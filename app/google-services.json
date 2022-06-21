@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "785058443752",
+    "project_id": "csapp-ia",
+    "storage_bucket": "csapp-ia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785058443752:android:a8592567d622606b11f45d",
+        "android_client_info": {
+          "package_name": "com.example.cs_ia_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785058443752-s7n1sp0hvtad0qoh3av0osauv1kute9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMUWrohN4Ns_enjRwjrA4xLqjPCAFL554"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785058443752-s7n1sp0hvtad0qoh3av0osauv1kute9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
