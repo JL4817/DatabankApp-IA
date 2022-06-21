@@ -28,6 +28,8 @@ public class AuthActivity extends AppCompatActivity {
 
     //teacher
 
+    //student
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
