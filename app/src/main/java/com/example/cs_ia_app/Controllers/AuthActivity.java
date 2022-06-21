@@ -28,7 +28,7 @@ public class AuthActivity extends AppCompatActivity {
 
     //teacher
 
-    //student//
+    //student//           232
 
 
     @Override
