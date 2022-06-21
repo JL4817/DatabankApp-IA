@@ -30,7 +30,7 @@ public class AuthActivity extends AppCompatActivity {
 
     //student
 
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
