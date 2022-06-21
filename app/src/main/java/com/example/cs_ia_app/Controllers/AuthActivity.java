@@ -26,7 +26,7 @@ public class AuthActivity extends AppCompatActivity {
     private Spinner userRoleSpinner;
     private String selectedRole;
 
-    //accounts
+    //
 
 
     @Override
