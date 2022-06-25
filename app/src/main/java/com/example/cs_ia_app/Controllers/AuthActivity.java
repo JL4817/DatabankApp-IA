@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs_ia_app.R;
@@ -20,14 +21,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 public class AuthActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
 
     //login
-    private EditText emailField;
-    private EditText passwordField;
+    private TextView emailField;
+    private TextView passwordField;
+    private TextView userIDField;
 
     private String userId;
 
@@ -43,6 +47,10 @@ public class AuthActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+
+        emailField = findViewById(R.id.emailField);
+        passwordField = findViewById(R.id.passwordField);
+        userIDField = findViewById(R.id.userIDField);
     }
 
 
@@ -98,8 +106,6 @@ public class AuthActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 
@@ -110,8 +116,6 @@ public class AuthActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, MainLobby.class);
                 startActivity(intent);
             }
-
-
         }
 
 
