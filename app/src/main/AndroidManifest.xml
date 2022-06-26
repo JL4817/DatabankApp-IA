@@ -13,7 +13,7 @@
             android:name=".Controllers.MainLobby"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Controllers.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
