@@ -7,13 +7,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs_ia_app.R;
+import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,8 +42,10 @@ public class AuthActivity extends AppCompatActivity {
     private String selectedRole;
 
     //admin
+    private Switch canDisableUsers;
 
     //user
+    private EditText occupation;
 
 
     @Override
@@ -50,8 +56,67 @@ public class AuthActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
+        layout = findViewById(R.id.llUser);
+        userRoleSpinner = findViewById(R.id.spnAuthActivity);
+        setupSpinner();
 
     }
+
+    private void setupSpinner(){
+        String[] userTypes = {Constants.USER, Constants.ADMIN};
+        // add user types to spinner
+        ArrayAdapter<String> langArrAdapter = new ArrayAdapter<String>(AuthActivity.this,
+                android.R.layout.simple_spinner_item, userTypes);
+        langArrAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userRoleSpinner.setAdapter(langArrAdapter);
+
+        //triggered whenever user selects something different
+        userRoleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                selectedRole = parent.getItemAtPosition(position).toString();
+                addFields();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+
+    public void addFields(){
+
+        commonFields();
+        if(selectedRole.equals("User")){
+            occupation = new EditText(this);
+            occupation.setHint("Enter Occupation");
+            layout.addView(occupation);
+        }
+
+        if(selectedRole.equals("Admin")){
+            canDisableUsers = new Switch(this);
+            canDisableUsers.setHint("Can disable Users");
+            canDisableUsers.setChecked(false);
+            layout.addView(canDisableUsers);
+        }
+    }
+
+    public void commonFields(){
+        layout.removeAllViewsInLayout();
+        nameField = new EditText(this);
+        nameField.setHint("Name");
+        layout.addView(nameField);
+        emailField = new EditText(this);
+        emailField.setHint("Email");
+        layout.addView(emailField);
+        passwordField = new EditText(this);
+        passwordField.setHint("Password");
+        layout.addView(passwordField);
+    }
+
 
 
     public void logIn(View v){
@@ -101,11 +166,13 @@ public class AuthActivity extends AppCompatActivity {
                     updateUI(user);
 
                 }else{
-                    Log.w("Sign up", "User Creation has failed", task.getException());
+                    Log.w("Sign up", "Account creation failed", task.getException());
                     updateUI(null);
                 }
             }
         });
+
+
     }
 
 
