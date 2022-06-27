@@ -21,8 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
 public class AuthActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -31,12 +29,17 @@ public class AuthActivity extends AppCompatActivity {
     //login
     private TextView emailField;
     private TextView passwordField;
-
     private String userId;
 
-    //teacher
+    //spinner
+    private LinearLayout layout;
+    private EditText nameField;
+    private Spinner userRoleSpinner;
+    private String selectedRole;
 
-    //student
+    //admin
+
+    //user
 
 
     @Override
@@ -47,8 +50,7 @@ public class AuthActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        emailField = findViewById(R.id.emailField);
-        passwordField = findViewById(R.id.passwordField);
+
     }
 
 
