@@ -16,6 +16,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cs_ia_app.Models.Admin;
+import com.example.cs_ia_app.Models.Person;
+import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
 import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -99,7 +102,6 @@ public class AuthActivity extends AppCompatActivity {
         if(selectedRole.equals("Admin")){
             canDisableUsers = new Switch(this);
             canDisableUsers.setHint("Can disable Users");
-            canDisableUsers.setChecked(false);
             layout.addView(canDisableUsers);
         }
     }
@@ -155,6 +157,7 @@ public class AuthActivity extends AppCompatActivity {
 
         String emailString = emailField.getText().toString();
         String passwordString = passwordField.getText().toString();
+        String nameString = nameField.getText().toString();
 
         mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -164,6 +167,8 @@ public class AuthActivity extends AppCompatActivity {
 
                     FirebaseUser user = mAuth.getCurrentUser();
                     updateUI(user);
+                    userId = user.getUid();
+                    addUserToDatabase(emailString, nameString);
 
                 }else{
                     Log.w("Sign up", "Account creation failed", task.getException());
@@ -172,6 +177,27 @@ public class AuthActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+
+    public void addUserToDatabase(String emailString, String nameString){
+
+        //make new user according to selected usertype
+        Person newPerson = null;
+
+        Boolean stopUser = canDisableUsers.isChecked();
+
+        if(selectedRole.equals(Constants.USER)) {
+            String job = occupation.getText().toString();
+            newPerson = new User(nameString, emailString, userId, job);
+        }
+        else if(selectedRole.equals(Constants.ADMIN)) {
+            newPerson = new Admin(nameString, emailString, userId, stopUser);
+        }
+
+        //add the new user to the database
+        firestore.collection(Constants.USER_COLLECTION).document(userId).set(newPerson);
 
     }
 
