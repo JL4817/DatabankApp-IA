@@ -31,7 +31,6 @@ public class AuthActivity extends AppCompatActivity {
     //login
     private TextView emailField;
     private TextView passwordField;
-    private TextView userIDField;
 
     private String userId;
 
@@ -50,7 +49,6 @@ public class AuthActivity extends AppCompatActivity {
 
         emailField = findViewById(R.id.emailField);
         passwordField = findViewById(R.id.passwordField);
-        userIDField = findViewById(R.id.userIDField);
     }
 
 
