@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSIAAPP">
         <activity
-            android:name=".Controllers.MainLobby"
+            android:name=".Controllers.MainMenu"
             android:exported="false" />
         <activity
             android:name=".Controllers.AuthActivity"

@@ -136,7 +136,7 @@ public class AuthActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
 
-                            Intent nextScreen = new Intent(getBaseContext(), MainLobby.class);
+                            Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
                             startActivity(nextScreen);
 
                         } else {
@@ -206,7 +206,7 @@ public class AuthActivity extends AppCompatActivity {
         public void updateUI(FirebaseUser currentUser){
 
             if(currentUser != null){
-                Intent intent = new Intent(this, MainLobby.class);
+                Intent intent = new Intent(this, MainMenu.class);
                 startActivity(intent);
             }
         }
