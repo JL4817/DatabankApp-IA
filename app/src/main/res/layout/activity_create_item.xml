@@ -23,6 +23,22 @@
         android:onClick="createItem"
         android:text="Open" />
 
+    <Button
+        android:id="@+id/btnFirebase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toFirebase"
+        android:text="Send to Firebase" />
+
+    <EditText
+        android:id="@+id/etItemID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="ID" />
+
 
 </LinearLayout>
 
