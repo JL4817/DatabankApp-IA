@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.accessibilityservice.GestureDescription;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,8 +30,11 @@ import android.widget.ImageView;
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
 import com.example.cs_ia_app.Utilities.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -38,6 +42,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.OnProgressListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -46,8 +51,15 @@ import android.hardware.Camera;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
+
+import io.grpc.Context;
 
 public class CreateItem extends AppCompatActivity {
+
+    public Uri imageUri;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
@@ -56,6 +68,9 @@ public class CreateItem extends AppCompatActivity {
     ImageView imageView;
     Button button;
     EditText id;
+
+
+    Button buttonFire;
 
 
     @Override
@@ -68,8 +83,14 @@ public class CreateItem extends AppCompatActivity {
 
         imageView = findViewById(R.id.image_view);
         button = findViewById(R.id.button5);
-
         id = findViewById(R.id.etItemID);
+
+        buttonFire = findViewById(R.id.btnFirebase);
+
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
 
     }
 
@@ -96,21 +117,35 @@ public class CreateItem extends AppCompatActivity {
     }
 
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
+
+
+            imageUri = data.getData();
+
+            //ImageView imageView = findViewById(R.id.image_view);
+            //  Uri selectedImage = data.getData();
+        //    imageView.setImageURI(imageUri);
         }
 
+
+
     }
+
+
 
 
     public void toFirebase(View v) {
 
 
-        //make new item
+        uploadPicture();
+
+        /*
         Item newItem = null;
 
         //generate + get new key
@@ -126,8 +161,37 @@ public class CreateItem extends AppCompatActivity {
         newSignUpKey.set(newItem);
         firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
 
-
-
+         */
 
     }
+
+
+    public void uploadPicture(){
+
+        final String randomKey = UUID.randomUUID().toString();
+        StorageReference riversRef = storageReference.child("images/" + randomKey);
+
+        // Get the data from an ImageView as bytes
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = riversRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "Failed to Upload", Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+               Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
 }

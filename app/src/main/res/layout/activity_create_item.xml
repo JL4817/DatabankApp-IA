@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="toFirebase"
-        android:text="Send to Firebase" />
+        android:text="Upload Picture to Firebase" />
 
     <EditText
         android:id="@+id/etItemID"
