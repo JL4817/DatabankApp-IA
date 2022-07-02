@@ -1,8 +1,5 @@
 package com.example.cs_ia_app.Controllers;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,50 +7,33 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.accessibilityservice.GestureDescription;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Gallery;
 import android.widget.ImageView;
 
-import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
-import com.example.cs_ia_app.Utilities.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.OnProgressListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import android.hardware.Camera;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
-
-import io.grpc.Context;
 
 public class CreateItem extends AppCompatActivity {
 
@@ -81,8 +61,8 @@ public class CreateItem extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        imageView = findViewById(R.id.image_view);
-        button = findViewById(R.id.button5);
+        imageView = findViewById(R.id.ivItemPicture);
+        button = findViewById(R.id.btnCamera);
         id = findViewById(R.id.etItemID);
 
         buttonFire = findViewById(R.id.btnFirebase);

@@ -8,36 +8,72 @@
     android:layout_height="match_parent"
     tools:context=".Controllers.CreateItem">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:scaleType="centerCrop"
-        android:text="TextView"
-        android:id="@+id/image_view"/>
-
-    <Button
-        android:id="@+id/button5"
+    <EditText
+        android:id="@+id/etTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:onClick="createItem"
-        android:text="Open" />
-
-    <Button
-        android:id="@+id/btnFirebase"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="toFirebase"
-        android:text="Upload Picture to Firebase" />
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="                             Item Creation Page"
+        android:textStyle="bold|italic" />
 
     <EditText
-        android:id="@+id/etItemID"
+        android:id="@+id/etItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:text="Name of Object" />
+
+    <EditText
+        android:id="@+id/etItemID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:text="ID" />
+
+    <EditText
+        android:id="@+id/etItemLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="Purchase Link" />
+
+    <ImageView
+        android:id="@+id/ivItemPicture"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+        android:scaleType="centerCrop"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/btnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:onClick="createItem"
+        android:text="Take Picture" />
+
+    <EditText
+        android:id="@+id/etItemLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="Item Current Location" />
+
+    <Button
+        android:id="@+id/btnFirebase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="toFirebase"
+        android:text="Upload Item to Firebase" />
 
 
 </LinearLayout>
