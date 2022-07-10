@@ -22,37 +22,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Enter Item Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name of Object" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/etItemID"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="ID"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="ID" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/etItemLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Enter Item Link"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Purchase Link" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
-        android:id="@+id/ivItemPicture"
+        android:id="@+id/ivItemPictureView"
         android:layout_width="match_parent"
         android:layout_height="167dp"
         android:scaleType="centerCrop"
         android:text="TextView" />
 
     <Button
-        android:id="@+id/btnCamera"
+        android:id="@+id/btnGetFromFirebase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -64,9 +67,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Enter Current Location"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Item Current Location" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btnFirebase"

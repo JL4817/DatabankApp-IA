@@ -49,9 +49,11 @@ public class CreateItem extends AppCompatActivity {
     Button button;
     EditText id;
 
-
     Button buttonFire;
 
+    EditText nameItem;
+    EditText locationItem;
+    EditText purchaseLinkItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +63,8 @@ public class CreateItem extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        imageView = findViewById(R.id.ivItemPicture);
-        button = findViewById(R.id.btnCamera);
+        imageView = findViewById(R.id.ivItemPictureView);
+        button = findViewById(R.id.btnGetFromFirebase);
         id = findViewById(R.id.etItemID);
 
         buttonFire = findViewById(R.id.btnFirebase);
@@ -70,6 +72,11 @@ public class CreateItem extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        //attributes
+        nameItem = findViewById(R.id.etItemName);
+        locationItem = findViewById(R.id.etItemLocation);
+        purchaseLinkItem = findViewById(R.id.etItemLink);
 
 
     }
@@ -122,10 +129,17 @@ public class CreateItem extends AppCompatActivity {
 
     public void toFirebase(View v) {
 
-
         uploadPicture();
 
-        /*
+/*
+         String location = locationItem.getText().toString();
+        String name = nameItem.getText().toString();
+        String link = purchaseLinkItem.getText().toString();
+
+
+        //get the image id
+           String imageId = randomKey;
+
         Item newItem = null;
 
         //generate + get new key
@@ -135,20 +149,25 @@ public class CreateItem extends AppCompatActivity {
         //user ID
         String userID = mUser.getUid();
 
-        newItem = new Item(itemKey, imageView);
+        newItem = new Item(itemKey, location, name, link, imageId);
 
         //add the new item to the database
         newSignUpKey.set(newItem);
         firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
 
-         */
+
+*/
+
+
 
     }
 
 
     public void uploadPicture(){
 
-        final String randomKey = UUID.randomUUID().toString();
+     //   final String randomKey = UUID.randomUUID().toString();
+         String randomKey = mUser.getUid();
+
         StorageReference riversRef = storageReference.child("images/" + randomKey);
 
         // Get the data from an ImageView as bytes
@@ -168,10 +187,14 @@ public class CreateItem extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-               Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
             }
         });
 
+
+
     }
+
+
 
 }
