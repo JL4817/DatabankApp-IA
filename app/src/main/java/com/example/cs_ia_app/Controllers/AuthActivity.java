@@ -186,13 +186,14 @@ public class AuthActivity extends AppCompatActivity {
         //make new user according to selected usertype
         Person newPerson = null;
 
-        Boolean stopUser = canDisableUsers.isChecked();
 
         if(selectedRole.equals(Constants.USER)) {
             String job = occupation.getText().toString();
             newPerson = new User(nameString, emailString, userId, job);
         }
-        else if(selectedRole.equals(Constants.ADMIN)) {
+
+        if(selectedRole.equals(Constants.ADMIN)) {
+            Boolean stopUser = canDisableUsers.isChecked();
             newPerson = new Admin(nameString, emailString, userId, stopUser);
         }
 

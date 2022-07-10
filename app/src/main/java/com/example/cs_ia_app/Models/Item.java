@@ -7,20 +7,20 @@ import android.widget.ImageView;
 public class Item {
 
     private String itemID;
-
     private String location;
     private String name;
     private String purchaseLink;
-
     private String itemImage;
+    private String owner;
 
 
-    public Item(String itemID, String location, String name, String purchaseLink, String itemImage) {
+    public Item(String itemID, String location, String name, String purchaseLink, String itemImage, String owner) {
         this.itemID = itemID;
         this.location = location;
         this.name = name;
         this.purchaseLink = purchaseLink;
         this.itemImage = itemImage;
+        this.owner = owner;
     }
 
 
@@ -65,6 +65,15 @@ public class Item {
         this.purchaseLink = purchaseLink;
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+
     @Override
     public String toString() {
         return "Item{" +
@@ -72,8 +81,10 @@ public class Item {
                 ", location='" + location + '\'' +
                 ", name='" + name + '\'' +
                 ", purchaseLink='" + purchaseLink + '\'' +
-                ", itemImage=" + itemImage +
+                ", itemImage='" + itemImage + '\'' +
+                ", owner='" + owner + '\'' +
                 '}';
     }
+
 
 }

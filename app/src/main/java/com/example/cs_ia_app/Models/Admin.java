@@ -2,7 +2,7 @@ package com.example.cs_ia_app.Models;
 
 public class Admin extends Person{
 
-    private boolean canDisableUsers;
+    private boolean canDisableUsers = false;
 
     public Admin(String name, String email, String userID, boolean canDisableUsers) {
         super(name, email, userID);

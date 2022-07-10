@@ -19,12 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
+import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -129,44 +133,10 @@ public class CreateItem extends AppCompatActivity {
 
     public void toFirebase(View v) {
 
-        uploadPicture();
+      // uploadPicture();
 
-/*
-         String location = locationItem.getText().toString();
-        String name = nameItem.getText().toString();
-        String link = purchaseLinkItem.getText().toString();
-
-
-        //get the image id
-           String imageId = randomKey;
-
-        Item newItem = null;
-
-        //generate + get new key
-        DocumentReference newSignUpKey = firestore.collection(Constants.ITEM_COLLECTION).document();
-        String itemKey = newSignUpKey.getId();
-
-        //user ID
-        String userID = mUser.getUid();
-
-        newItem = new Item(itemKey, location, name, link, imageId);
-
-        //add the new item to the database
-        newSignUpKey.set(newItem);
-        firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
-
-
-*/
-
-
-
-    }
-
-
-    public void uploadPicture(){
-
-     //   final String randomKey = UUID.randomUUID().toString();
-         String randomKey = mUser.getUid();
+        final String randomKey = UUID.randomUUID().toString();
+        //    String randomKey = mUser.getUid();
 
         StorageReference riversRef = storageReference.child("images/" + randomKey);
 
@@ -192,9 +162,72 @@ public class CreateItem extends AppCompatActivity {
         });
 
 
+        //generate + get new key
+        DocumentReference newSignUpKey = firestore.collection(Constants.ITEM_COLLECTION).document();
+        String itemKey = newSignUpKey.getId();
+
+        String location = locationItem.getText().toString();
+        String name = nameItem.getText().toString();
+        String link = purchaseLinkItem.getText().toString();
+
+        //user ID
+        String userID = mUser.getUid();
+
+        Item newItem = null;
+
+        newItem = new Item(itemKey, location, name, link, randomKey, userID);
+
+        //add the new item to the database
+        newSignUpKey.set(newItem);
+
+        firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
+
+        firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
+                .update("ownedItems", FieldValue.arrayUnion(randomKey));
+
+
+
+
 
     }
 
+/*
+    public void uploadPicture(){
+
+        final String randomKey = UUID.randomUUID().toString();
+     //    String randomKey = mUser.getUid();
+
+        StorageReference riversRef = storageReference.child("images/" + randomKey);
+
+        // Get the data from an ImageView as bytes
+        imageView.setDrawingCacheEnabled(true);
+        imageView.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = riversRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "Failed to Upload", Toast.LENGTH_LONG).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+
+        firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
+                .update("ownedVehicles", FieldValue.arrayUnion(randomKey));
+
+    }
+
+
+ */
 
 
 }
