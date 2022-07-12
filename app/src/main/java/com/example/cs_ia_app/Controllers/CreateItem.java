@@ -66,6 +66,7 @@ public class CreateItem extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        firestore = FirebaseFirestore.getInstance();
 
         imageView = findViewById(R.id.ivItemPictureView);
         button = findViewById(R.id.btnGetFromFirebase);
@@ -184,9 +185,6 @@ public class CreateItem extends AppCompatActivity {
 
         firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
                 .update("ownedItems", FieldValue.arrayUnion(randomKey));
-
-
-
 
 
     }
