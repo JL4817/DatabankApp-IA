@@ -15,13 +15,15 @@
         android:layout_height="167dp"
         android:onClick="displayImage"
         android:scaleType="centerCrop"
-        android:text="TextView" />
+        android:text="TextView"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btnGetFromFirebase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:onClick="displayImage"
         android:text="Display Picuture" />
 
 

@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
+
 
 public class DisplayImageTest extends AppCompatActivity {
 
@@ -51,6 +53,7 @@ public class DisplayImageTest extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        firestore = FirebaseFirestore.getInstance();
 
     }
 
@@ -58,9 +61,18 @@ public class DisplayImageTest extends AppCompatActivity {
 
     public void displayImage(View v) {
 
+
         //making the ID of the User as the image id,
+        String randomKey = ACCESSIBILITY_SERVICE;
 
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        storageRef.child("images/" + randomKey).getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
 
+                    }
+                });
 
     }
 

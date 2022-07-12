@@ -25,6 +25,15 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
+    public void toTestDisplay(View v){
+
+        Intent nextScreen = new Intent(getBaseContext(), DisplayImageTest.class);
+        startActivity(nextScreen);
+
+    }
+
+
+
 
 
 }

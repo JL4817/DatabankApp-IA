@@ -34,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -51,7 +52,7 @@ public class CreateItem extends AppCompatActivity {
 
     ImageView imageView;
     Button button;
-    EditText id;
+    TextView id;
 
     Button buttonFire;
 
@@ -73,7 +74,6 @@ public class CreateItem extends AppCompatActivity {
         id = findViewById(R.id.etItemID);
 
         buttonFire = findViewById(R.id.btnFirebase);
-
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -134,8 +134,6 @@ public class CreateItem extends AppCompatActivity {
 
     public void toFirebase(View v) {
 
-      // uploadPicture();
-
         final String randomKey = UUID.randomUUID().toString();
         //    String randomKey = mUser.getUid();
 
@@ -162,6 +160,7 @@ public class CreateItem extends AppCompatActivity {
             }
         });
 
+        id.setText(randomKey);
 
         //generate + get new key
         DocumentReference newSignUpKey = firestore.collection(Constants.ITEM_COLLECTION).document();
@@ -188,44 +187,6 @@ public class CreateItem extends AppCompatActivity {
 
 
     }
-
-/*
-    public void uploadPicture(){
-
-        final String randomKey = UUID.randomUUID().toString();
-     //    String randomKey = mUser.getUid();
-
-        StorageReference riversRef = storageReference.child("images/" + randomKey);
-
-        // Get the data from an ImageView as bytes
-        imageView.setDrawingCacheEnabled(true);
-        imageView.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = riversRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(), "Failed to Upload", Toast.LENGTH_LONG).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
-            }
-        });
-
-
-        firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
-                .update("ownedVehicles", FieldValue.arrayUnion(randomKey));
-
-    }
-
-
- */
 
 
 }
