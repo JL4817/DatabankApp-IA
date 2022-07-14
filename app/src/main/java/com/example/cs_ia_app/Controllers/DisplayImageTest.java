@@ -34,6 +34,7 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class DisplayImageTest extends AppCompatActivity {
@@ -42,7 +43,6 @@ public class DisplayImageTest extends AppCompatActivity {
     ImageView imageViewPictureDisplay;
     Button buttonToFirebase;
 
-    public Uri imageUri;
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -73,45 +73,10 @@ public class DisplayImageTest extends AppCompatActivity {
 
     public void displayImage(View v) {
 
-        //failure
-
-
-        //making the ID of the User as the image id,
-        firestore.collection(Constants.ITEM_COLLECTION).whereEqualTo("itemImage", "").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-
-                StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-                storageRef.child("images/" +  firestore.collection(Constants.ITEM_COLLECTION).document("itemID").get()).getDownloadUrl()
-                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-
-                                /*
-
-                                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-
-                                    imageViewPictureDisplay.setImageBitmap(bitmap);
-
-                                    imageUri = data.getData();
-
-                                 */
-
-                                    imageViewPictureDisplay.setImageURI(imageUri);
-
-                                }
-
-                        });
-
-            }
-
-        });
 
 
 
     }
-
 
 
 
