@@ -8,10 +8,10 @@
     tools:context=".Controllers.MainMenu">
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/toRecycler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="toTestDisplay"
+        android:onClick="toRec"
         android:text="Test"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

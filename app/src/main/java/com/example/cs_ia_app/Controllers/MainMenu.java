@@ -25,12 +25,13 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
-    public void toTestDisplay(View v){
+    public void toRec(View v){
 
-        Intent nextScreen = new Intent(getBaseContext(), DisplayImageTest.class);
+        Intent nextScreen = new Intent(getBaseContext(), ItemInfoActivity.class);
         startActivity(nextScreen);
 
     }
+
 
 
 

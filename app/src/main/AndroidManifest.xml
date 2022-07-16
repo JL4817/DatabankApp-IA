@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSIAAPP">
         <activity
-            android:name=".Controllers.DisplayImageTest"
+            android:name=".Controllers.ItemInfoActivity"
             android:exported="false" />
         <activity
             android:name=".Controllers.CreateItem"

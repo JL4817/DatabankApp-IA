@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CS-IA-APP</string>
+    <string name="enter_current_location">Enter Current Location</string>
 </resources>

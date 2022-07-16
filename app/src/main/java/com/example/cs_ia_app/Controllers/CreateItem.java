@@ -69,7 +69,7 @@ public class CreateItem extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
 
-        imageView = findViewById(R.id.ivItemPictureView);
+        imageView = findViewById(R.id.ivItemDisplay);
         button = findViewById(R.id.btnGetFromFirebase);
         id = findViewById(R.id.etItemID);
 
@@ -125,7 +125,11 @@ public class CreateItem extends AppCompatActivity {
         //    imageView.setImageURI(imageUri);
         }
 
+/*
+        Intent intent = new Intent(CreateItem.this, ItemInfoActivity.class);
+        startActivity(intent);
 
+ */
 
     }
 
@@ -184,7 +188,6 @@ public class CreateItem extends AppCompatActivity {
 
         firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
                 .update("ownedItems", FieldValue.arrayUnion(randomKey));
-
 
     }
 

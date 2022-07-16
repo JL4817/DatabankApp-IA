@@ -48,7 +48,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
-        android:id="@+id/ivItemPictureView"
+        android:id="@+id/ivItemDisplay"
         android:layout_width="match_parent"
         android:layout_height="167dp"
         android:scaleType="centerCrop"
