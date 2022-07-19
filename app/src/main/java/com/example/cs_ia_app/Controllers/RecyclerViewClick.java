@@ -76,12 +76,9 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             tvitemLink.setText("Vehicle ID: " + link);
 
 
-          //  image = selected.getItemImage();
-          //  Item item = itemList.get(position);
-
             String imageUri = selected.getItemImage();
-          //  imageUri = item.getItemImage();
             Picasso.get().load(imageUri).into(imageView);
+
 
            // imageView.setImageURI(image);
 

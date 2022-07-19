@@ -1,5 +1,7 @@
 package com.example.cs_ia_app.Controllers;
 
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
+
+    private FirebaseStorage storage;
+
 
     ArrayList<Item> itemList;
     private RecHolder.ItemClickListener mItemListener;
@@ -52,9 +64,28 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
 
         Item item = itemList.get(position);
 
-        String imageUri = null;
-        imageUri = item.getItemImage();
-        Picasso.get().load(imageUri).into(holder.imageView);
+
+        String imageUri = item.getItemImage();
+
+
+        // Points to the root reference
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference dateRef = storageRef.child("images/"+imageUri);
+        dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+        {
+            @Override
+            public void onSuccess(Uri downloadUrl)
+            {
+                Picasso.get().load(downloadUrl).into(holder.imageView);
+            }
+        });
+
+
+
+        //if item itemImage is equal to the one in firebasestorage
+
+       // Picasso.get().load("https://cdn.motor1.com/images/mgl/mrz1e/s3/coolest-cars-feature.jpg").into(holder.imageView);
+
 
         holder.itemView.setOnClickListener(view -> {
             mItemListener.onItemClick(itemList, position);

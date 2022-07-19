@@ -114,13 +114,14 @@
 
             <ImageView
                 android:id="@+id/ivItemShow"
-                android:layout_width="192dp"
-                android:layout_height="134dp"
+                android:layout_width="202dp"
+                android:layout_height="140dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.925"
+                app:layout_constraintHorizontal_bias="0.922"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.727"
                 tools:srcCompat="@tools:sample/avatars" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
