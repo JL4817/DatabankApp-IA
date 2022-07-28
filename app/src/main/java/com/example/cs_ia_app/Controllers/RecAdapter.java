@@ -64,13 +64,11 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
 
         Item item = itemList.get(position);
 
-
         String imageUri = item.getItemImage();
-
 
         // Points to the root reference
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference dateRef = storageRef.child("images/"+imageUri);
+        StorageReference dateRef = storageRef.child("images/" + imageUri);
         dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
         {
             @Override
@@ -79,11 +77,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
                 Picasso.get().load(downloadUrl).into(holder.imageView);
             }
         });
-
-
-
-        //if item itemImage is equal to the one in firebasestorage
-
+        
        // Picasso.get().load("https://cdn.motor1.com/images/mgl/mrz1e/s3/coolest-cars-feature.jpg").into(holder.imageView);
 
 

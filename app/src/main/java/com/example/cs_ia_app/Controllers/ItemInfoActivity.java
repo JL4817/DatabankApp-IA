@@ -90,7 +90,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
                     getAllItem.setResult(null);
                 }
                 else{
-                    Log.d("VehiclesInfoActivity", "Error getting comcumets from db: ", task.getException());
+                    Log.d("ItemsInfoActivity", "Error getting comcumets from db: ", task.getException());
                 }
             }
         });
