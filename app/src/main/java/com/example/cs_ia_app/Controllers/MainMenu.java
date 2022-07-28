@@ -32,6 +32,10 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+    public void toFindItem(View v){
+        Intent nextScreen = new Intent(getBaseContext(), FindItemActivity.class);
+        startActivity(nextScreen);
+    }
 
 
 
