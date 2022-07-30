@@ -4,6 +4,9 @@ public class User extends Person{
 
     private String occupation;
 
+    public User(){
+
+    }
 
     public User(String name, String email, String userID, String occupation) {
         super(name, email, userID);

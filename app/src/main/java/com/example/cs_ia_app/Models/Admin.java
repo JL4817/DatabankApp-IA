@@ -4,6 +4,10 @@ public class Admin extends Person{
 
     private boolean canDisableUsers = false;
 
+    public Admin(){
+
+    }
+
     public Admin(String name, String email, String userID, boolean canDisableUsers) {
         super(name, email, userID);
         this.canDisableUsers = canDisableUsers;
