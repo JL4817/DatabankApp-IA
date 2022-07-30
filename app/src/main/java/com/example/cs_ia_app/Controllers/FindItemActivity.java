@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.cs_ia_app.Models.Item;
-import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,12 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
 
 public class FindItemActivity extends AppCompatActivity{
 
@@ -40,10 +33,10 @@ public class FindItemActivity extends AppCompatActivity{
     private ListView listView;
     //private String[] names = {"Jinpil", "Jennie", "Jason", "Jack"};
 
-    private ArrayList<User> users;
+    private ArrayList<Item> items;
 
     public ArrayAdapter<String> arrayAdapter;
-    ArrayList<String> usersNames = new ArrayList<>();
+    ArrayList<String> itemName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +49,12 @@ public class FindItemActivity extends AppCompatActivity{
         mUser = mAuth.getCurrentUser();
         listView = (ListView) findViewById(R.id.listview);
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, usersNames);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemName);
 
       //  arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
         listView.setAdapter(arrayAdapter);
 
-        users = new ArrayList<>();
+        items = new ArrayList<>();
         getNames();
 
 
@@ -70,14 +63,14 @@ public class FindItemActivity extends AppCompatActivity{
 
     public void getNames(){
 
-        firestore.collection("user")
+        firestore.collection("item")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                               users.add(document.toObject(User.class));
+                               items.add(document.toObject(Item.class));
                             }
                         } else {
                             Log.d("FindItemActivity", "Error getting documents: ", task.getException());
@@ -86,10 +79,10 @@ public class FindItemActivity extends AppCompatActivity{
                        // String[] a;
                       //  String[] names =  Arrays.copyOfRange(a, 0, users.size());;
 
-                        for(User user: users){
-                            usersNames.add(user.getName());
+                        for(Item item: items){
+                            itemName.add(item.getName());
                         }
-                        System.out.println(usersNames);
+                        System.out.println(itemName);
 
                     }
                 });
@@ -102,7 +95,7 @@ public class FindItemActivity extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Type");
+        searchView.setQueryHint("Search for the Items");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
