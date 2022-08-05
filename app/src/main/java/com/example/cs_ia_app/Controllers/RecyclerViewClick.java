@@ -25,7 +25,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+
+
 public class RecyclerViewClick extends AppCompatActivity implements View.OnClickListener {
+
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -86,6 +89,8 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
 
     }
+
+
 
 
     @Override

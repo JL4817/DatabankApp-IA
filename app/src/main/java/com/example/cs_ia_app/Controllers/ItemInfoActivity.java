@@ -27,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
 public class ItemInfoActivity extends AppCompatActivity implements RecHolder.ItemClickListener {
 
@@ -120,6 +121,8 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
             }
         });
+
+
 
     }
 

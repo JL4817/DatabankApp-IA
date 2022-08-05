@@ -4,10 +4,13 @@ package com.example.cs_ia_app.Controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -58,6 +61,24 @@ public class FindItemActivity extends AppCompatActivity{
         getNames();
 
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position==0){
+
+                    startActivity(new Intent(FindItemActivity.this, RecyclerViewClick.class));
+
+                }else if(position==1){
+
+                }
+
+            }
+        });
+
+
+
+
     }
 
 
@@ -98,7 +119,7 @@ public class FindItemActivity extends AppCompatActivity{
         searchView.setQueryHint("Search for the Items");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
+            @Override 
             public boolean onQueryTextSubmit(String query) {
 
                 return false;
