@@ -104,6 +104,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
                 RecAdapter myAdapter = new RecAdapter(itemList ,new RecHolder.ItemClickListener() {
 
+
                     @Override
                     public void onItemClick(ArrayList<Item> details, int position) {
 

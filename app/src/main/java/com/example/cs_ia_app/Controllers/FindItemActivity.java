@@ -27,7 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class FindItemActivity extends AppCompatActivity{
+public class FindItemActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
@@ -61,15 +61,26 @@ public class FindItemActivity extends AppCompatActivity{
         getNames();
 
 
+        //get the name and compare to make sure it matches
+
+        //make intent and pass it to the  or viewClick to display onyl taht
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if(position==0){
+                String value = (String)parent.getItemAtPosition(position);
 
-                    startActivity(new Intent(FindItemActivity.this, RecyclerViewClick.class));
+                //if(position==0)
 
-                }else if(position==1){
+                if(value.equals(itemName)){
+
+                    Intent myIntent = new Intent(FindItemActivity.this, ItemDisplayTool.class);
+                    myIntent.putExtra("key", value); //Optional parameters
+                    FindItemActivity.this.startActivity(myIntent);
+
+
+                    startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
 
                 }
 
@@ -119,7 +130,7 @@ public class FindItemActivity extends AppCompatActivity{
         searchView.setQueryHint("Search for the Items");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override 
+            @Override
             public boolean onQueryTextSubmit(String query) {
 
                 return false;
