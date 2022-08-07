@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -73,14 +76,27 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             ID = selected.getItemID();
             link = selected.getPurchaseLink();
 
-            tvlocation.setText("Location: " + location);
-            tvname.setText("Price: " + name);
-            tvID.setText("Model: " + ID);
-            tvitemLink.setText("Vehicle ID: " + link);
+            tvlocation.setText(location);
+            tvname.setText(name);
+            tvID.setText(ID);
+            tvitemLink.setText(link);
+
 
 
             String imageUri = selected.getItemImage();
-            Picasso.get().load(imageUri).into(imageView);
+            // Points to the root reference
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            StorageReference dateRef = storageRef.child("images/" + imageUri);
+            dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+            {
+                @Override
+                public void onSuccess(Uri downloadUrl)
+                {
+                    Picasso.get().load(downloadUrl).into(imageView);
+                }
+            });
+
+
 
 
            // imageView.setImageURI(image);

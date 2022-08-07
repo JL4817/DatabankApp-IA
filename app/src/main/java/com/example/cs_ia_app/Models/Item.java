@@ -1,10 +1,14 @@
 package com.example.cs_ia_app.Models;
 
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable, Parcelable {
 
     private String itemID;
     private String location;
@@ -24,9 +28,35 @@ public class Item {
     }
 
     public Item(){
-
+         itemID = "";
+         location = "";
+         name = "";
+         purchaseLink = "";
+         itemImage = "";
+         owner = "";
     }
 
+
+    protected Item(Parcel in) {
+        itemID = in.readString();
+        location = in.readString();
+        name = in.readString();
+        purchaseLink = in.readString();
+        itemImage = in.readString();
+        owner = in.readString();
+    }
+
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 
     public String getItemID() {
         return itemID;
@@ -79,6 +109,22 @@ public class Item {
 
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(itemID);
+        dest.writeString(location);
+        dest.writeString(name);
+        dest.writeString(purchaseLink);
+        dest.writeString(itemImage);
+        dest.writeString(owner);
+    }
+
+
+    @Override
     public String toString() {
         return "Item{" +
                 "itemID='" + itemID + '\'' +
@@ -89,6 +135,4 @@ public class Item {
                 ", owner='" + owner + '\'' +
                 '}';
     }
-
-
 }
