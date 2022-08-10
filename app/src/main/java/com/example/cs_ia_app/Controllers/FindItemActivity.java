@@ -4,6 +4,7 @@ package com.example.cs_ia_app.Controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class FindItemActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private Context context;
 
     private ListView listView;
     //private String[] names = {"Jinpil", "Jennie", "Jason", "Jack"};
@@ -46,6 +48,7 @@ public class FindItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_item);
 
+        context = this;
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
@@ -73,16 +76,21 @@ public class FindItemActivity extends AppCompatActivity {
 
                 //if(position==0)
 
-                if(value.equals(itemName)){
+                    if(itemName.contains(value)){
 
-                    Intent myIntent = new Intent(FindItemActivity.this, ItemDisplayTool.class);
-                    myIntent.putExtra("key", value); //Optional parameters
-                    FindItemActivity.this.startActivity(myIntent);
+                    //    System.out.println("HELLLO THISWORKS");
 
 
-                    startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
+                        Intent i = new Intent(context, ItemDisplayTool.class);
+                        i.putExtra("values", value);
+                        startActivity(i);
 
-                }
+                        startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
+
+                    }
+
+
+
 
             }
         });

@@ -36,6 +36,8 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     private TextView locate, nam;
 
+    private String value;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +61,13 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     public void getFirebaseData(){
 
-        Intent intent = getIntent();
-        String value = intent.getStringExtra("key");
+        System.out.println("HERE WORKS 101");
+
+        if(getIntent().hasExtra("hi")){
+
+            value = (String) getIntent().getSerializableExtra("values");
+
+              System.out.println(value);
 
         firestore.collection("item")
                 .get()
@@ -73,6 +80,7 @@ public class ItemDisplayTool extends AppCompatActivity {
                                     if(value.equals(item.getName())){
                                         String loc = item.getLocation();
 
+                                        System.out.println("RUNES UNTIL HERE");
                                         nam.setText(loc);
                                         locate.setText(value);
 
@@ -89,6 +97,6 @@ public class ItemDisplayTool extends AppCompatActivity {
                 });
 
     }
-
+    }
 
 }
