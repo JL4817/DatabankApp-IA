@@ -78,14 +78,14 @@ public class FindItemActivity extends AppCompatActivity {
 
                     if(itemName.contains(value)){
 
-                    //    System.out.println("HELLLO THISWORKS");
+                        System.out.println("HELLLO THISWORKS");
 
 
                         Intent i = new Intent(context, ItemDisplayTool.class);
-                        i.putExtra("values", value);
+                        i.putExtra("hi", value);
                         startActivity(i);
 
-                        startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
+                        //startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
 
                     }
 

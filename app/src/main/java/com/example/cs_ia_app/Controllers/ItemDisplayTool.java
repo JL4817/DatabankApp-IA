@@ -34,6 +34,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     private ArrayList<Item> items;
 
+
     private TextView locate, nam;
 
     private String value;
@@ -65,7 +66,9 @@ public class ItemDisplayTool extends AppCompatActivity {
 
         if(getIntent().hasExtra("hi")){
 
-            value = (String) getIntent().getSerializableExtra("values");
+            System.out.println("IF WORKS 102");
+
+            value = (String) getIntent().getSerializableExtra("hi");
 
               System.out.println(value);
 
@@ -76,15 +79,22 @@ public class ItemDisplayTool extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
+
+                            System.out.println("RUNES UNTIL12123123 HERE");
+
                                 for(Item item: items){
+
+                                    System.out.println("RU13212312315134r55ERE");
+                                    System.out.println(item.getName());
+
                                     if(value.equals(item.getName())){
                                         String loc = item.getLocation();
 
                                         System.out.println("RUNES UNTIL HERE");
                                         nam.setText(loc);
                                         locate.setText(value);
-
                                     }
+
                                 }
 
                         } else {
