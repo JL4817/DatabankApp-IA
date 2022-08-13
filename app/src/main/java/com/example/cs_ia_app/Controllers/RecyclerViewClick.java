@@ -81,8 +81,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             tvID.setText(ID);
             tvitemLink.setText(link);
 
-
-
             String imageUri = selected.getItemImage();
             // Points to the root reference
             StorageReference storageRef = FirebaseStorage.getInstance().getReference();

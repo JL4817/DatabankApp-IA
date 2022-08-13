@@ -65,8 +65,6 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
         itemList =  new ArrayList<>();
 
-
-
       //  itemList = new ArrayList<Item>();
     //    itemAdapter = new RecAdapter(ItemInfoActivity.this, itemList);
 
@@ -77,6 +75,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
 
     public void showVL(){
+
         itemList.clear();
         TaskCompletionSource<String> getAllItem = new TaskCompletionSource<>();
         firestore.collection(Constants.ITEM_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -101,9 +100,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
             @Override
             public void onComplete(@NonNull Task<String> task) {
 
-
                 RecAdapter myAdapter = new RecAdapter(itemList ,new RecHolder.ItemClickListener() {
-
 
                     @Override
                     public void onItemClick(ArrayList<Item> details, int position) {
@@ -112,6 +109,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
                         i.putExtra("itemList", itemList);
                         i.putExtra("itemPos", position);
                         startActivity(i);
+
 
                     }
 

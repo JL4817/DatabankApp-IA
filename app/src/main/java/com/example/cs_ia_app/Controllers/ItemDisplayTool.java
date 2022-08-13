@@ -3,25 +3,25 @@ package com.example.cs_ia_app.Controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Text;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -35,10 +35,11 @@ public class ItemDisplayTool extends AppCompatActivity {
     private ArrayList<Item> items;
 
 
-    private TextView locate, nam;
+    private TextView locate, nam, link;
 
     private String value;
 
+    private ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,10 @@ public class ItemDisplayTool extends AppCompatActivity {
 
         items = new ArrayList<>();
 
-        locate = findViewById(R.id.plainT);
-        nam = findViewById(R.id.plainName);
+        locate = findViewById(R.id.lvLocation);
+        nam = findViewById(R.id.lvName);
+        link = findViewById(R.id.lvLink);
+        iv = findViewById(R.id.lvImageView);
 
         getFirebaseData();
 
@@ -86,10 +89,28 @@ public class ItemDisplayTool extends AppCompatActivity {
                                  //   System.out.println("Class 2.3 Name is "+item.getName());
 
                                     if(value.equals(item.getName())){
-                                        String loc = item.getLocation();
 
-                                        nam.setText(loc);
-                                        locate.setText(item.getName());
+                                        String loc = item.getLocation();
+                                        String pLink = item.getPurchaseLink();
+
+
+                                        String imageUri = item.getItemImage();
+                                        // Points to the root reference
+                                        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                                        StorageReference dateRef = storageRef.child("images/" + imageUri);
+                                        dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+                                        {
+                                            @Override
+                                            public void onSuccess(Uri downloadUrl)
+                                            {
+                                                Picasso.get().load(downloadUrl).into(iv);
+                                            }
+                                        });
+
+                                        link.setText("Purchase Link: "+pLink);
+                                        locate.setText("Location: "+loc);
+                                        nam.setText("Name: "+item.getName());
+
                                     }
 
                                 }
