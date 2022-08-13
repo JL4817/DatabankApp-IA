@@ -62,15 +62,12 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     public void getFirebaseData(){
 
-        System.out.println("HERE WORKS 101");
-
         if(getIntent().hasExtra("hi")){
-
-            System.out.println("IF WORKS 102");
 
             value = (String) getIntent().getSerializableExtra("hi");
 
-              System.out.println(value);
+            System.out.println("Class 2.1 Name is "+value);
+
 
         firestore.collection("item")
                 .get()
@@ -79,20 +76,20 @@ public class ItemDisplayTool extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
 
-
-                            System.out.println("RUNES UNTIL12123123 HERE");
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                items.add(document.toObject(Item.class));
+                            }
 
                                 for(Item item: items){
 
-                                    System.out.println("RU13212312315134r55ERE");
-                                    System.out.println(item.getName());
+                                //    System.out.println("Class 2.2 Name is "+item.getName());
+                                 //   System.out.println("Class 2.3 Name is "+item.getName());
 
                                     if(value.equals(item.getName())){
                                         String loc = item.getLocation();
 
-                                        System.out.println("RUNES UNTIL HERE");
                                         nam.setText(loc);
-                                        locate.setText(value);
+                                        locate.setText(item.getName());
                                     }
 
                                 }

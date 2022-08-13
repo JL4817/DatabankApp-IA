@@ -78,8 +78,7 @@ public class FindItemActivity extends AppCompatActivity {
 
                     if(itemName.contains(value)){
 
-                        System.out.println("HELLLO THISWORKS");
-
+                     //   System.out.println("Class 1 Name is "+value);
 
                         Intent i = new Intent(context, ItemDisplayTool.class);
                         i.putExtra("hi", value);
