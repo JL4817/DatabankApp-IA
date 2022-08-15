@@ -37,6 +37,11 @@ public class MainMenu extends AppCompatActivity {
         startActivity(nextScreen);
     }
 
+    public void toDeleteItem(View v){
+        Intent nextScreen = new Intent(getBaseContext(), DeleteItem.class);
+        startActivity(nextScreen);
+    }
+
 
 
 

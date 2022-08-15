@@ -63,7 +63,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
          */
 
-        itemList =  new ArrayList<>();
+        itemList = new ArrayList<>();
 
       //  itemList = new ArrayList<Item>();
     //    itemAdapter = new RecAdapter(ItemInfoActivity.this, itemList);
