@@ -3,11 +3,13 @@ package com.example.cs_ia_app.Controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
@@ -20,6 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -81,15 +86,26 @@ public class DeleteItem extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d("DeleteItemS", "DocumentSnapshot successfully deleted!");
+                                            Log.d("DeleteItemSucces", "DocumentSnapshot successfully deleted!");
+                                            Toast.makeText(DeleteItem.this, "Item Has Successfully been deleted!",
+                                                    Toast.LENGTH_SHORT).show();
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.w("DeleteItemF", "Error deleting document", e);
+                                            Log.w("DeleteItemFailure", "Error deleting document", e);
+                                            Toast.makeText(DeleteItem.this, "Item Deletion Failed.",
+                                                    Toast.LENGTH_SHORT).show();
                                         }
                                     });
+
+                                String imageUri = item.getItemImage();
+                                StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                                StorageReference dateRef = storageRef.child("images/" + imageUri);
+                                dateRef.delete();
+
+
                             }
                         }
 
