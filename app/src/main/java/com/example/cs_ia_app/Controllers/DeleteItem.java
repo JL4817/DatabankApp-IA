@@ -51,12 +51,15 @@ public class DeleteItem extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         delete = findViewById(R.id.itemDelete);
         itemName = findViewById(R.id.itemNameDeleteField);
+        itemName.setHint("Enter Item Name to Delete Item");
 
         items = new ArrayList<>();
+
 
     }
 
     public void deleteItem(View v) {
+
 
 
         firestore.collection("item")

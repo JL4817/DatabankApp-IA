@@ -155,12 +155,14 @@ public class CreateItem extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(getApplicationContext(), "Failed to Upload", Toast.LENGTH_LONG).show();
+                Toast.makeText(CreateItem.this, "Failed to Upload Item to Firebase!",
+                        Toast.LENGTH_SHORT).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Snackbar.make(findViewById(android.R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
+                Toast.makeText(CreateItem.this, "Successfully Uploaded Item to Firebase!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 

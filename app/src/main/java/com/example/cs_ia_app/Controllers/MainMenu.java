@@ -55,6 +55,11 @@ public class MainMenu extends AppCompatActivity {
         startActivity(nextScreen);
     }
 
+    public void toEditItem(View v){
+        Intent nextScreen = new Intent(getBaseContext(), EditItem.class);
+        startActivity(nextScreen);
+    }
+
 
     public void signUserOut(View v){
 
