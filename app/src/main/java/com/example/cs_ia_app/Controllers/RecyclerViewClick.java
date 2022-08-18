@@ -50,10 +50,13 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.design_row_for_recyclerview);
+        setContentView(R.layout.activity_edit_item);
+
+        //design_row_for_recyclerview
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+
 
 
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
@@ -63,22 +66,30 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
 
             selected = itemList.get(position);
+            /*
             tvlocation = findViewById(R.id.etItemLocationDisplay);
             tvname = findViewById(R.id.etItemNameDisplay);
             tvID = findViewById(R.id.etItemIDDisplay);
             tvitemLink = findViewById(R.id.etItemLinkDisplay);
-
             imageView = findViewById(R.id.ivItemShow);
+
+             */
+
+            tvlocation = findViewById(R.id.lvName2);
+            tvname = findViewById(R.id.lvLocation2);
+           // tvID = findViewById(R.id.etItemIDDisplay);
+            tvitemLink = findViewById(R.id.lvLink2);
+            imageView = findViewById(R.id.lvImageView2);
 
 
             location = selected.getLocation();
             name = selected.getName();
-            ID = selected.getItemID();
+           // ID = selected.getItemID();
             link = selected.getPurchaseLink();
 
             tvlocation.setText(location);
             tvname.setText(name);
-            tvID.setText(ID);
+           // tvID.setText(ID);
             tvitemLink.setText(link);
 
             String imageUri = selected.getItemImage();

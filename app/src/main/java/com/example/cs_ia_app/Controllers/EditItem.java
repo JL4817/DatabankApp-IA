@@ -29,16 +29,15 @@ public class EditItem extends AppCompatActivity {
 
     public void updateItem(View v){
 
-        /*
-        firestore.collection("users")
+/*
+        firestore.collection("item")
                 .document("frank")
                 .update({
                         "age": 13,
                 "favorites.color": "Red"
                 });
 
-         */
-
+ */
 
 
 
