@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
@@ -87,6 +88,13 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             tvitemLink = findViewById(R.id.lvLink2);
             imageView = findViewById(R.id.lvImageView2);
 
+            tvName2 = findViewById(R.id.lvName3);
+            tvLocation2 = findViewById(R.id.lvLocation3);
+            tvLink2 = findViewById(R.id.lvLink3);
+
+            tvName2.setHint("Enter New Name");
+            tvLocation2.setHint("Enter New Location");
+            tvLink2.setHint("Enter New Link");
 
             location = selected.getLocation();
             name = selected.getName();
@@ -118,51 +126,38 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
 
 
-
-
         }
-
-        tvName2 = findViewById(R.id.lvName3);
-        tvLocation2 = findViewById(R.id.lvLocation3);
-        tvLink2 = findViewById(R.id.lvLink3);
-
-
-
 
 
     }
 
 
-    public void newInfoUpdate(View v){
 
-/*
+    public void btnToUpdateInfo(View v){
 
-        String newName = tvName2.getText().toString();
-        String newLocation = tvLocation2.getText().toString();
-        String newLink = tvLink2.getText().toString();
+        if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
 
-        CollectionReference applicationsRef = firestore.collection("items");
-        DocumentReference applicationIdRef = applicationsRef.document(selected.getItemID());
-        applicationIdRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    List<Map<String, Object>> users = (List<Map<String, Object>>) document.get(selected.getItemID());
-                }
-            }
-        });
-
- */
+            String newName = tvName2.getText().toString();
+            String newLocation = tvLocation2.getText().toString();
+            String newLink = tvLink2.getText().toString();
 
 
-        firestore.collection("item")
-                .document("frank")
-                .update({
-                        "age": 13,
-                "favorites.color": "Red"
-                });
 
+
+
+
+            firestore.collection("item").document(selected.getItemID())
+                    .update("name", newName);
+            firestore.collection("item").document(selected.getItemID())
+                    .update("location", newLocation);
+            firestore.collection("item").document(selected.getItemID())
+                    .update("purchaseLink", newLink);
+
+            Toast.makeText(RecyclerViewClick.this, "Item Updated.",
+                    Toast.LENGTH_SHORT).show();
+
+        }
 
 
     }
