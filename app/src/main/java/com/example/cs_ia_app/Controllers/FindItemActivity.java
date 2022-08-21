@@ -102,7 +102,7 @@ public class FindItemActivity extends AppCompatActivity {
 
                                      */
 
-                                    if(itemName.contains(value)){
+                                 //   if(itemName.contains(value)){
 
 
                                         //   System.out.println("Class 1 Name is "+value);
@@ -111,7 +111,8 @@ public class FindItemActivity extends AppCompatActivity {
 
                                         String ownerID = item.getOwner();
 
-                                        System.out.println("Class 1 Name is "+ownerID);
+                                        //prints it out
+                                        System.out.println("Owner Name ID is "+ownerID);
                                         Intent i = new Intent(context, ItemDisplayTool.class);
                                         i.putExtra("hi", value);
                                         i.putExtra("ownerName", ownerID);
@@ -120,7 +121,7 @@ public class FindItemActivity extends AppCompatActivity {
 
                                         //startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
 
-                                    }
+                               //     }
 
                                 }
                             }

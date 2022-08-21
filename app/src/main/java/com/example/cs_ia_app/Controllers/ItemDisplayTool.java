@@ -158,9 +158,10 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                 for(User user: users){
 
+
                                     if(ownerN.equals(user.getUserID())){
 
-
+                                        System.out.println("HERE IS THE THING"+ownerN);
                                         String ownerName = user.getName();
                                         tvOwnerName.setText("Owner Name: "+ownerName);
 
