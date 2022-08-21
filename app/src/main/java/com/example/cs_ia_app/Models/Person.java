@@ -5,15 +5,17 @@ public class Person {
     private String name;
     private String email;
     private String userID;
+    private String type;
 
     public Person(){
 
     }
 
-    public Person(String name, String email, String userID){
+    public Person(String name, String email, String userID, String type){
         this.name = name;
         this.email = email;
         this.userID = userID;
+        this.type = type;
 
     }
 
@@ -42,12 +44,21 @@ public class Person {
         this.userID = userID;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", userID='" + userID + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

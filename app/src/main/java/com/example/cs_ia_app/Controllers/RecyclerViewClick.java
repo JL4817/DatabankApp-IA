@@ -80,6 +80,9 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
         //design_row_for_recyclerview
 
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
@@ -195,6 +198,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             String newItemId = selected.getItemImage();
+            System.out.println(newItemId);
 
             //riversRef.delete();
 
@@ -215,6 +219,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             });
 
             //deleted
+
 
 
             final String newRandomKey = UUID.randomUUID().toString();
@@ -263,6 +268,8 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
             Toast.makeText(RecyclerViewClick.this, "Item Updated.",
                     Toast.LENGTH_SHORT).show();
+
+
 
         }
 

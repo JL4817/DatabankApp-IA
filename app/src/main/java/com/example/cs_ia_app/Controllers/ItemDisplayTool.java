@@ -6,12 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
+import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +48,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     private TextView tvOwnerName;
     private String ownerN;
+    private Button disableUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public class ItemDisplayTool extends AppCompatActivity {
         link = findViewById(R.id.lvLink);
         iv = findViewById(R.id.lvImageView);
         tvOwnerName = findViewById(R.id.lvOwnerName);
+        disableUser = findViewById(R.id.btnDisableOwner);
 
         getFirebaseData();
 
@@ -132,7 +138,9 @@ public class ItemDisplayTool extends AppCompatActivity {
 
             if(getIntent().hasExtra("ownerName")){
 
+                System.out.println("Here123123");
                 ownerN = (String) getIntent().getSerializableExtra("ownerName");
+                System.out.println(ownerN);
 
                 firestore.collection("user")
                         .get()
@@ -151,8 +159,36 @@ public class ItemDisplayTool extends AppCompatActivity {
                                 for(User user: users){
 
                                     if(ownerN.equals(user.getUserID())){
+
+
                                         String ownerName = user.getName();
                                         tvOwnerName.setText("Owner Name: "+ownerName);
+
+                                        /*
+                                        firestore.collection("user").whereEqualTo("canDisableUsers", true).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                            }
+                                        });
+
+                                         */
+
+                                        System.out.println("WORKS HERE123");
+                                        System.out.println(user.getType()); //User
+
+                                        if(user.getType().equals(Constants.ADMIN)) {
+
+                                            disableUser.setVisibility(View.VISIBLE);
+
+                                        }
+                                        else if(user.getType().equals(Constants.USER)){
+
+                                            disableUser.setVisibility(View.GONE);
+
+                                        }
+
+
                                     }
 
                                 }
@@ -162,10 +198,22 @@ public class ItemDisplayTool extends AppCompatActivity {
                         });
             }
 
-
-
-
          }
     }
+
+
+    public void toDisableUser(View v){
+
+      //  mUser.delete();
+       // FirebaseAuth.getInstance().deleteUser(uid);
+
+        Toast.makeText(ItemDisplayTool.this, "Successfully deleted user.",
+                Toast.LENGTH_SHORT).show();
+
+
+
+    }
+
+
 
 }

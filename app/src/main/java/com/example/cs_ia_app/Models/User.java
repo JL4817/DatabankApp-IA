@@ -8,8 +8,8 @@ public class User extends Person{
 
     }
 
-    public User(String name, String email, String userID, String occupation) {
-        super(name, email, userID);
+    public User(String name, String email, String userID, String occupation, String type) {
+        super(name, email, userID, type);
         this.occupation = occupation;
     }
 
