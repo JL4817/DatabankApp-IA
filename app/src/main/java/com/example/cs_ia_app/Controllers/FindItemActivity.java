@@ -72,23 +72,50 @@ public class FindItemActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String value = (String)parent.getItemAtPosition(position);
 
-                //if(position==0)
+                firestore.collection("item")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        items.add(document.toObject(Item.class));
+                                    }
+                                } else {
+                                    Log.d("FindItemActivity", "Error getting documents: ", task.getException());
+                                }
 
-                    if(itemName.contains(value)){
+                                // String[] a;
+                                //  String[] names =  Arrays.copyOfRange(a, 0, users.size());;
 
-                     //   System.out.println("Class 1 Name is "+value);
+                                for(Item item: items){
 
-                        Intent i = new Intent(context, ItemDisplayTool.class);
-                        i.putExtra("hi", value);
-                        startActivity(i);
+                                    String value = (String)parent.getItemAtPosition(position);
 
-                        //startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
+                                    //if(position==0)
 
-                    }
+                                    if(itemName.contains(value)){
+
+                                        //   System.out.println("Class 1 Name is "+value);
+
+                                        itemName.add(item.getName());
+
+                                        String ownerID = item.getOwner();
+
+                                        Intent i = new Intent(context, ItemDisplayTool.class);
+                                        i.putExtra("hi", value);
+                                        i.putExtra("ownerName", ownerID);
+                                        startActivity(i);
 
 
+                                        //startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
+
+                                    }
+
+                                }
+                            }
+                        });
 
 
             }
@@ -119,7 +146,9 @@ public class FindItemActivity extends AppCompatActivity {
                       //  String[] names =  Arrays.copyOfRange(a, 0, users.size());;
 
                         for(Item item: items){
+
                             itemName.add(item.getName());
+
                         }
                         System.out.println(itemName);
 

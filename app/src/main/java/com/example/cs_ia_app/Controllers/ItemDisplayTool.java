@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cs_ia_app.Models.Item;
+import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,12 +35,15 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     private ArrayList<Item> items;
 
+    private ArrayList<User> users;
+
 
     private TextView locate, nam, link;
-
     private String value;
-
     private ImageView iv;
+
+    private TextView tvOwnerName;
+    private String ownerN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +56,13 @@ public class ItemDisplayTool extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
 
         items = new ArrayList<>();
+        users = new ArrayList<>();
 
         locate = findViewById(R.id.lvLocation);
         nam = findViewById(R.id.lvName);
         link = findViewById(R.id.lvLink);
         iv = findViewById(R.id.lvImageView);
+        tvOwnerName = findViewById(R.id.lvOwnerName);
 
         getFirebaseData();
 
@@ -69,8 +75,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
             value = (String) getIntent().getSerializableExtra("hi");
 
-            System.out.println("Class 2.1 Name is "+value);
-
+            //System.out.println("Class 2.1 Name is "+value);
 
         firestore.collection("item")
                 .get()
@@ -124,7 +129,43 @@ public class ItemDisplayTool extends AppCompatActivity {
                     }
                 });
 
-    }
+
+            if(getIntent().hasExtra("ownerName")){
+
+                ownerN = (String) getIntent().getSerializableExtra("ownerName");
+
+                firestore.collection("user")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        users.add(document.toObject(User.class));
+                                    }
+                                } else {
+                                    Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
+                                }
+
+
+                                for(User user: users){
+
+                                    if(ownerN.equals(user.getUserID())){
+                                        String ownerName = user.getName();
+                                        tvOwnerName.setText("Owner Name: "+ownerName);
+                                    }
+
+                                }
+
+
+                            }
+                        });
+            }
+
+
+
+
+         }
     }
 
 }
