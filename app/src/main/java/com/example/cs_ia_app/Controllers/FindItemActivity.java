@@ -66,7 +66,6 @@ public class FindItemActivity extends AppCompatActivity {
 
 
         //get the name and compare to make sure it matches
-
         //make intent and pass it to the  or viewClick to display onyl taht
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,24 +86,13 @@ public class FindItemActivity extends AppCompatActivity {
                                     Log.d("FindItemActivity", "Error getting documents: ", task.getException());
                                 }
 
-                                // String[] a;
-                                //  String[] names =  Arrays.copyOfRange(a, 0, users.size());;
-
-                              //  for(Item item: items){
-
                                     String value = (String)parent.getItemAtPosition(position);
 
 
                                         Intent i = new Intent(context, ItemDisplayTool.class);
                                         i.putExtra("hi", value);
-                                //       i.putExtra("ownerName", ownerID);
                                         i.putExtra("selected_vehicle", (Parcelable) items.get(position));
                                         startActivity(i);
-
-
-                                        //startActivity(new Intent(FindItemActivity.this, ItemDisplayTool.class));
-
-                               //     }
 
                                 }
                           //  }

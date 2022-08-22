@@ -171,29 +171,32 @@ public class ItemDisplayTool extends AppCompatActivity {
                                         tvOwnerName.setText("Owner Name: "+ownerName);
 
 
-                                        firestore.collection("user").whereEqualTo("userType",Constants.ADMIN).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                                        admins.add(document.toObject(Admin.class));
-                                                    }
-                                                } else {
-                                                    Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
-                                                }
 
-                                                for(Admin admin: admins){
-
-
-                                                    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-                                                    DatabaseReference mDb = mDatabase.getReference();
 
                                                     firestore.collection("user").document(mUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                                         @Override
                                                         public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                                            System.out.println("Here is value");
-                                                            boolean no = value.getBoolean("canDisableUsers").booleanValue();
-                                                            System.out.println(no);
+
+                                                            String currentUserType = value.getString("userType").toString();
+
+                                                            if(currentUserType.equals(Constants.USER)){
+
+                                                                disableUser.setVisibility(View.GONE);
+                                                            }
+                                                            else if(currentUserType.equals(Constants.ADMIN)){
+
+                                                                boolean adminUserBoolean = value.getBoolean("canDisableUsers").booleanValue();
+                                                                System.out.println("IS IT TRUE OR FALSE");
+                                                                System.out.println(adminUserBoolean);
+
+                                                                if(adminUserBoolean == true){
+
+                                                                    disableUser.setVisibility(View.VISIBLE);
+                                                                }
+
+
+                                                            }
+
                                                         }
                                                     });
 
@@ -214,39 +217,6 @@ public class ItemDisplayTool extends AppCompatActivity {
                                                      */
 
 
-
-
-                                                    /*
-
-
-                                                    boolean canDisbaleUser = admin.getDisableUsers();
-
-                                                    if(mUser.getUid().equals(user.getUserID())){
-
-                                                        if(user.getUserType().equals(Constants.ADMIN) && canDisbaleUser == true) {
-
-                                                            disableUser.setVisibility(View.VISIBLE);
-
-                                                        }
-                                                        else if(user.getUserType().equals(Constants.USER)){
-
-                                                            disableUser.setVisibility(View.GONE);
-
-                                                        }
-                                                    }
-
-                                                     */
-
-
-
-
-
-                                                }
-
-                                            }
-                                        });
-
-
                                     }
 
                                 }
@@ -260,7 +230,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     public void toDisableUser(View v){
 
-      //  mUser.delete();
+        //  mUser.delete();
        // FirebaseAuth.getInstance().deleteUser(uid);
 
         Toast.makeText(ItemDisplayTool.this, "Successfully deleted user.",
