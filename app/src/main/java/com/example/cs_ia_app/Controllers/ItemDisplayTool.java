@@ -77,11 +77,13 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     public void getFirebaseData(){
 
-        if(getIntent().hasExtra("hi")){
+        if(getIntent().hasExtra("selected_vehicle")){
 
+            Item data = (Item) getIntent().getSerializableExtra("selected_vehicle");
+
+            String a = data.getOwner();
             value = (String) getIntent().getSerializableExtra("hi");
 
-            //System.out.println("Class 2.1 Name is "+value);
 
         firestore.collection("item")
                 .get()
@@ -103,10 +105,8 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                         String loc = item.getLocation();
                                         String pLink = item.getPurchaseLink();
-
-
                                         String imageUri = item.getItemImage();
-                                        // Points to the root reference
+
                                         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
                                         StorageReference dateRef = storageRef.child("images/" + imageUri);
                                         dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
@@ -136,12 +136,6 @@ public class ItemDisplayTool extends AppCompatActivity {
                 });
 
 
-            if(getIntent().hasExtra("ownerName")){
-
-                System.out.println("Here123123");
-                ownerN = (String) getIntent().getSerializableExtra("ownerName");
-                System.out.println(ownerN);
-
                 firestore.collection("user")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -159,9 +153,9 @@ public class ItemDisplayTool extends AppCompatActivity {
                                 for(User user: users){
 
 
-                                    if(ownerN.equals(user.getUserID())){
+                                    if(a.equals(user.getUserID())){
 
-                                        System.out.println("HERE IS THE THING"+ownerN);
+                                        System.out.println("HERE IS THE OWNER"+a);
                                         String ownerName = user.getName();
                                         tvOwnerName.setText("Owner Name: "+ownerName);
 
@@ -197,9 +191,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                             }
                         });
-            }
-
-         }
+        }
     }
 
 

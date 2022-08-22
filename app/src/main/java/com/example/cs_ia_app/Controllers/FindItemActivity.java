@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,7 +90,7 @@ public class FindItemActivity extends AppCompatActivity {
                                 // String[] a;
                                 //  String[] names =  Arrays.copyOfRange(a, 0, users.size());;
 
-                                for(Item item: items){
+                              //  for(Item item: items){
 
                                     String value = (String)parent.getItemAtPosition(position);
 
@@ -109,13 +110,14 @@ public class FindItemActivity extends AppCompatActivity {
 
                                         //itemName.add(item.getName());
 
-                                        String ownerID = item.getOwner();
+                                  //      String ownerID = item.getOwner();
 
                                         //prints it out
-                                        System.out.println("Owner Name ID is "+ownerID);
+                                  //      System.out.println("Owner Name ID is "+ownerID);
                                         Intent i = new Intent(context, ItemDisplayTool.class);
                                         i.putExtra("hi", value);
-                                        i.putExtra("ownerName", ownerID);
+                                //       i.putExtra("ownerName", ownerID);
+                                        i.putExtra("selected_vehicle", (Parcelable) items.get(position));
                                         startActivity(i);
 
 
@@ -124,7 +126,7 @@ public class FindItemActivity extends AppCompatActivity {
                                //     }
 
                                 }
-                            }
+                          //  }
                         });
 
 
