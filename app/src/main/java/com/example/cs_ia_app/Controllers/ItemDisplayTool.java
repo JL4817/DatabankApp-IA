@@ -152,11 +152,11 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                 for(User user: users){
 
-
                                     if(a.equals(user.getUserID())){
 
-                                        System.out.println("HERE IS THE OWNER"+a);
+                                      //  System.out.println("HERE IS THE OWNER"+a);
                                         String ownerName = user.getName();
+
                                         tvOwnerName.setText("Owner Name: "+ownerName);
 
                                         /*
@@ -169,8 +169,9 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                          */
 
-                                        System.out.println("WORKS HERE123");
-                                        System.out.println(user.getType()); //User
+                                    //    System.out.println("WORKS HERE123");
+                                   //     System.out.println(user.getType()); //User
+
 
                                         if(user.getType().equals(Constants.ADMIN)) {
 
