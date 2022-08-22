@@ -5,7 +5,7 @@ public class Person {
     private String name;
     private String email;
     private String userID;
-    private String type;
+    private String userType;
 
     public Person(){
 
@@ -15,7 +15,7 @@ public class Person {
         this.name = name;
         this.email = email;
         this.userID = userID;
-        this.type = type;
+        this.userType = type;
 
     }
 
@@ -44,12 +44,12 @@ public class Person {
         this.userID = userID;
     }
 
-    public String getType() {
-        return type;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Person {
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", userID='" + userID + '\'' +
-                ", type='" + type + '\'' +
+                ", type='" + userType + '\'' +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cs_ia_app.Models.Admin;
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
@@ -21,7 +23,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,6 +47,8 @@ public class ItemDisplayTool extends AppCompatActivity {
     private ArrayList<Item> items;
 
     private ArrayList<User> users;
+
+    private ArrayList<Admin> admins;
 
 
     private TextView locate, nam, link;
@@ -62,6 +71,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
         items = new ArrayList<>();
         users = new ArrayList<>();
+        admins = new ArrayList<>();
 
         locate = findViewById(R.id.lvLocation);
         nam = findViewById(R.id.lvName);
@@ -81,7 +91,8 @@ public class ItemDisplayTool extends AppCompatActivity {
 
             Item data = (Item) getIntent().getSerializableExtra("selected_vehicle");
 
-            String a = data.getOwner();
+
+            String owner = data.getOwner();
             value = (String) getIntent().getSerializableExtra("hi");
 
 
@@ -152,37 +163,88 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                 for(User user: users){
 
-                                    if(a.equals(user.getUserID())){
+                                    if(owner.equals(user.getUserID())){
 
                                       //  System.out.println("HERE IS THE OWNER"+a);
                                         String ownerName = user.getName();
 
                                         tvOwnerName.setText("Owner Name: "+ownerName);
 
-                                        /*
-                                        firestore.collection("user").whereEqualTo("canDisableUsers", true).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+
+                                        firestore.collection("user").whereEqualTo("userType",Constants.ADMIN).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
-                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                        admins.add(document.toObject(Admin.class));
+                                                    }
+                                                } else {
+                                                    Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
+                                                }
+
+                                                for(Admin admin: admins){
+
+
+                                                    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+                                                    DatabaseReference mDb = mDatabase.getReference();
+
+                                                    firestore.collection("user").document(mUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                            System.out.println("Here is value");
+                                                            boolean no = value.getBoolean("canDisableUsers").booleanValue();
+                                                            System.out.println(no);
+                                                        }
+                                                    });
+
+                                                    /*
+
+                                                    mDb.child("user").child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            boolean yes = dataSnapshot.child("canDisableUsers").getValue(boolean.class);
+                                                            System.out.println("TRUE OR FALSE");
+                                                            System.out.println(yes);
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {}
+                                                    });
+
+                                                     */
+
+
+
+
+                                                    /*
+
+
+                                                    boolean canDisbaleUser = admin.getDisableUsers();
+
+                                                    if(mUser.getUid().equals(user.getUserID())){
+
+                                                        if(user.getUserType().equals(Constants.ADMIN) && canDisbaleUser == true) {
+
+                                                            disableUser.setVisibility(View.VISIBLE);
+
+                                                        }
+                                                        else if(user.getUserType().equals(Constants.USER)){
+
+                                                            disableUser.setVisibility(View.GONE);
+
+                                                        }
+                                                    }
+
+                                                     */
+
+
+
+
+
+                                                }
 
                                             }
                                         });
-
-                                         */
-
-                                    //    System.out.println("WORKS HERE123");
-                                   //     System.out.println(user.getType()); //User
-
-
-                                        if(user.getType().equals(Constants.ADMIN)) {
-
-                                            disableUser.setVisibility(View.VISIBLE);
-
-                                        }
-                                        else if(user.getType().equals(Constants.USER)){
-
-                                            disableUser.setVisibility(View.GONE);
-
-                                        }
 
 
                                     }
@@ -203,6 +265,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
         Toast.makeText(ItemDisplayTool.this, "Successfully deleted user.",
                 Toast.LENGTH_SHORT).show();
+
 
 
 

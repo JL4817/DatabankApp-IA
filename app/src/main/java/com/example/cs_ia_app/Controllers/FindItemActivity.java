@@ -94,26 +94,7 @@ public class FindItemActivity extends AppCompatActivity {
 
                                     String value = (String)parent.getItemAtPosition(position);
 
-                                    //if(position==0)
 
-                                    /*
-                                    System.out.println("Class 1 Name is");
-                                    System.out.println(value);
-                                    System.out.println(itemName);
-
-                                     */
-
-                                 //   if(itemName.contains(value)){
-
-
-                                        //   System.out.println("Class 1 Name is "+value);
-
-                                        //itemName.add(item.getName());
-
-                                  //      String ownerID = item.getOwner();
-
-                                        //prints it out
-                                  //      System.out.println("Owner Name ID is "+ownerID);
                                         Intent i = new Intent(context, ItemDisplayTool.class);
                                         i.putExtra("hi", value);
                                 //       i.putExtra("ownerName", ownerID);

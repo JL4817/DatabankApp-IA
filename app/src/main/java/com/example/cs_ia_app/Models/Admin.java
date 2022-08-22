@@ -13,7 +13,7 @@ public class Admin extends Person{
         this.canDisableUsers = canDisableUsers;
     }
 
-    public boolean isCanDisableUsers() {
+    public boolean getDisableUsers() {
         return canDisableUsers;
     }
 
