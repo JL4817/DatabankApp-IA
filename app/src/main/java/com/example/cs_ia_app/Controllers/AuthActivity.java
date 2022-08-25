@@ -1,6 +1,7 @@
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -26,12 +27,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class AuthActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
+    private FirebaseUser mUser;
 
     //login
     private TextView emailField;
@@ -59,6 +64,7 @@ public class AuthActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        mUser = mAuth.getCurrentUser();
 
         layout = findViewById(R.id.llUser);
         userRoleSpinner = findViewById(R.id.spnAuthActivity);
@@ -129,29 +135,53 @@ public class AuthActivity extends AppCompatActivity {
         String emailString = emailField.getText().toString();
         String passwordString = passwordField.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(emailString, passwordString)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("SIGN UP", "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+        String userUID = mUser.getUid();
 
-                            Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
-                            startActivity(nextScreen);
+        firestore.collection("user").document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                        } else {
+                    boolean userValidation = value.getBoolean("isValid").booleanValue();
 
-                            // If sign in fails, display a message to the user.
-                            Log.w("SIGN UP", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(AuthActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
+                    if(userValidation == true){
+
+
+                        mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("SIGN UP", "signInWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    updateUI(user);
+
+                                    Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+                                    startActivity(nextScreen);
+
+                                } else {
+
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("SIGN UP", "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(AuthActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    updateUI(null);
+                                }
+
+                            }
+                        });
+
+                    }else{
+
+                        Toast.makeText(AuthActivity.this, "user is invalid, can not log in!",
+                                Toast.LENGTH_SHORT).show();
+
                     }
-                });
+
+
+                }
+        });
+
     }
 
 
