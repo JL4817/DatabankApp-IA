@@ -60,8 +60,6 @@ public class DeleteItem extends AppCompatActivity {
 
     public void deleteItem(View v) {
 
-
-
         firestore.collection("item")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -26,8 +26,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.io.Serializable;
 
 public class ItemInfoActivity extends AppCompatActivity implements RecHolder.ItemClickListener {
 
@@ -70,11 +68,11 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
         //recyclerView.setAdapter(itemAdapter);
 
-        showVL();
+        showItemList();
     }
 
 
-    public void showVL(){
+    public void showItemList(){
 
         itemList.clear();
         TaskCompletionSource<String> getAllItem = new TaskCompletionSource<>();
@@ -125,10 +123,6 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
     }
 
-
-    private void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

@@ -37,6 +37,7 @@ public class AuthActivity extends AppCompatActivity {
     private TextView emailField;
     private TextView passwordField;
     private String userId;
+    private boolean validUser = true;
 
     //spinner
     private LinearLayout layout;
@@ -123,6 +124,8 @@ public class AuthActivity extends AppCompatActivity {
 
     public void logIn(View v){
 
+        //make the if statement in login
+
         String emailString = emailField.getText().toString();
         String passwordString = passwordField.getText().toString();
 
@@ -159,26 +162,37 @@ public class AuthActivity extends AppCompatActivity {
         String passwordString = passwordField.getText().toString();
         String nameString = nameField.getText().toString();
 
-        mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d("Sign Up", "Succesfully signed up the user");
-
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUI(user);
-                    userId = user.getUid();
-                    addUserToDatabase(emailString, nameString);
-
-                }else{
-                    Log.w("Sign up", "Account creation failed", task.getException());
-                    updateUI(null);
-                }
-            }
-        });
+       if(nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty()) {
 
 
-    }
+           Toast.makeText(AuthActivity.this, "Please fill in the text field",
+                   Toast.LENGTH_LONG).show();
+
+       }
+       else{
+               mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                   @Override
+                   public void onComplete(@NonNull Task<AuthResult> task) {
+                       if(task.isSuccessful()){
+                           Log.d("Sign Up", "Succesfully signed up the user");
+
+                           FirebaseUser user = mAuth.getCurrentUser();
+                           updateUI(user);
+                           userId = user.getUid();
+                           addUserToDatabase(emailString, nameString);
+
+                       }else{
+                           Log.w("Sign up", "Account creation failed", task.getException());
+                           updateUI(null);
+                       }
+                   }
+               });
+           }
+
+       }
+
+
+
 
 
     public void addUserToDatabase(String emailString, String nameString){
@@ -190,12 +204,12 @@ public class AuthActivity extends AppCompatActivity {
 
         if(selectedRole.equals(Constants.USER)) {
             String job = occupation.getText().toString();
-            newPerson = new User(nameString, emailString, userId, job, userType);
+            newPerson = new User(nameString, emailString, userId, job, userType, validUser);
         }
 
         if(selectedRole.equals(Constants.ADMIN)) {
             Boolean stopUser = canDisableUsers.isChecked();
-            newPerson = new Admin(nameString, emailString, userId, stopUser, userType);
+            newPerson = new Admin(nameString, emailString, userId, stopUser, userType, validUser);
         }
 
         //add the new user to the database

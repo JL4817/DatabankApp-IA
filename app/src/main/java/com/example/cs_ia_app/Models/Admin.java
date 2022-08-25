@@ -8,8 +8,8 @@ public class Admin extends Person{
 
     }
 
-    public Admin(String name, String email, String userID, boolean canDisableUsers, String type) {
-        super(name, email, userID, type);
+    public Admin(String name, String email, String userID, boolean canDisableUsers, String type, boolean isValid) {
+        super(name, email, userID, type, isValid);
         this.canDisableUsers = canDisableUsers;
     }
 

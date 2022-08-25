@@ -2,6 +2,7 @@ package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
@@ -19,6 +20,7 @@ import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
 import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,15 +50,12 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     private ArrayList<User> users;
 
-    private ArrayList<Admin> admins;
-
 
     private TextView locate, nam, link;
     private String value;
     private ImageView iv;
 
     private TextView tvOwnerName;
-    private String ownerN;
     private Button disableUser;
 
     @Override
@@ -71,7 +70,6 @@ public class ItemDisplayTool extends AppCompatActivity {
 
         items = new ArrayList<>();
         users = new ArrayList<>();
-        admins = new ArrayList<>();
 
         locate = findViewById(R.id.lvLocation);
         nam = findViewById(R.id.lvName);
@@ -85,9 +83,9 @@ public class ItemDisplayTool extends AppCompatActivity {
     }
 
 
-    public void getFirebaseData(){
+    public void getFirebaseData() {
 
-        if(getIntent().hasExtra("selected_vehicle")){
+        if (getIntent().hasExtra("selected_vehicle")) {
 
             Item data = (Item) getIntent().getSerializableExtra("selected_vehicle");
 
@@ -96,23 +94,23 @@ public class ItemDisplayTool extends AppCompatActivity {
             value = (String) getIntent().getSerializableExtra("hi");
 
 
-        firestore.collection("item")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+            firestore.collection("item")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                items.add(document.toObject(Item.class));
-                            }
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    items.add(document.toObject(Item.class));
+                                }
 
-                                for(Item item: items){
+                                for (Item item : items) {
 
-                                //    System.out.println("Class 2.2 Name is "+item.getName());
-                                 //   System.out.println("Class 2.3 Name is "+item.getName());
+                                    //    System.out.println("Class 2.2 Name is "+item.getName());
+                                    //   System.out.println("Class 2.3 Name is "+item.getName());
 
-                                    if(value.equals(item.getName())){
+                                    if (value.equals(item.getName())) {
 
                                         String loc = item.getLocation();
                                         String pLink = item.getPurchaseLink();
@@ -120,127 +118,145 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
                                         StorageReference dateRef = storageRef.child("images/" + imageUri);
-                                        dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
-                                        {
+                                        dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @Override
-                                            public void onSuccess(Uri downloadUrl)
-                                            {
+                                            public void onSuccess(Uri downloadUrl) {
                                                 Picasso.get().load(downloadUrl).into(iv);
                                             }
                                         });
 
-                                        link.setText("Purchase Link: "+pLink);
-                                        locate.setText("Location: "+loc);
-                                        nam.setText("Name: "+item.getName());
+                                        link.setText("Purchase Link: " + pLink);
+                                        locate.setText("Location: " + loc);
+                                        nam.setText("Name: " + item.getName());
 
                                     }
 
                                 }
 
-                        } else {
-                            Log.d("FindItemActivity", "Error getting documents: ", task.getException());
+                            } else {
+                                Log.d("FindItemActivity", "Error getting documents: ", task.getException());
+                            }
+
+
                         }
+                    });
 
 
-
-                    }
-                });
-
-
-                firestore.collection("user")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        users.add(document.toObject(User.class));
-                                    }
-                                } else {
-                                    Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
+            firestore.collection("user")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    users.add(document.toObject(User.class));
                                 }
+                            } else {
+                                Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
+                            }
 
 
-                                for(User user: users){
+                            for (User user : users) {
 
-                                    if(owner.equals(user.getUserID())){
+                                if (owner.equals(user.getUserID())) {
 
-                                      //  System.out.println("HERE IS THE OWNER"+a);
-                                        String ownerName = user.getName();
+                                    //  System.out.println("HERE IS THE OWNER"+a);
+                                    String ownerName = user.getName();
 
-                                        tvOwnerName.setText("Owner Name: "+ownerName);
-
-
+                                    tvOwnerName.setText("Owner Name: " + ownerName);
 
 
-                                                    firestore.collection("user").document(mUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                                        @Override
-                                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                    firestore.collection("user").document(mUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                                                            String currentUserType = value.getString("userType").toString();
+                                            String currentUserType = value.getString("userType").toString();
 
-                                                            if(currentUserType.equals(Constants.USER)){
+                                            if (currentUserType.equals(Constants.USER)) {
 
-                                                                disableUser.setVisibility(View.GONE);
-                                                            }
-                                                            else if(currentUserType.equals(Constants.ADMIN)){
+                                                disableUser.setVisibility(View.GONE);
+                                            } else if (currentUserType.equals(Constants.ADMIN)) {
 
-                                                                boolean adminUserBoolean = value.getBoolean("canDisableUsers").booleanValue();
-                                                                System.out.println("IS IT TRUE OR FALSE");
-                                                                System.out.println(adminUserBoolean);
+                                                boolean adminUserBoolean = value.getBoolean("canDisableUsers").booleanValue();
+                                                //   System.out.println("IS IT TRUE OR FALSE");
+                                                //   System.out.println(adminUserBoolean);
 
-                                                                if(adminUserBoolean == true){
+                                                if (adminUserBoolean == true) {
 
-                                                                    disableUser.setVisibility(View.VISIBLE);
-                                                                }
-
-
-                                                            }
-
-                                                        }
-                                                    });
-
-                                                    /*
-
-                                                    mDb.child("user").child(mUser.getUid()).addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                                            boolean yes = dataSnapshot.child("canDisableUsers").getValue(boolean.class);
-                                                            System.out.println("TRUE OR FALSE");
-                                                            System.out.println(yes);
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(DatabaseError databaseError) {}
-                                                    });
-
-                                                     */
+                                                    disableUser.setVisibility(View.VISIBLE);
+                                                }
 
 
-                                    }
+                                            }
+
+                                        }
+                                    });
+
+
+
 
                                 }
-
 
                             }
-                        });
+
+
+                        }
+                    });
         }
     }
 
 
-    public void toDisableUser(View v){
+    public void toDisableUser(View v) {
 
         //  mUser.delete();
-       // FirebaseAuth.getInstance().deleteUser(uid);
-
-        Toast.makeText(ItemDisplayTool.this, "Successfully deleted user.",
-                Toast.LENGTH_SHORT).show();
+        // FirebaseAuth.getInstance().deleteUser(uid);
 
 
+        if (getIntent().hasExtra("selected_vehicle")) {
+
+            value = (String) getIntent().getSerializableExtra("hi");
+            Item data = (Item) getIntent().getSerializableExtra("selected_vehicle");
+
+
+            firestore.collection("user")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    users.add(document.toObject(User.class));
+                                }
+
+                                for (User user : users) {
+
+                                    if(data.getOwner().equals(user.getUserID())){
+
+                                        firestore.collection("item").document(data.getOwner())
+                                                .update("isValid", false);
+                                    }
+
+
+                                    if(user.getIsValid() == false){
+                                        firestore.collection("user").document(data.getOwner()).delete();
+                                    }
+
+
+                                }
+
+                            } else {
+                                Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
+                            }
+
+
+                        }
+                    });
+
+
+
+        }
 
 
     }
-
-
-
 }

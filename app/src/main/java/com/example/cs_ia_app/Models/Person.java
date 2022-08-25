@@ -6,17 +6,19 @@ public class Person {
     private String email;
     private String userID;
     private String userType;
+    private boolean isValid;
 
     public Person(){
 
     }
 
-    public Person(String name, String email, String userID, String type){
+
+    public Person(String name, String email, String userID, String userType, boolean isValid) {
         this.name = name;
         this.email = email;
         this.userID = userID;
-        this.userType = type;
-
+        this.userType = userType;
+        this.isValid = isValid;
     }
 
 
@@ -52,13 +54,22 @@ public class Person {
         this.userType = userType;
     }
 
+    public boolean getIsValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", userID='" + userID + '\'' +
-                ", type='" + userType + '\'' +
+                ", userType='" + userType + '\'' +
+                ", isValid=" + isValid +
                 '}';
     }
 }

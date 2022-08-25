@@ -87,7 +87,7 @@ public class CreateItem extends AppCompatActivity {
     }
 
 
-    public void createItem(View v) {
+    public void saveImage(View v) {
 
         if (ContextCompat.checkSelfPermission(CreateItem.this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
