@@ -86,7 +86,6 @@
         android:id="@+id/backButton5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="90dp"
         android:backgroundTint="#2D40AA"
         android:onClick="toMainMenu"
         android:text="Back To Main Menu" />
