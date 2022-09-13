@@ -56,6 +56,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
+
     public void signUserOut(View v){
 
         mAuth.signOut();
@@ -67,6 +68,7 @@ public class MainMenu extends AppCompatActivity {
         startActivity(nextScreen);
 
     }
+
 
 
 

@@ -48,6 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Collections;
 
 
 public class RecyclerViewClick extends AppCompatActivity implements View.OnClickListener {
@@ -89,6 +90,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             itemList = (ArrayList<Item>) getIntent().getSerializableExtra("itemList");
+        //    Collections.sort(itemList);
             position = (int) getIntent().getSerializableExtra("itemPos");
 
 
@@ -276,6 +278,11 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
     }
 
+
+    public void toMainMenu(View v){
+        Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+        startActivity(nextScreen);
+    }
 
 
     @Override

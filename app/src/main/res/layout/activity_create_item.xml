@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".Controllers.CreateItem">
 
     <EditText
@@ -58,6 +59,7 @@
         android:id="@+id/btnGetFromFirebase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#283CAA"
         android:gravity="center_horizontal"
         android:onClick="saveImage"
         android:text="Take Picture" />
@@ -76,8 +78,18 @@
         android:id="@+id/btnFirebase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#2D40AA"
         android:onClick="toFirebase"
         android:text="Upload Item to Firebase" />
+
+    <Button
+        android:id="@+id/backButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="90dp"
+        android:backgroundTint="#2D40AA"
+        android:onClick="toMainMenu"
+        android:text="Back To Main Menu" />
 
 
 </LinearLayout>

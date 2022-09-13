@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -85,13 +86,13 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     public void getFirebaseData() {
 
-        if (getIntent().hasExtra("selected_vehicle")) {
+        if (getIntent().hasExtra("selected_item")) {
 
-            Item data = (Item) getIntent().getSerializableExtra("selected_vehicle");
+            Item data = (Item) getIntent().getSerializableExtra("selected_item");
 
 
             String owner = data.getOwner();
-            value = (String) getIntent().getSerializableExtra("hi");
+            value = (String) getIntent().getSerializableExtra("nameValue");
 
 
             firestore.collection("item")
@@ -212,10 +213,10 @@ public class ItemDisplayTool extends AppCompatActivity {
         // FirebaseAuth.getInstance().deleteUser(uid);
 
 
-        if (getIntent().hasExtra("selected_vehicle")) {
+        if (getIntent().hasExtra("selected_item")) {
 
-            value = (String) getIntent().getSerializableExtra("hi");
-            Item data = (Item) getIntent().getSerializableExtra("selected_vehicle");
+            value = (String) getIntent().getSerializableExtra("nameValue");
+            Item data = (Item) getIntent().getSerializableExtra("selected_item");
 
 
             firestore.collection("user")
@@ -259,4 +260,11 @@ public class ItemDisplayTool extends AppCompatActivity {
 
 
     }
+
+
+    public void toMainMenu(View v){
+        Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+        startActivity(nextScreen);
+    }
+
 }

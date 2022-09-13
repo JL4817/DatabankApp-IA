@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -122,6 +123,7 @@ public class AuthActivity extends AppCompatActivity {
         emailField.setHint("Email");
         layout.addView(emailField);
         passwordField = new EditText(this);
+        passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);;
         passwordField.setHint("Password");
         layout.addView(passwordField);
     }

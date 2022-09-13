@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Controllers.DeleteItem">
 
+    <Button
+        android:id="@+id/backButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="toMainMenu"
+        android:text="Back to Main Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.906" />
+
     <EditText
         android:id="@+id/etTitle2"
         android:layout_width="411dp"
@@ -36,7 +48,7 @@
 
     <EditText
         android:id="@+id/itemNameDeleteField"
-        android:layout_width="267dp"
+        android:layout_width="349dp"
         android:layout_height="59dp"
         android:ems="10"
         android:inputType="textPersonName"

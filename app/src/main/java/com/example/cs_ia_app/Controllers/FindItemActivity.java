@@ -53,8 +53,7 @@ public class FindItemActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
-        mUser = mAuth.getCurrentUser();
-        listView = (ListView) findViewById(R.id.listview);
+        listView = findViewById(R.id.listview);
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemName);
 
@@ -89,8 +88,8 @@ public class FindItemActivity extends AppCompatActivity {
 
 
                                         Intent i = new Intent(context, ItemDisplayTool.class);
-                                        i.putExtra("hi", value);
-                                        i.putExtra("selected_vehicle", (Parcelable) items.get(position));
+                                        i.putExtra("nameValue", value);
+                                        i.putExtra("selected_item", (Parcelable) items.get(position));
                                         startActivity(i);
 
                                 }

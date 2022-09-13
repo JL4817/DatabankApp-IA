@@ -141,6 +141,18 @@ public class CreateItem extends AppCompatActivity {
         final String randomKey = UUID.randomUUID().toString();
         //    String randomKey = mUser.getUid();
 
+        String location = locationItem.getText().toString();
+        String name = nameItem.getText().toString();
+        String link = purchaseLinkItem.getText().toString();
+
+        if(location.isEmpty() || name.isEmpty() || link.isEmpty()) {
+
+            Toast.makeText(CreateItem.this, "Please fill in the text field",
+                    Toast.LENGTH_LONG).show();
+
+        }else{
+
+
         StorageReference riversRef = storageReference.child("images/" + randomKey);
 
         // Get the data from an ImageView as bytes
@@ -172,10 +184,6 @@ public class CreateItem extends AppCompatActivity {
         DocumentReference newSignUpKey = firestore.collection(Constants.ITEM_COLLECTION).document();
         String itemKey = newSignUpKey.getId();
 
-        String location = locationItem.getText().toString();
-        String name = nameItem.getText().toString();
-        String link = purchaseLinkItem.getText().toString();
-
         //user ID
         String userID = mUser.getUid();
 
@@ -191,6 +199,13 @@ public class CreateItem extends AppCompatActivity {
         firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
                 .update("ownedItems", FieldValue.arrayUnion(randomKey));
 
+        }
+    }
+
+
+    public void toMainMenu(View v){
+        Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+        startActivity(nextScreen);
     }
 
 

@@ -3,6 +3,7 @@ package com.example.cs_ia_app.Controllers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,6 +55,8 @@ public class DeleteItem extends AppCompatActivity {
         itemName.setHint("Enter Item Name to Delete Item");
 
         items = new ArrayList<>();
+
+        itemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_delete_forever_24, 0, 0, 0);
 
 
     }
@@ -118,4 +121,13 @@ public class DeleteItem extends AppCompatActivity {
 
 
     }
+
+
+
+    public void toMainMenu(View v){
+        Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+        startActivity(nextScreen);
+    }
+
+
 }
