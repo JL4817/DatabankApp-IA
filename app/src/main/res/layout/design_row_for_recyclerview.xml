@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/etItemIDDisplay" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/mainMenuTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name:"

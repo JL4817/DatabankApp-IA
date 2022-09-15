@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private TextView nameFieldtv;
     private TextView passwordFieldtv;
+    private TextView banner1, banner2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,14 @@ public class LogInActivity extends AppCompatActivity {
 
         nameFieldtv = findViewById(R.id.accountNameTV);
         passwordFieldtv = findViewById(R.id.accountPasswordTV);
+        passwordFieldtv.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        //changing to purple color, textview
+        banner1 = findViewById(R.id.textView3);
+        banner1.setTextColor(Color.rgb(148,0,211));
+
+        banner2 = findViewById(R.id.textView4);
+        banner2.setTextColor(Color.rgb(148,0,211));
 
     }
 

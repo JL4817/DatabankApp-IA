@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -55,8 +53,6 @@ public class DeleteItem extends AppCompatActivity {
         itemName.setHint("Enter Item Name to Delete Item");
 
         items = new ArrayList<>();
-
-        itemName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_delete_forever_24, 0, 0, 0);
 
 
     }

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don't have an account? Click to sign up!"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please LogIn to use the Item Database App!"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -31,16 +33,17 @@
 
     <Button
         android:id="@+id/logInButton1"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="logIn"
         android:text="Log In "
+        app:icon="@drawable/ic_log_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.715" />
+        app:layout_constraintVertical_bias="0.751" />
 
     <Button
         android:id="@+id/button8"
@@ -48,6 +51,8 @@
         android:layout_height="wrap_content"
         android:onClick="toSignUpPage"
         android:text="Sign Up"
+        app:icon="@drawable/ic_sign_up"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -57,12 +62,12 @@
 
     <EditText
         android:id="@+id/accountPasswordTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="276dp"
+        android:layout_height="48dp"
         android:ems="10"
+        android:hint="Enter Account Password"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:hint="Enter Account Password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -72,12 +77,12 @@
 
     <EditText
         android:id="@+id/accountNameTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="277dp"
+        android:layout_height="53dp"
         android:ems="10"
+        android:hint="Enter Account Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:hint="Enter Account Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"

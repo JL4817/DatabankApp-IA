@@ -59,9 +59,10 @@
         android:id="@+id/btnGetFromFirebase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#283CAA"
         android:gravity="center_horizontal"
         android:onClick="saveImage"
+        app:icon="@drawable/ic_camera"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:text="Take Picture" />
 
     <EditText
@@ -78,16 +79,18 @@
         android:id="@+id/btnFirebase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2D40AA"
         android:onClick="toFirebase"
+        app:icon="@drawable/ic_upload"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:text="Upload Item to Firebase" />
 
     <Button
         android:id="@+id/backButton5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#2D40AA"
         android:onClick="toMainMenu"
+        app:icon="@drawable/ic_menu_book"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:text="Back To Main Menu" />
 
 
