@@ -8,7 +8,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,24 +18,16 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
-import com.example.cs_ia_app.Utilities.Constants;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -44,11 +35,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.Collections;
 
 
 public class RecyclerViewClick extends AppCompatActivity implements View.OnClickListener {
@@ -87,6 +74,8 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
+
+
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             itemList = (ArrayList<Item>) getIntent().getSerializableExtra("itemList");
@@ -109,7 +98,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
            // tvID = findViewById(R.id.etItemIDDisplay);
             tvitemLink = findViewById(R.id.lvLink2);
             imageView = findViewById(R.id.lvImageView2);
-            takePicture = findViewById(R.id.button7);
+            takePicture = findViewById(R.id.takePictureBTN);
 
             tvName2 = findViewById(R.id.lvName3);
             tvLocation2 = findViewById(R.id.lvLocation3);
@@ -202,54 +191,62 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             String newItemId = selected.getItemImage();
             System.out.println(newItemId);
 
-            //riversRef.delete();
-
             StorageReference photoRef = storageReference.child("images/" + newItemId);
 
             //if gets delete, cant get the id.
 
-            photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    // Success
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Error
-                }
-            });
+            if(takePicture.isPressed()){
+
+                photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Success
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Error
+                    }
+                });
+
+
+                final String newRandomKey = UUID.randomUUID().toString();
+
+                StorageReference riversRef = storageReference.child("images/" + newRandomKey);
+
+                // Get the data from an ImageView as bytes
+                tvImageView3.setDrawingCacheEnabled(true);
+                tvImageView3.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) tvImageView3.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] data = baos.toByteArray();
+
+                UploadTask uploadTask = riversRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(RecyclerViewClick.this, "Failed to Upload Item to Firebase!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(RecyclerViewClick.this, "Successfully Uploaded Item to Firebase!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                firestore.collection("item").document(selected.getItemID())
+                        .update("itemImage", newRandomKey);
+
+            }
 
             //deleted
 
 
 
-            final String newRandomKey = UUID.randomUUID().toString();
 
-            StorageReference riversRef = storageReference.child("images/" + newRandomKey);
-
-            // Get the data from an ImageView as bytes
-            tvImageView3.setDrawingCacheEnabled(true);
-            tvImageView3.buildDrawingCache();
-            Bitmap bitmap = ((BitmapDrawable) tvImageView3.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-
-            UploadTask uploadTask = riversRef.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(RecyclerViewClick.this, "Failed to Upload Item to Firebase!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(RecyclerViewClick.this, "Successfully Uploaded Item to Firebase!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
 
 
 
@@ -264,9 +261,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
                     .update("location", newLocation);
             firestore.collection("item").document(selected.getItemID())
                     .update("purchaseLink", newLink);
-            firestore.collection("item").document(selected.getItemID())
-                    .update("itemImage", newRandomKey);
-
 
             Toast.makeText(RecyclerViewClick.this, "Item Updated.",
                     Toast.LENGTH_SHORT).show();

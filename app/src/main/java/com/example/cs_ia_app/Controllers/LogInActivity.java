@@ -48,7 +48,7 @@ public class LogInActivity extends AppCompatActivity {
 
 
     public void toSignUpPage(View v){
-        Intent nextScreen = new Intent(getBaseContext(), AuthActivity.class);
+        Intent nextScreen = new Intent(getBaseContext(), SignUpActivity.class);
         startActivity(nextScreen);
     }
 

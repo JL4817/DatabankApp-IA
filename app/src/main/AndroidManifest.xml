@@ -35,7 +35,7 @@
             android:name=".Controllers.RecyclerViewClick"
             android:exported="true" />
         <activity
-            android:name=".Controllers.AuthActivity"
+            android:name=".Controllers.SignUpActivity"
             android:exported="true" />
         <activity
             android:name=".Controllers.LogInActivity"
