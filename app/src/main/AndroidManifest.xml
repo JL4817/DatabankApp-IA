@@ -14,9 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CSIAAPP">
         <activity
-            android:name=".Controllers.LogInActivity"
-            android:exported="false" />
-        <activity
             android:name=".Controllers.DeleteItem"
             android:exported="false" />
         <activity
@@ -39,6 +36,9 @@
             android:exported="true" />
         <activity
             android:name=".Controllers.AuthActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Controllers.LogInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

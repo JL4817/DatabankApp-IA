@@ -33,6 +33,7 @@
         android:id="@+id/logInButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="logIn"
         android:text="Log In "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,13 +56,13 @@
         app:layout_constraintVertical_bias="0.906" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/accountPasswordTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
+        android:hint="Enter Account Password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -70,13 +71,13 @@
         app:layout_constraintVertical_bias="0.377" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/accountNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
+        android:hint="Enter Account Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"

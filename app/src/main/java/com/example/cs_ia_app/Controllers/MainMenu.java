@@ -64,7 +64,7 @@ public class MainMenu extends AppCompatActivity {
         Toast.makeText(MainMenu.this, "User has been logged out!",
                 Toast.LENGTH_SHORT).show();
 
-        Intent nextScreen = new Intent(getBaseContext(), AuthActivity.class);
+        Intent nextScreen = new Intent(getBaseContext(), LogInActivity.class);
         startActivity(nextScreen);
 
     }
