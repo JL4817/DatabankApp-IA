@@ -96,6 +96,7 @@ public class LogInActivity extends AppCompatActivity {
 
                                             boolean userValidation = value.getBoolean("isValid").booleanValue();
 
+                                            //checks if user is valid
                                             if (userValidation == true) {
 
 
