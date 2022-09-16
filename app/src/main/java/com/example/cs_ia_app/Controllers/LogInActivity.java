@@ -24,6 +24,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
+
 public class LogInActivity extends AppCompatActivity {
 
 
@@ -71,7 +74,6 @@ public class LogInActivity extends AppCompatActivity {
         String emailString = nameFieldtv.getText().toString();
         String passwordString = passwordFieldtv.getText().toString();
 
-
                     mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -81,36 +83,47 @@ public class LogInActivity extends AppCompatActivity {
                                 Log.d("SIGN UP", "signInWithEmail:success");
 
 
-                                String userUID = mUser.getUid();
+                                try {
 
-                                firestore.collection("user").document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                  //  TimeUnit.SECONDS.sleep(1);
+                                    Thread.sleep(500);
 
-                                        boolean userValidation = value.getBoolean("isValid").booleanValue();
+                                    String userUID = mUser.getUid();
 
-                                        if (userValidation == true) {
+                                    firestore.collection("user").document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                                            boolean userValidation = value.getBoolean("isValid").booleanValue();
+
+                                            if (userValidation == true) {
 
 
-                                            FirebaseUser user = mAuth.getCurrentUser();
-                                            updateUI(user);
+                                                FirebaseUser user = mAuth.getCurrentUser();
+                                                updateUI(user);
 
-                                            Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
-                                            startActivity(nextScreen);
+                                                Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+                                                startActivity(nextScreen);
 
-                                            Toast.makeText(LogInActivity.this, "Log In Successful!",
-                                                    Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LogInActivity.this, "Log In Successful!",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                            else{
+
+                                                Log.w("SIGN UP", "signInWithEmailAndPassword:Failure", task.getException());
+                                                Toast.makeText(LogInActivity.this, "user is invalid, can not log in!",
+                                                        Toast.LENGTH_SHORT).show();
+                                                updateUI(null);
+
+                                            }
                                         }
-                                        else{
+                                    });
 
-                                            Log.w("SIGN UP", "signInWithEmailAndPassword:Failure", task.getException());
-                                            Toast.makeText(LogInActivity.this, "user is invalid, can not log in!",
-                                                    Toast.LENGTH_SHORT).show();
-                                            updateUI(null);
+                                } catch (InterruptedException e) {
+                                    Thread.currentThread().interrupt();
+                                }
 
-                                        }
-                                    }
-                                });
+
                             }
                         }
                     });
