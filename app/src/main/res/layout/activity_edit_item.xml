@@ -16,10 +16,10 @@
         app:icon="@drawable/ic_menu_book"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintVertical_bias="0.988" />
 
     <ImageView
         android:id="@+id/lvImageView3"
@@ -40,6 +40,7 @@
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:hint="New Purchase Link"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -54,6 +55,7 @@
         android:layout_height="49dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:hint="New Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -68,6 +70,7 @@
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:hint="New Location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.006"
@@ -181,16 +184,17 @@
     <Button
         android:id="@+id/button6"
         style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="235dp"
-        android:layout_height="46dp"
+        android:layout_width="246dp"
+        android:layout_height="43dp"
         android:onClick="btnToUpdateInfo"
         android:text="Update Information"
         app:icon="@drawable/ic_update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.944" />
+        app:layout_constraintVertical_bias="0.919" />
 
     <Button
         android:id="@+id/takePictureBTN"
@@ -202,7 +206,7 @@
         app:icon="@drawable/ic_camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.004"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.85" />
