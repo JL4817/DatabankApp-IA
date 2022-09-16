@@ -9,13 +9,15 @@
     android:orientation="vertical"
     tools:context=".Controllers.CreateItem">
 
-    <EditText
+    <TextView
         android:id="@+id/etTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="                             Item Creation Page"
+        android:minHeight="32dp"
+        android:text="                       Item Creation Page"
+        android:textSize="20sp"
         android:textStyle="bold|italic" />
 
     <EditText
@@ -28,14 +30,15 @@
         android:minHeight="48dp"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
+    <TextView
         android:id="@+id/etItemID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="ID"
+        android:hint="ID Automatically Created"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:textSize="24sp"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
@@ -77,12 +80,12 @@
 
     <Button
         android:id="@+id/btnFirebase"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="toFirebase"
-        app:icon="@drawable/ic_upload"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:text="Upload Item to Firebase" />
+        android:text="Upload Item to Firebase"
+        app:icon="@drawable/ic_upload" />
 
     <Button
         android:id="@+id/backButton5"

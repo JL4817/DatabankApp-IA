@@ -8,12 +8,12 @@
 
     <Button
         android:id="@+id/backButton3"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="toMainMenu"
         android:text="Back to Main Menu"
         app:icon="@drawable/ic_menu_book"
-        style="@style/Widget.MaterialComponents.Button.Icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,26 +37,27 @@
 
     <Button
         android:id="@+id/itemDelete"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:onClick="deleteItem"
         android:text="Delete"
         app:icon="@drawable/ic_delete_item"
-        style="@style/Widget.MaterialComponents.Button.Icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616" />
+        app:layout_constraintVertical_bias="0.557" />
 
     <EditText
         android:id="@+id/itemNameDeleteField"
         android:layout_width="349dp"
         android:layout_height="59dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Enter Item Name"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -64,5 +65,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.405"
         tools:ignore="SpeakableTextPresentCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,8 +77,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
                 Picasso.get().load(downloadUrl).into(holder.imageView);
             }
         });
-        
-       // Picasso.get().load("https://cdn.motor1.com/images/mgl/mrz1e/s3/coolest-cars-feature.jpg").into(holder.imageView);
 
 
         holder.itemView.setOnClickListener(view -> {

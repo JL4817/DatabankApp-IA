@@ -85,8 +85,8 @@ public class LogInActivity extends AppCompatActivity {
 
                                 try {
 
-                                  //  TimeUnit.SECONDS.sleep(1);
-                                    Thread.sleep(500); //millisecond
+                                    TimeUnit.SECONDS.sleep(1);
+                                  //  Thread.sleep(500); //millisecond
 
                                     String userUID = mUser.getUid();
 

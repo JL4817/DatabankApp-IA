@@ -116,20 +116,12 @@ public class CreateItem extends AppCompatActivity {
         if (requestCode == 101) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
-
-
             imageUri = data.getData();
 
             //ImageView imageView = findViewById(R.id.image_view);
             //  Uri selectedImage = data.getData();
         //    imageView.setImageURI(imageUri);
         }
-
-/*
-        Intent intent = new Intent(CreateItem.this, ItemInfoActivity.class);
-        startActivity(intent);
-
- */
 
     }
 
@@ -139,7 +131,6 @@ public class CreateItem extends AppCompatActivity {
     public void toFirebase(View v) {
 
         final String randomKey = UUID.randomUUID().toString();
-        //    String randomKey = mUser.getUid();
 
         String location = locationItem.getText().toString();
         String name = nameItem.getText().toString();
@@ -152,8 +143,7 @@ public class CreateItem extends AppCompatActivity {
 
         }else{
 
-
-        StorageReference riversRef = storageReference.child("images/" + randomKey);
+        StorageReference imageRef = storageReference.child("images/" + randomKey);
 
         // Get the data from an ImageView as bytes
         imageView.setDrawingCacheEnabled(true);
@@ -163,17 +153,17 @@ public class CreateItem extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = riversRef.putBytes(data);
+        UploadTask uploadTask = imageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(CreateItem.this, "Failed to Upload Item to Firebase!",
+                Toast.makeText(CreateItem.this, "Failed to Upload Image to Firebase!",
                         Toast.LENGTH_SHORT).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(CreateItem.this, "Successfully Uploaded Item to Firebase!",
+                Toast.makeText(CreateItem.this, "Successfully Uploaded Image to Firebase!",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -195,7 +185,6 @@ public class CreateItem extends AppCompatActivity {
         newSignUpKey.set(newItem);
 
         firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
-
         firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
                 .update("ownedItems", FieldValue.arrayUnion(randomKey));
 
