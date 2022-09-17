@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ public class DeleteItem extends AppCompatActivity {
 
     private Button delete;
     private TextView itemName;
+    private TextView nameBanner;
 
     private ArrayList<Item> items;
 
@@ -51,7 +53,8 @@ public class DeleteItem extends AppCompatActivity {
         delete = findViewById(R.id.itemDelete);
         itemName = findViewById(R.id.itemNameDeleteField);
         itemName.setHint("Enter Item Name to Delete Item");
-
+        nameBanner = findViewById(R.id.nameBannerTV);
+        nameBanner.setTextColor(Color.rgb(148,0,211));
         items = new ArrayList<>();
 
 
