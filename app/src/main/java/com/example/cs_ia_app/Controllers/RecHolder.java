@@ -14,13 +14,11 @@ import java.util.ArrayList;
 
 public class RecHolder extends RecyclerView.ViewHolder{
 
-    protected TextView tvname;
-    protected TextView tvlocation;
-    protected TextView tvID;
-    protected TextView tvLink;
-
-    ImageView imageView;
-
+    private TextView tvname;
+    private TextView tvlocation;
+    private TextView tvID;
+    private TextView tvLink;
+    private ImageView imageView;
 
 
     public RecHolder(@NonNull View itemView) {
@@ -36,6 +34,46 @@ public class RecHolder extends RecyclerView.ViewHolder{
 
     public interface ItemClickListener{
         void onItemClick(ArrayList<Item> details, int position);
+    }
+
+    public TextView getTvname() {
+        return tvname;
+    }
+
+    public void setTvname(TextView tvname) {
+        this.tvname = tvname;
+    }
+
+    public TextView getTvlocation() {
+        return tvlocation;
+    }
+
+    public void setTvlocation(TextView tvlocation) {
+        this.tvlocation = tvlocation;
+    }
+
+    public TextView getTvID() {
+        return tvID;
+    }
+
+    public void setTvID(TextView tvID) {
+        this.tvID = tvID;
+    }
+
+    public TextView getTvLink() {
+        return tvLink;
+    }
+
+    public void setTvLink(TextView tvLink) {
+        this.tvLink = tvLink;
+    }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
 

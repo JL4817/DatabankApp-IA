@@ -41,10 +41,7 @@ import java.util.UUID;
 public class RecyclerViewClick extends AppCompatActivity implements View.OnClickListener {
 
 
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     private FirebaseFirestore firestore;
-
 
     private ImageView imageView;
     private TextView tvlocation, tvname, tvID, tvitemLink;
@@ -66,12 +63,8 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
-        //design_row_for_recyclerview
-
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
-        mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
 
@@ -79,23 +72,13 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             itemList = (ArrayList<Item>) getIntent().getSerializableExtra("itemList");
-        //    Collections.sort(itemList);
             position = (int) getIntent().getSerializableExtra("itemPos");
 
 
             selected = itemList.get(position);
-            /*
-            tvlocation = findViewById(R.id.etItemLocationDisplay);
-            tvname = findViewById(R.id.etItemNameDisplay);
-            tvID = findViewById(R.id.etItemIDDisplay);
-            tvitemLink = findViewById(R.id.etItemLinkDisplay);
-            imageView = findViewById(R.id.ivItemShow);
-
-             */
 
             tvlocation = findViewById(R.id.lvName2);
             tvname = findViewById(R.id.lvLocation2);
-           // tvID = findViewById(R.id.etItemIDDisplay);
             tvitemLink = findViewById(R.id.lvLink2);
             imageView = findViewById(R.id.lvImageView2);
             takePicture = findViewById(R.id.takePictureBTN);
@@ -111,12 +94,10 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
             location = selected.getLocation();
             name = selected.getName();
-           // ID = selected.getItemID();
             link = selected.getPurchaseLink();
 
             tvlocation.setText(location);
             tvname.setText(name);
-           // tvID.setText(ID);
             tvitemLink.setText(link);
 
             String imageUri = selected.getItemImage();
@@ -131,13 +112,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
                     Picasso.get().load(downloadUrl).into(imageView);
                 }
             });
-
-
-
-
-           // imageView.setImageURI(image);
-
-
 
         }
 
@@ -243,12 +217,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             }
 
             //deleted
-
-
-
-
-
-
 
             String newName = tvName2.getText().toString();
             String newLocation = tvLocation2.getText().toString();

@@ -135,10 +135,8 @@ public class SignUpActivity extends AppCompatActivity {
 
        if(nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty()) {
 
-
            Toast.makeText(SignUpActivity.this, "Please fill in the text field",
                    Toast.LENGTH_LONG).show();
-
        }
        else{
                mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

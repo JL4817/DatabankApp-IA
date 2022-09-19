@@ -31,13 +31,11 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
-
     private FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
     private RecyclerView recyclerView;
-    private RecAdapter itemAdapter;
     private ArrayList<Item> itemList;
     private Context context;
 
@@ -50,23 +48,11 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
-
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
         recyclerView = findViewById(R.id.recyclerview_id);
-        /*
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-         */
-
         itemList = new ArrayList<>();
-
-      //  itemList = new ArrayList<Item>();
-    //    itemAdapter = new RecAdapter(ItemInfoActivity.this, itemList);
-
-        //recyclerView.setAdapter(itemAdapter);
 
         showItemList();
     }
@@ -108,19 +94,14 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
                         i.putExtra("itemPos", position);
                         startActivity(i);
 
-
                     }
 
                 });
 
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(ItemInfoActivity.this));
-
             }
         });
-
-
-
     }
 
 

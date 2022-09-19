@@ -48,14 +48,11 @@ public class ItemDisplayTool extends AppCompatActivity {
     private FirebaseUser mUser;
 
     private ArrayList<Item> items;
-
     private ArrayList<User> users;
-
 
     private TextView locate, nam, link;
     private String value;
     private ImageView iv;
-
     private TextView tvOwnerName;
     private Button disableUser;
 
@@ -89,11 +86,8 @@ public class ItemDisplayTool extends AppCompatActivity {
         if (getIntent().hasExtra("selected_item")) {
 
             Item data = (Item) getIntent().getSerializableExtra("selected_item");
-
-
             String owner = data.getOwner();
             value = (String) getIntent().getSerializableExtra("nameValue");
-
 
             firestore.collection("item")
                     .get()
@@ -107,9 +101,6 @@ public class ItemDisplayTool extends AppCompatActivity {
                                 }
 
                                 for (Item item : items) {
-
-                                    //    System.out.println("Class 2.2 Name is "+item.getName());
-                                    //   System.out.println("Class 2.3 Name is "+item.getName());
 
                                     if (value.equals(item.getName())) {
 
@@ -176,25 +167,20 @@ public class ItemDisplayTool extends AppCompatActivity {
                                             if (currentUserType.equals(Constants.USER)) {
 
                                                 disableUser.setVisibility(View.GONE);
+
                                             } else if (currentUserType.equals(Constants.ADMIN)) {
 
                                                 boolean adminUserBoolean = value.getBoolean("canDisableUsers").booleanValue();
-                                                //   System.out.println("IS IT TRUE OR FALSE");
-                                                //   System.out.println(adminUserBoolean);
 
                                                 if (adminUserBoolean == true) {
 
                                                     disableUser.setVisibility(View.VISIBLE);
                                                 }
 
-
                                             }
 
                                         }
                                     });
-
-
-
 
                                 }
 
@@ -209,15 +195,10 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     public void toDisableUser(View v) {
 
-        //  mUser.delete();
-        // FirebaseAuth.getInstance().deleteUser(uid);
-
-
         if (getIntent().hasExtra("selected_item")) {
 
             value = (String) getIntent().getSerializableExtra("nameValue");
             Item data = (Item) getIntent().getSerializableExtra("selected_item");
-
 
             firestore.collection("user")
                     .get()
@@ -243,21 +224,15 @@ public class ItemDisplayTool extends AppCompatActivity {
                                         firestore.collection("user").document(data.getOwner()).delete();
                                     }
 
-
                                 }
 
                             } else {
                                 Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
                             }
 
-
                         }
                     });
-
-
-
         }
-
 
     }
 

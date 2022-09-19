@@ -1,12 +1,9 @@
 package com.example.cs_ia_app.Controllers;
 
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,12 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
-
-    private FirebaseStorage storage;
-
 
     ArrayList<Item> itemList;
     private RecHolder.ItemClickListener mItemListener;
@@ -38,8 +30,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
         this.itemList = itemList;
         this.mItemListener = itemClickListener;
     }
-
-
 
 
     @NonNull
@@ -53,14 +43,13 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull RecHolder holder, final int position) {
 
-        holder.tvname.setText(itemList.get(position).getName());
-        holder.tvlocation.setText(itemList.get(position).getLocation());
-        holder.tvID.setText(itemList.get(position).getItemID());
-        holder.tvLink.setText(itemList.get(position).getPurchaseLink());
+        holder.getTvname().setText(itemList.get(position).getName());
+        holder.getTvlocation().setText(itemList.get(position).getLocation());
+        holder.getTvID().setText(itemList.get(position).getItemID());
+        holder.getTvLink().setText(itemList.get(position).getPurchaseLink());
 
         Item item = itemList.get(position);
 
@@ -74,7 +63,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
             @Override
             public void onSuccess(Uri downloadUrl)
             {
-                Picasso.get().load(downloadUrl).into(holder.imageView);
+                Picasso.get().load(downloadUrl).into(holder.getImageView());
             }
         });
 
@@ -87,9 +76,10 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
 
     @Override
     public int getItemCount() {
-        return itemList.size();
-    }
 
+        return itemList.size();
+
+    }
 
 
 
