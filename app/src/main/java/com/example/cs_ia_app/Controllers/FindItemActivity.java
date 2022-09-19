@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,10 +38,7 @@ public class FindItemActivity extends AppCompatActivity {
     private Context context;
 
     private ListView listView;
-    //private String[] names = {"Jinpil", "Jennie", "Jason", "Jack"};
-
     private ArrayList<Item> items;
-
     public ArrayAdapter<String> arrayAdapter;
     ArrayList<String> itemName = new ArrayList<>();
 
@@ -55,11 +53,9 @@ public class FindItemActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         listView = findViewById(R.id.listview);
 
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemName);
 
-      //  arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, itemName);
         listView.setAdapter(arrayAdapter);
-
         items = new ArrayList<>();
         getNames();
 
@@ -91,11 +87,8 @@ public class FindItemActivity extends AppCompatActivity {
                                         i.putExtra("nameValue", value);
                                         i.putExtra("selected_item", (Parcelable) items.get(position));
                                         startActivity(i);
-
                                 }
-                          //  }
                         });
-
 
             }
         });
@@ -121,9 +114,6 @@ public class FindItemActivity extends AppCompatActivity {
                             Log.d("FindItemActivity", "Error getting documents: ", task.getException());
                         }
 
-                       // String[] a;
-                      //  String[] names =  Arrays.copyOfRange(a, 0, users.size());;
-
                         for(Item item: items){
 
                             itemName.add(item.getName());
@@ -142,7 +132,7 @@ public class FindItemActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Search for the Items");
+        searchView.setQueryHint("Search for Item Name");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -163,5 +153,17 @@ public class FindItemActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
 
+            case R.id.to_main_menu:
+                Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+                startActivity(nextScreen);
+                return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 }

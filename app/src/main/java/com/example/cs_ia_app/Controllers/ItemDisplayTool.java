@@ -170,7 +170,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                             } else if (currentUserType.equals(Constants.ADMIN)) {
 
-                                                boolean adminUserBoolean = value.getBoolean("canDisableUsers").booleanValue();
+                                                boolean adminUserBoolean = value.getBoolean("disableUsers").booleanValue();
 
                                                 if (adminUserBoolean == true) {
 

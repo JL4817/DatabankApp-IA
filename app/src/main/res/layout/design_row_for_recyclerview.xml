@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="410dp"
-        android:layout_height="255dp"
+        android:layout_height="291dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -17,54 +17,60 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="234dp"
+            android:layout_height="276dp"
             android:layout_marginBottom="550dp">
 
             <TextView
                 android:id="@+id/etItemNameDisplay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_width="299dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="289dp"
                 android:text="Model"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.299"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etItemLocationDisplay" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/mainMenuTV"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/etItemLocationDisplay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_width="105dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="81dp"
+                android:layout_marginBottom="40dp"
                 android:text="location"
-                app:layout_constraintBottom_toTopOf="@+id/etItemNameDisplay"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.308"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.34" />
+                app:layout_constraintBottom_toTopOf="@+id/etItemLinkDisplay"
+                app:layout_constraintEnd_toStartOf="@+id/ivItemShow"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView6" />
 
             <TextView
                 android:id="@+id/etItemIDDisplay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_width="155dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="152dp"
+                android:layout_marginBottom="34dp"
                 android:text="ID"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.221"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etItemNameDisplay" />
+                app:layout_constraintBottom_toTopOf="@+id/etItemLocationDisplay"
+                app:layout_constraintEnd_toStartOf="@+id/ivItemShow"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textView5" />
 
             <TextView
                 android:id="@+id/etItemLinkDisplay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_width="127dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="67dp"
+                android:layout_marginBottom="68dp"
                 android:text="Item Link"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.315"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etItemIDDisplay" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ivItemShow"
+                app:layout_constraintHorizontal_bias="0.028"
+                app:layout_constraintStart_toEndOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/mainMenuTV"
@@ -73,12 +79,13 @@
                 android:text="Name:"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.068"
+                app:layout_constraintHorizontal_bias="0.065"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.451" />
+                app:layout_constraintVertical_bias="0.116" />
 
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Item Link:"
@@ -87,7 +94,7 @@
                 app:layout_constraintHorizontal_bias="0.068"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.879" />
+                app:layout_constraintVertical_bias="0.735" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -99,7 +106,7 @@
                 app:layout_constraintHorizontal_bias="0.061"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.674" />
+                app:layout_constraintVertical_bias="0.307" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -108,21 +115,22 @@
                 android:text="Location:"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.086"
+                app:layout_constraintHorizontal_bias="0.068"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.139" />
+                app:layout_constraintVertical_bias="0.505" />
 
             <ImageView
                 android:id="@+id/ivItemShow"
-                android:layout_width="202dp"
-                android:layout_height="200dp"
+                android:layout_width="194dp"
+                android:layout_height="188dp"
+                android:rotation="270"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.923"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:rotation="270"
+                app:layout_constraintVertical_bias="0.818"
                 tools:srcCompat="@tools:sample/avatars" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

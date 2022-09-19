@@ -42,6 +42,8 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
 
     private FirebaseFirestore firestore;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     private ImageView imageView;
     private TextView tvlocation, tvname, tvID, tvitemLink;
@@ -55,8 +57,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     private int position;
     private Item selected;
 
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         firestore = FirebaseFirestore.getInstance();
-
 
 
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
@@ -153,7 +152,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
         }
 
-
     }
 
 
@@ -167,19 +165,17 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
             StorageReference photoRef = storageReference.child("images/" + newItemId);
 
-            //if gets delete, cant get the id.
-
             if(takePicture.isPressed()){
 
                 photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Success
+                        // image is deleted
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        // Error
+                        // failed to delete image
                     }
                 });
 
@@ -232,8 +228,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
             Toast.makeText(RecyclerViewClick.this, "Item Updated.",
                     Toast.LENGTH_SHORT).show();
-
-
 
         }
 
