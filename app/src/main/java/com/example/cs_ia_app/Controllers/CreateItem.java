@@ -109,7 +109,6 @@ public class CreateItem extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -120,12 +119,10 @@ public class CreateItem extends AppCompatActivity {
 
             //ImageView imageView = findViewById(R.id.image_view);
             //  Uri selectedImage = data.getData();
-        //    imageView.setImageURI(imageUri);
+            //    imageView.setImageURI(imageUri);
         }
 
     }
-
-
 
 
     public void toFirebase(View v) {
@@ -136,63 +133,63 @@ public class CreateItem extends AppCompatActivity {
         String name = nameItem.getText().toString();
         String link = purchaseLinkItem.getText().toString();
 
-        if(location.isEmpty() || name.isEmpty() || link.isEmpty()) {
+        if (location.isEmpty() || name.isEmpty() || link.isEmpty()) {
 
             Toast.makeText(CreateItem.this, "Please fill in the text field",
                     Toast.LENGTH_LONG).show();
 
-        }else{
+        } else {
 
-        StorageReference imageRef = storageReference.child("images/" + randomKey);
+            StorageReference imageRef = storageReference.child("images/" + randomKey);
 
-        // Get the data from an ImageView as bytes
-        imageView.setDrawingCacheEnabled(true);
-        imageView.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
+            // Get the data from an ImageView as bytes
+            imageView.setDrawingCacheEnabled(true);
+            imageView.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = imageRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(CreateItem.this, "Failed to Upload Image to Firebase!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(CreateItem.this, "Successfully Uploaded Image to Firebase!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+            UploadTask uploadTask = imageRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Toast.makeText(CreateItem.this, "Failed to Upload Image to Firebase!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(CreateItem.this, "Successfully Uploaded Image to Firebase!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        id.setText(randomKey);
+            id.setText(randomKey);
 
-        //generate + get new key
-        DocumentReference newSignUpKey = firestore.collection(Constants.ITEM_COLLECTION).document();
-        String itemKey = newSignUpKey.getId();
+            //generate + get new key
+            DocumentReference newSignUpKey = firestore.collection(Constants.ITEM_COLLECTION).document();
+            String itemKey = newSignUpKey.getId();
 
-        //user ID
-        String userID = mUser.getUid();
+            //user ID
+            String userID = mUser.getUid();
 
-        Item newItem = null;
+            Item newItem = null;
 
-        newItem = new Item(itemKey, location, name, link, randomKey, userID);
+            newItem = new Item(itemKey, location, name, link, randomKey, userID);
 
-        //add the new item to the database
-        newSignUpKey.set(newItem);
+            //add the new item to the database
+            newSignUpKey.set(newItem);
 
-        firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
-        firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
-                .update("ownedItems", FieldValue.arrayUnion(randomKey));
+            firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
+            firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
+                    .update("ownedItems", FieldValue.arrayUnion(randomKey));
 
         }
     }
 
 
-    public void toMainMenu(View v){
+    public void toMainMenu(View v) {
         Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
         startActivity(nextScreen);
     }

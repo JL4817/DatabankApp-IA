@@ -53,98 +53,90 @@ public class LogInActivity extends AppCompatActivity {
 
         //changing to purple color, textview
         banner1 = findViewById(R.id.textView3);
-        banner1.setTextColor(Color.rgb(148,0,211));
+        banner1.setTextColor(Color.rgb(148, 0, 211));
 
         banner2 = findViewById(R.id.textView4);
-        banner2.setTextColor(Color.rgb(148,0,211));
+        banner2.setTextColor(Color.rgb(148, 0, 211));
 
     }
 
 
-    public void toSignUpPage(View v){
+    public void toSignUpPage(View v) {
         Intent nextScreen = new Intent(getBaseContext(), SignUpActivity.class);
         startActivity(nextScreen);
     }
 
 
-    public void logIn(View v){
+    public void logIn(View v) {
 
         //make the if statement in login
 
         String emailString = nameFieldtv.getText().toString();
         String passwordString = passwordFieldtv.getText().toString();
 
-                    mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+        mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("SIGN UP", "signInWithEmail:success");
-
-
-                                try {
-
-                                    TimeUnit.SECONDS.sleep(1);
-                                  //  Thread.sleep(500); //millisecond
-
-                                    String userUID = mUser.getUid();
-
-                                    firestore.collection("user").document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                                            boolean userValidation = value.getBoolean("isValid").booleanValue();
-
-                                            //checks if user is valid
-                                            if (userValidation == true) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("SIGN UP", "signInWithEmail:success");
 
 
-                                                FirebaseUser user = mAuth.getCurrentUser();
-                                                updateUI(user);
+                    try {
 
-                                                Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
-                                                startActivity(nextScreen);
+                        TimeUnit.SECONDS.sleep(1);
+                        //  Thread.sleep(500); //millisecond
 
-                                                Toast.makeText(LogInActivity.this, "Log In Successful!",
-                                                        Toast.LENGTH_SHORT).show();
-                                            }
-                                            else{
+                        String userUID = mUser.getUid();
 
-                                                Log.w("SIGN UP", "signInWithEmailAndPassword:Failure", task.getException());
-                                                Toast.makeText(LogInActivity.this, "user is invalid, can not log in!",
-                                                        Toast.LENGTH_SHORT).show();
-                                                updateUI(null);
+                        firestore.collection("user").document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                                            }
-                                        }
-                                    });
+                                boolean userValidation = value.getBoolean("isValid").booleanValue();
 
-                                } catch (InterruptedException e) {
-                                    Thread.currentThread().interrupt();
+                                //checks if user is valid
+                                if (userValidation == true) {
+
+
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    updateUI(user);
+
+                                    Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+                                    startActivity(nextScreen);
+
+                                    Toast.makeText(LogInActivity.this, "Log In Successful!",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+
+                                    Log.w("SIGN UP", "signInWithEmailAndPassword:Failure", task.getException());
+                                    Toast.makeText(LogInActivity.this, "user is invalid, can not log in!",
+                                            Toast.LENGTH_SHORT).show();
+                                    updateUI(null);
+
                                 }
-
-
                             }
-                        }
-                    });
+                        });
+
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+
+
+                }
+            }
+        });
     }
 
 
+    public void updateUI(FirebaseUser currentUser) {
 
-    public void updateUI(FirebaseUser currentUser){
-
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent intent = new Intent(this, MainMenu.class);
             startActivity(intent);
         }
     }
-
-
-
-
-
-
 
 
 }

@@ -1,10 +1,10 @@
 package com.example.cs_ia_app.Models;
 
-public class Admin extends Person{
+public class Admin extends Person {
 
     private boolean canDisableUsers = false;
 
-    public Admin(){
+    public Admin() {
 
     }
 

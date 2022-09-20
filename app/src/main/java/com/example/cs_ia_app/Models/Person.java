@@ -8,7 +8,7 @@ public class Person {
     private String userType;
     private boolean isValid;
 
-    public Person(){
+    public Person() {
 
     }
 

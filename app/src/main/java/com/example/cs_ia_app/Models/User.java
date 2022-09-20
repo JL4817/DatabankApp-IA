@@ -1,10 +1,10 @@
 package com.example.cs_ia_app.Models;
 
-public class User extends Person{
+public class User extends Person {
 
     private String occupation;
 
-    public User(){
+    public User() {
 
     }
 

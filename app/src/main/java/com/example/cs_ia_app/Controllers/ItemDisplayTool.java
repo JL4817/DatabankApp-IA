@@ -160,28 +160,28 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                     firestore.collection("user").document(mUser.getUid())
                                             .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                @Override
+                                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                                            String currentUserType = value.getString("userType").toString();
+                                                    String currentUserType = value.getString("userType").toString();
 
-                                            if (currentUserType.equals(Constants.USER)) {
+                                                    if (currentUserType.equals(Constants.USER)) {
 
-                                                disableUser.setVisibility(View.GONE);
+                                                        disableUser.setVisibility(View.GONE);
 
-                                            } else if (currentUserType.equals(Constants.ADMIN)) {
+                                                    } else if (currentUserType.equals(Constants.ADMIN)) {
 
-                                                boolean adminUserBoolean = value.getBoolean("disableUsers").booleanValue();
+                                                        boolean adminUserBoolean = value.getBoolean("disableUsers").booleanValue();
 
-                                                if (adminUserBoolean == true) {
+                                                        if (adminUserBoolean == true) {
 
-                                                    disableUser.setVisibility(View.VISIBLE);
+                                                            disableUser.setVisibility(View.VISIBLE);
+                                                        }
+
+                                                    }
+
                                                 }
-
-                                            }
-
-                                        }
-                                    });
+                                            });
 
                                 }
 
@@ -201,39 +201,37 @@ public class ItemDisplayTool extends AppCompatActivity {
             value = (String) getIntent().getSerializableExtra("nameValue");
             Item data = (Item) getIntent().getSerializableExtra("selected_item");
 
-            firestore.collection("user")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
+            firestore.collection("user").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
 
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    users.add(document.toObject(User.class));
-                                }
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            users.add(document.toObject(User.class));
+                        }
 
-                                for (User user : users) {
+                        for (User user : users) {
 
-                                    if(data.getOwner().equals(user.getUserID())){
+                            if (data.getOwner().equals(user.getUserID())) {
 
-                                        firestore.collection("user").document(data.getOwner())
-                                                .update("isValid", false);
-                                    }
-
-                                }
-
-                            } else {
-                                Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
+                                firestore.collection("user").document(data.getOwner())
+                                        .update("isValid", false);
                             }
 
                         }
-                    });
+
+                    } else {
+                        Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
+                    }
+
+                }
+            });
         }
 
     }
 
 
-    public void toMainMenu(View v){
+    public void toMainMenu(View v) {
         Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
         startActivity(nextScreen);
     }

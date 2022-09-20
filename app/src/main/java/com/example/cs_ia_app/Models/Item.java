@@ -27,13 +27,13 @@ public class Item implements Serializable, Parcelable {
         this.owner = owner;
     }
 
-    public Item(){
-         itemID = "";
-         location = "";
-         name = "";
-         purchaseLink = "";
-         itemImage = "";
-         owner = "";
+    public Item() {
+        itemID = "";
+        location = "";
+        name = "";
+        purchaseLink = "";
+        itemImage = "";
+        owner = "";
     }
 
 

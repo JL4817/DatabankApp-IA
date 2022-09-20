@@ -58,22 +58,21 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
     }
 
 
-    public void showItemList(){
+    public void showItemList() {
 
         itemList.clear();
         TaskCompletionSource<String> getAllItem = new TaskCompletionSource<>();
         firestore.collection(Constants.ITEM_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful() && task.getResult() != null){
-                    for(QueryDocumentSnapshot document : task.getResult()){
+                if (task.isSuccessful() && task.getResult() != null) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
 
-                            itemList.add(document.toObject(Item.class));
+                        itemList.add(document.toObject(Item.class));
                     }
 
                     getAllItem.setResult(null);
-                }
-                else{
+                } else {
                     Log.d("ItemsInfoActivity", "Error getting comcumets from db: ", task.getException());
                 }
             }
@@ -84,7 +83,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
             @Override
             public void onComplete(@NonNull Task<String> task) {
 
-                RecAdapter myAdapter = new RecAdapter(itemList ,new RecHolder.ItemClickListener() {
+                RecAdapter myAdapter = new RecAdapter(itemList, new RecHolder.ItemClickListener() {
 
                     @Override
                     public void onItemClick(ArrayList<Item> details, int position) {

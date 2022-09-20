@@ -32,12 +32,12 @@ public class MainMenu extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
         tvMainMenu = findViewById(R.id.mainMenuTV);
-        tvMainMenu.setTextColor(Color.rgb(148,0,211));
+        tvMainMenu.setTextColor(Color.rgb(148, 0, 211));
 
     }
 
 
-    public void toCreateItem(View v){
+    public void toCreateItem(View v) {
 
         Intent nextScreen = new Intent(getBaseContext(), CreateItem.class);
         startActivity(nextScreen);
@@ -45,26 +45,25 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
-    public void toRec(View v){
+    public void toRec(View v) {
 
         Intent nextScreen = new Intent(getBaseContext(), ItemInfoActivity.class);
         startActivity(nextScreen);
 
     }
 
-    public void toFindItem(View v){
+    public void toFindItem(View v) {
         Intent nextScreen = new Intent(getBaseContext(), FindItemActivity.class);
         startActivity(nextScreen);
     }
 
-    public void toDeleteItem(View v){
+    public void toDeleteItem(View v) {
         Intent nextScreen = new Intent(getBaseContext(), DeleteItem.class);
         startActivity(nextScreen);
     }
 
 
-
-    public void signUserOut(View v){
+    public void signUserOut(View v) {
 
         mAuth.signOut();
 
@@ -75,10 +74,6 @@ public class MainMenu extends AppCompatActivity {
         startActivity(nextScreen);
 
     }
-
-
-
-
 
 
 }

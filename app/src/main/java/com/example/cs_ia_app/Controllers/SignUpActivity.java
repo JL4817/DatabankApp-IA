@@ -69,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void setupSpinner(){
+    private void setupSpinner() {
         String[] userTypes = {Constants.USER, Constants.ADMIN};
         // add user types to spinner
         ArrayAdapter<String> langArrAdapter = new ArrayAdapter<String>(SignUpActivity.this,
@@ -78,11 +78,9 @@ public class SignUpActivity extends AppCompatActivity {
         userRoleSpinner.setAdapter(langArrAdapter);
 
         //triggered whenever user selects something different
-        userRoleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        userRoleSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedRole = parent.getItemAtPosition(position).toString();
                 addFields();
             }
@@ -94,23 +92,23 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void addFields(){
+    public void addFields() {
 
         commonFields();
-        if(selectedRole.equals("User")){
+        if (selectedRole.equals("User")) {
             occupation = new EditText(this);
             occupation.setHint("Enter Occupation");
             layout.addView(occupation);
         }
 
-        if(selectedRole.equals("Admin")){
+        if (selectedRole.equals("Admin")) {
             canDisableUsers = new Switch(this);
             canDisableUsers.setHint("Can disable Users");
             layout.addView(canDisableUsers);
         }
     }
 
-    public void commonFields(){
+    public void commonFields() {
         layout.removeAllViewsInLayout();
         nameField = new EditText(this);
         nameField.setHint("Name");
@@ -125,57 +123,53 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
-
-    public void signUp(View v){
+    public void signUp(View v) {
 
         String emailString = emailField.getText().toString();
         String passwordString = passwordField.getText().toString();
         String nameString = nameField.getText().toString();
 
-       if(nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty()) {
+        if (nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty()) {
 
-           Toast.makeText(SignUpActivity.this, "Please fill in the text field",
-                   Toast.LENGTH_LONG).show();
-       }
-       else{
-               mAuth.createUserWithEmailAndPassword(emailString, passwordString)
-                       .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                   @Override
-                   public void onComplete(@NonNull Task<AuthResult> task) {
-                       if(task.isSuccessful()){
-                           Log.d("Sign Up", "Succesfully signed up the user");
+            Toast.makeText(SignUpActivity.this, "Please fill in the text field",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.createUserWithEmailAndPassword(emailString, passwordString)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("Sign Up", "Succesfully signed up the user");
 
-                           FirebaseUser user = mAuth.getCurrentUser();
-                           updateUI(user);
-                           userId = user.getUid();
-                           addUserToDatabase(emailString, nameString);
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                updateUI(user);
+                                userId = user.getUid();
+                                addUserToDatabase(emailString, nameString);
 
-                       }else{
-                           Log.w("Sign up", "Account creation failed", task.getException());
-                           updateUI(null);
-                       }
-                   }
-               });
-           }
+                            } else {
+                                Log.w("Sign up", "Account creation failed", task.getException());
+                                updateUI(null);
+                            }
+                        }
+                    });
+        }
 
-       }
-
+    }
 
 
-    public void addUserToDatabase(String emailString, String nameString){
+    public void addUserToDatabase(String emailString, String nameString) {
 
         //make new user according to selected usertype
         Person newPerson = null;
         String userType = selectedRole;
 
 
-        if(selectedRole.equals(Constants.USER)) {
+        if (selectedRole.equals(Constants.USER)) {
             String job = occupation.getText().toString();
             newPerson = new User(nameString, emailString, userId, job, userType, validUser);
         }
 
-        if(selectedRole.equals(Constants.ADMIN)) {
+        if (selectedRole.equals(Constants.ADMIN)) {
             Boolean stopUser = canDisableUsers.isChecked();
             newPerson = new Admin(nameString, emailString, userId, stopUser, userType, validUser);
         }
@@ -185,20 +179,19 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-        public void toMainMenu(View v){
+    public void toMainMenu(View v) {
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
+
+    public void updateUI(FirebaseUser currentUser) {
+
+        if (currentUser != null) {
             Intent intent = new Intent(this, MainMenu.class);
             startActivity(intent);
         }
-
-
-        public void updateUI(FirebaseUser currentUser){
-
-            if(currentUser != null){
-                Intent intent = new Intent(this, MainMenu.class);
-                startActivity(intent);
-            }
-        }
-
+    }
 
 
 }

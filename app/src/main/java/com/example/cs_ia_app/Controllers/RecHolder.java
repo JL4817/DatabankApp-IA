@@ -12,7 +12,7 @@ import com.example.cs_ia_app.R;
 
 import java.util.ArrayList;
 
-public class RecHolder extends RecyclerView.ViewHolder{
+public class RecHolder extends RecyclerView.ViewHolder {
 
     private TextView tvname;
     private TextView tvlocation;
@@ -32,7 +32,7 @@ public class RecHolder extends RecyclerView.ViewHolder{
 
     }
 
-    public interface ItemClickListener{
+    public interface ItemClickListener {
         void onItemClick(ArrayList<Item> details, int position);
     }
 

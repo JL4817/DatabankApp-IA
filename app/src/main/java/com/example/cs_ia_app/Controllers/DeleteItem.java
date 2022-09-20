@@ -54,7 +54,7 @@ public class DeleteItem extends AppCompatActivity {
         itemName = findViewById(R.id.itemNameDeleteField);
         itemName.setHint("Enter Item Name to Delete Item");
         nameBanner = findViewById(R.id.nameBannerTV);
-        nameBanner.setTextColor(Color.rgb(148,0,211));
+        nameBanner.setTextColor(Color.rgb(148, 0, 211));
         items = new ArrayList<>();
 
 
@@ -79,28 +79,28 @@ public class DeleteItem extends AppCompatActivity {
 
                             String name = itemName.getText().toString();
 
-                            if(name.equals(item.getName())){
+                            if (name.equals(item.getName())) {
 
-                            String documentID = item.getItemID();
+                                String documentID = item.getItemID();
 
-                            firestore.collection("item").document(documentID)
-                                    .delete()
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.d("DeleteItemSuccess", "DocumentSnapshot successfully deleted!");
-                                            Toast.makeText(DeleteItem.this, "Item Has Successfully been deleted!",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("DeleteItemFailure", "Error deleting document", e);
-                                            Toast.makeText(DeleteItem.this, "Item Deletion Failed.",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                firestore.collection("item").document(documentID)
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("DeleteItemSuccess", "DocumentSnapshot successfully deleted!");
+                                                Toast.makeText(DeleteItem.this, "Item Has Successfully been deleted!",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("DeleteItemFailure", "Error deleting document", e);
+                                                Toast.makeText(DeleteItem.this, "Item Deletion Failed.",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
 
                                 String imageUri = item.getItemImage();
                                 StorageReference storageRef = FirebaseStorage.getInstance().getReference();
@@ -114,8 +114,7 @@ public class DeleteItem extends AppCompatActivity {
     }
 
 
-
-    public void toMainMenu(View v){
+    public void toMainMenu(View v) {
         Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
         startActivity(nextScreen);
     }

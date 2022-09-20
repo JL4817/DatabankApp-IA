@@ -26,7 +26,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
     ArrayList<Item> itemList;
     private RecHolder.ItemClickListener mItemListener;
 
-    public RecAdapter(ArrayList itemList, RecHolder.ItemClickListener itemClickListener){
+    public RecAdapter(ArrayList itemList, RecHolder.ItemClickListener itemClickListener) {
         this.itemList = itemList;
         this.mItemListener = itemClickListener;
     }
@@ -58,11 +58,9 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
         // Points to the root reference
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference dateRef = storageRef.child("images/" + imageUri);
-        dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
-        {
+        dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onSuccess(Uri downloadUrl)
-            {
+            public void onSuccess(Uri downloadUrl) {
                 Picasso.get().load(downloadUrl).into(holder.getImageView());
             }
         });
@@ -80,7 +78,6 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
         return itemList.size();
 
     }
-
 
 
 }

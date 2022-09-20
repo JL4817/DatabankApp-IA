@@ -80,26 +80,24 @@ public class FindItemActivity extends AppCompatActivity {
                                     Log.d("FindItemActivity", "Error getting documents: ", task.getException());
                                 }
 
-                                    String value = (String)parent.getItemAtPosition(position);
+                                String value = (String) parent.getItemAtPosition(position);
 
 
-                                        Intent i = new Intent(context, ItemDisplayTool.class);
-                                        i.putExtra("nameValue", value);
-                                        i.putExtra("selected_item", (Parcelable) items.get(position));
-                                        startActivity(i);
-                                }
+                                Intent i = new Intent(context, ItemDisplayTool.class);
+                                i.putExtra("nameValue", value);
+                                i.putExtra("selected_item", (Parcelable) items.get(position));
+                                startActivity(i);
+                            }
                         });
 
             }
         });
 
 
-
-
     }
 
 
-    public void getNames(){
+    public void getNames() {
 
         firestore.collection("item")
                 .get()
@@ -108,13 +106,13 @@ public class FindItemActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                               items.add(document.toObject(Item.class));
+                                items.add(document.toObject(Item.class));
                             }
                         } else {
                             Log.d("FindItemActivity", "Error getting documents: ", task.getException());
                         }
 
-                        for(Item item: items){
+                        for (Item item : items) {
 
                             itemName.add(item.getName());
 
@@ -156,7 +154,7 @@ public class FindItemActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
             case R.id.to_main_menu:
                 Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);

@@ -103,11 +103,9 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
             // Points to the root reference
             StorageReference storageRef = FirebaseStorage.getInstance().getReference();
             StorageReference dateRef = storageRef.child("images/" + imageUri);
-            dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
-            {
+            dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
-                public void onSuccess(Uri downloadUrl)
-                {
+                public void onSuccess(Uri downloadUrl) {
                     Picasso.get().load(downloadUrl).into(imageView);
                 }
             });
@@ -118,8 +116,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     }
 
 
-
-    public void takePictureNew(View v){
+    public void takePictureNew(View v) {
 
         if (ContextCompat.checkSelfPermission(RecyclerViewClick.this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -152,7 +149,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
     }
 
-    public void btnToUpdateInfo(View v){
+    public void btnToUpdateInfo(View v) {
 
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
@@ -161,7 +158,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
             StorageReference photoRef = storageReference.child("images/" + newItemId);
 
-            if(takePicture.isPressed()){
+            if (takePicture.isPressed()) {
 
                 photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -230,7 +227,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     }
 
 
-    public void toMainMenu(View v){
+    public void toMainMenu(View v) {
         Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
         startActivity(nextScreen);
     }
