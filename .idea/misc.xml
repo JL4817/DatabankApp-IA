@@ -30,9 +30,10 @@
         <entry key="app/src/main/res/layout/activity_main_lobby.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_retreive_data_recycler_view.xml" value="0.18478260869565216" />
         <entry key="app/src/main/res/layout/activity_sign_out_user.xml" value="0.24114583333333334" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="app/src/main/res/layout/design_row_for_recyclerview.xml" value="0.375" />
         <entry key="app/src/main/res/layout/new_view.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/menu/menu.xml" value="0.24114583333333334" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.25" />
       </map>
     </option>
   </component>

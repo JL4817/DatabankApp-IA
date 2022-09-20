@@ -75,7 +75,6 @@ public class DeleteItem extends AppCompatActivity {
                             Log.d("DeleteItem", "Error getting documents: ", task.getException());
                         }
 
-
                         for (Item item : items) {
 
                             String name = itemName.getText().toString();
@@ -89,7 +88,7 @@ public class DeleteItem extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d("DeleteItemSucces", "DocumentSnapshot successfully deleted!");
+                                            Log.d("DeleteItemSuccess", "DocumentSnapshot successfully deleted!");
                                             Toast.makeText(DeleteItem.this, "Item Has Successfully been deleted!",
                                                     Toast.LENGTH_SHORT).show();
                                         }
@@ -108,17 +107,10 @@ public class DeleteItem extends AppCompatActivity {
                                 StorageReference dateRef = storageRef.child("images/" + imageUri);
                                 dateRef.delete();
 
-
                             }
                         }
-
-
                     }
-
-
                 });
-
-
     }
 
 

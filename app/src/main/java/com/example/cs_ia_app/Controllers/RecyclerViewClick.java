@@ -46,8 +46,8 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     private StorageReference storageReference;
 
     private ImageView imageView;
-    private TextView tvlocation, tvname, tvID, tvitemLink;
-    private String location, name, ID, link, image;
+    private TextView tvlocation, tvname, tvitemLink;
+    private String location, name, link;
 
     private TextView tvName2, tvLink2, tvLocation2;
     private Button takePicture;
@@ -121,7 +121,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
     public void takePictureNew(View v){
 
-
         if (ContextCompat.checkSelfPermission(RecyclerViewClick.this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(RecyclerViewClick.this,
@@ -142,7 +141,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -153,8 +151,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         }
 
     }
-
-
 
     public void btnToUpdateInfo(View v){
 
@@ -230,7 +226,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
                     Toast.LENGTH_SHORT).show();
 
         }
-
 
     }
 

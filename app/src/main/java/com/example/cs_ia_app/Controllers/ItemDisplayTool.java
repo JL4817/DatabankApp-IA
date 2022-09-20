@@ -158,7 +158,8 @@ public class ItemDisplayTool extends AppCompatActivity {
                                     tvOwnerName.setText("Owner Name: " + ownerName);
 
 
-                                    firestore.collection("user").document(mUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                    firestore.collection("user").document(mUser.getUid())
+                                            .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                         @Override
                                         public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -215,13 +216,8 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                     if(data.getOwner().equals(user.getUserID())){
 
-                                        firestore.collection("item").document(data.getOwner())
+                                        firestore.collection("user").document(data.getOwner())
                                                 .update("isValid", false);
-                                    }
-
-
-                                    if(user.getIsValid() == false){
-                                        firestore.collection("user").document(data.getOwner()).delete();
                                     }
 
                                 }

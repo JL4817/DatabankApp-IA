@@ -57,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -119,7 +119,7 @@ public class SignUpActivity extends AppCompatActivity {
         emailField.setHint("Email");
         layout.addView(emailField);
         passwordField = new EditText(this);
-        passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);;
+        passwordField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         passwordField.setHint("Password");
         layout.addView(passwordField);
     }
@@ -139,7 +139,8 @@ public class SignUpActivity extends AppCompatActivity {
                    Toast.LENGTH_LONG).show();
        }
        else{
-               mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+               mAuth.createUserWithEmailAndPassword(emailString, passwordString)
+                       .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                    @Override
                    public void onComplete(@NonNull Task<AuthResult> task) {
                        if(task.isSuccessful()){
