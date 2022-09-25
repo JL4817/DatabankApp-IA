@@ -1,11 +1,12 @@
 package com.example.cs_ia_app.Models;
 
+
 public class User extends Person {
 
     private String occupation;
 
     public User() {
-
+        this.occupation = "unknown";
     }
 
     public User(String name, String email, String userID, String occupation, String type, boolean isValid) {

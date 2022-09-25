@@ -1,5 +1,7 @@
 package com.example.cs_ia_app.Controllers;
 
+import static com.google.common.io.Files.getFileExtension;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.StorageReference;
 
 import java.sql.Time;
 import java.util.concurrent.TimeUnit;
@@ -98,7 +101,6 @@ public class LogInActivity extends AppCompatActivity {
 
                                 //checks if user is valid
                                 if (userValidation == true) {
-
 
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     updateUI(user);

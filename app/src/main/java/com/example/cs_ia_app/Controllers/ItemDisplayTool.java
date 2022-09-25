@@ -51,7 +51,6 @@ public class ItemDisplayTool extends AppCompatActivity {
     private ArrayList<User> users;
 
     private TextView locate, nam, link;
-    private String value;
     private ImageView iv;
     private TextView tvOwnerName;
     private Button disableUser;
@@ -85,9 +84,8 @@ public class ItemDisplayTool extends AppCompatActivity {
 
         if (getIntent().hasExtra("selected_item")) {
 
-            Item data = (Item) getIntent().getSerializableExtra("selected_item");
+            Item data = getIntent().getParcelableExtra("selected_item");
             String owner = data.getOwner();
-            value = (String) getIntent().getSerializableExtra("nameValue");
 
             firestore.collection("item")
                     .get()
@@ -102,7 +100,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                 for (Item item : items) {
 
-                                    if (value.equals(item.getName())) {
+                                    if (data.getName().equals(item.getName())) {
 
                                         String loc = item.getLocation();
                                         String pLink = item.getPurchaseLink();
@@ -134,6 +132,8 @@ public class ItemDisplayTool extends AppCompatActivity {
                     });
 
 
+
+
             firestore.collection("user")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -152,27 +152,27 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                 if (owner.equals(user.getUserID())) {
 
-                                    //  System.out.println("HERE IS THE OWNER"+a);
                                     String ownerName = user.getName();
 
                                     tvOwnerName.setText("Owner Name: " + ownerName);
-
 
                                     firestore.collection("user").document(mUser.getUid())
                                             .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                                                    String currentUserType = value.getString("userType").toString();
+                                                    String currentUserType = value.getString("userType");
 
+                                                    //checks if overall Person is either a user or an admin
                                                     if (currentUserType.equals(Constants.USER)) {
 
                                                         disableUser.setVisibility(View.GONE);
 
+                                                    //if user is admin
                                                     } else if (currentUserType.equals(Constants.ADMIN)) {
 
                                                         boolean adminUserBoolean = value.getBoolean("disableUsers").booleanValue();
-
+                                                        //checks if the unique admin variable is true
                                                         if (adminUserBoolean == true) {
 
                                                             disableUser.setVisibility(View.VISIBLE);
@@ -182,12 +182,9 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                                 }
                                             });
-
                                 }
 
                             }
-
-
                         }
                     });
         }
@@ -198,8 +195,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
         if (getIntent().hasExtra("selected_item")) {
 
-            value = (String) getIntent().getSerializableExtra("nameValue");
-            Item data = (Item) getIntent().getSerializableExtra("selected_item");
+            Item data = getIntent().getParcelableExtra("selected_item");
 
             firestore.collection("user").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override

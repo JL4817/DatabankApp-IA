@@ -71,9 +71,8 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             itemList = (ArrayList<Item>) getIntent().getSerializableExtra("itemList");
+
             position = (int) getIntent().getSerializableExtra("itemPos");
-
-
             selected = itemList.get(position);
 
             tvlocation = findViewById(R.id.lvName2);

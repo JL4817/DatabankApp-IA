@@ -20,6 +20,7 @@ import android.widget.SearchView;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
+import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,8 +34,6 @@ import java.util.ArrayList;
 public class FindItemActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     private Context context;
 
     private ListView listView;
@@ -48,8 +47,6 @@ public class FindItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_item);
 
         context = this;
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
         listView = findViewById(R.id.listview);
 
@@ -60,14 +57,11 @@ public class FindItemActivity extends AppCompatActivity {
         getNames();
 
 
-        //get the name and compare to make sure it matches
-        //make intent and pass it to the  or viewClick to display onyl taht
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                firestore.collection("item")
+                firestore.collection(Constants.ITEM_COLLECTION)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -80,26 +74,19 @@ public class FindItemActivity extends AppCompatActivity {
                                     Log.d("FindItemActivity", "Error getting documents: ", task.getException());
                                 }
 
-                                String value = (String) parent.getItemAtPosition(position);
-
-
                                 Intent i = new Intent(context, ItemDisplayTool.class);
-                                i.putExtra("nameValue", value);
-                                i.putExtra("selected_item", (Parcelable) items.get(position));
+                                i.putExtra("selected_item", items.get(position));
                                 startActivity(i);
                             }
                         });
-
             }
         });
-
-
     }
 
 
     public void getNames() {
 
-        firestore.collection("item")
+        firestore.collection(Constants.ITEM_COLLECTION)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -115,13 +102,9 @@ public class FindItemActivity extends AppCompatActivity {
                         for (Item item : items) {
 
                             itemName.add(item.getName());
-
                         }
-                        System.out.println(itemName);
-
                     }
                 });
-
     }
 
     @Override

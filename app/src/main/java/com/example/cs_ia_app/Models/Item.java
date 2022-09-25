@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import java.io.Serializable;
 
-public class Item implements Serializable, Parcelable {
+public class Item implements Parcelable {
 
     private String itemID;
     private String location;
@@ -17,6 +17,14 @@ public class Item implements Serializable, Parcelable {
     private String itemImage;
     private String owner;
 
+    public Item() {
+        itemID = "unknown";
+        location = "unknown";
+        name = "unknown";
+        purchaseLink = "unknown";
+        itemImage = "unknown";
+        owner = "unknown";
+    }
 
     public Item(String itemID, String location, String name, String purchaseLink, String itemImage, String owner) {
         this.itemID = itemID;
@@ -27,24 +35,22 @@ public class Item implements Serializable, Parcelable {
         this.owner = owner;
     }
 
-    public Item() {
-        itemID = "";
-        location = "";
-        name = "";
-        purchaseLink = "";
-        itemImage = "";
-        owner = "";
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-
-    protected Item(Parcel in) {
-        itemID = in.readString();
-        location = in.readString();
-        name = in.readString();
-        purchaseLink = in.readString();
-        itemImage = in.readString();
-        owner = in.readString();
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(itemID);
+        dest.writeString(location);
+        dest.writeString(name);
+        dest.writeString(purchaseLink);
+        dest.writeString(itemImage);
+        dest.writeString(owner);
     }
+
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {
         @Override
@@ -57,6 +63,15 @@ public class Item implements Serializable, Parcelable {
             return new Item[size];
         }
     };
+
+    protected Item(Parcel in) {
+        itemID = in.readString();
+        location = in.readString();
+        name = in.readString();
+        purchaseLink = in.readString();
+        itemImage = in.readString();
+        owner = in.readString();
+    }
 
     public String getItemID() {
         return itemID;
@@ -105,22 +120,6 @@ public class Item implements Serializable, Parcelable {
 
     public void setOwner(String owner) {
         this.owner = owner;
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(itemID);
-        dest.writeString(location);
-        dest.writeString(name);
-        dest.writeString(purchaseLink);
-        dest.writeString(itemImage);
-        dest.writeString(owner);
     }
 
 

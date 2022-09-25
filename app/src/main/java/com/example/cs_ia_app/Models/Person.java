@@ -9,7 +9,11 @@ public class Person {
     private boolean isValid;
 
     public Person() {
-
+        this.name = "unknown";
+        this.email = "unknown";
+        this.userID = "unknown";
+        this.userType = "unknown";
+        this.isValid = true;
     }
 
 

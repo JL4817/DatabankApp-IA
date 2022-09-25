@@ -29,12 +29,7 @@ import java.util.ArrayList;
 
 public class ItemInfoActivity extends AppCompatActivity implements RecHolder.ItemClickListener {
 
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
     private FirebaseFirestore firestore;
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
-
     private RecyclerView recyclerView;
     private ArrayList<Item> itemList;
     private Context context;
@@ -45,12 +40,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
         setContentView(R.layout.activity_retreive_data_recycler_view);
 
         context = this;
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
         recyclerView = findViewById(R.id.recyclerview_id);
         itemList = new ArrayList<>();
 
@@ -102,7 +92,6 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
             }
         });
     }
-
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
