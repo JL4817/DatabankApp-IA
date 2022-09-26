@@ -28,6 +28,7 @@ import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,8 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText occupation;
 
     private ArrayList<Item> items;
-    private ArrayList<String> owners;
-    private int count = 0;
+    private ArrayList<Admin> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
         setupSpinner();
 
         items = new ArrayList<>();
-        owners = new ArrayList<>();
+        users = new ArrayList<>();
 
     }
 
@@ -150,65 +150,33 @@ public class SignUpActivity extends AppCompatActivity {
         String passwordString = passwordField.getText().toString();
         String nameString = nameField.getText().toString();
 
-        firestore.collection("item")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
+        firestore.collection("user").whereEqualTo("userType", "Admin").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                items.add(document.toObject(Item.class));
-                            }
-
-                            for (Item item : items) {
-                                String own = item.getOwner();
-                                owners.add(own);
-                            }
-
-                            for (int i = 0; i < owners.size(); i++) {
-
-                                firestore.collection("user").document(owners.get(i)).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-
-                                        String userType = value.getString("userType");
-
-                                        if (userType.equals("Admin")) {
-                                            count++;
-                                        }
-
-
-                                    }
-                                });
-
-
-                            }
-
-
-                        }
-
+                if(task.isSuccessful() && task.getResult() != null){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        users.add(document.toObject(Admin.class));
                     }
+                }
 
-                });
+            }
+        });
 
 
-
-        if(count == 3 && selectedRole.equals("Admin")){
+        if(users.size() >= 3 && selectedRole.equals("Admin")){
 
             Toast.makeText(SignUpActivity.this, "Too many Admin Users!",
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_LONG).show();
 
         }else{
-
-            System.out.println("TOO MANY USERS123");
-            System.out.println(count);
 
             if (nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty()) {
 
                 Toast.makeText(SignUpActivity.this, "Please fill in the text field",
                         Toast.LENGTH_LONG).show();
             } else {
+
                 mAuth.createUserWithEmailAndPassword(emailString, passwordString)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
