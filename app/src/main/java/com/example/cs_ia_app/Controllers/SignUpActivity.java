@@ -150,7 +150,8 @@ public class SignUpActivity extends AppCompatActivity {
         String passwordString = passwordField.getText().toString();
         String nameString = nameField.getText().toString();
 
-        firestore.collection("user").whereEqualTo("userType", "Admin").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firestore.collection("user").whereEqualTo("userType", "Admin")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
