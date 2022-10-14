@@ -230,9 +230,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    public void toMainMenu(View v) {
-        Intent intent = new Intent(this, MainMenu.class);
-        startActivity(intent);
+    public void toLogInScreen(View v) {
+
+        Intent nextScreen = new Intent(getBaseContext(), LogInActivity.class);
+        startActivity(nextScreen);
+
     }
 
 

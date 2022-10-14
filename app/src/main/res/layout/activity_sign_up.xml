@@ -60,12 +60,12 @@
 
     <Button
         android:id="@+id/button5"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="toMainMenu"
-        android:text="Back to Main Menu"
+        android:onClick="toLogInScreen"
+        android:text="Back to Login Screen"
         app:icon="@drawable/ic_menu_book"
-        style="@style/Widget.MaterialComponents.Button.Icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
