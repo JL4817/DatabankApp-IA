@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs_ia_app.R;
+import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -48,7 +49,6 @@ public class LogInActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        mUser = mAuth.getCurrentUser();
 
         nameFieldtv = findViewById(R.id.accountNameTV);
         passwordFieldtv = findViewById(R.id.accountPasswordTV);
@@ -81,6 +81,8 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
+                mUser = mAuth.getCurrentUser();
+
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("SIGN UP", "signInWithEmail:success");
@@ -93,7 +95,7 @@ public class LogInActivity extends AppCompatActivity {
 
                         String userUID = mUser.getUid();
 
-                        firestore.collection("user").document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        firestore.collection(Constants.USER_COLLECTION).document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
                             @Override
                             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.R;
+import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,7 +63,7 @@ public class DeleteItem extends AppCompatActivity {
 
     public void deleteItem(View v) {
 
-        firestore.collection("item")
+        firestore.collection(Constants.ITEM_COLLECTION)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -83,7 +84,7 @@ public class DeleteItem extends AppCompatActivity {
 
                                 String documentID = item.getItemID();
 
-                                firestore.collection("item").document(documentID)
+                                firestore.collection(Constants.ITEM_COLLECTION).document(documentID)
                                         .delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

@@ -87,7 +87,7 @@ public class ItemDisplayTool extends AppCompatActivity {
             Item data = getIntent().getParcelableExtra("selected_item");
             String owner = data.getOwner();
 
-            firestore.collection("item")
+            firestore.collection(Constants.ITEM_COLLECTION)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -134,7 +134,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
 
 
-            firestore.collection("user")
+            firestore.collection(Constants.USER_COLLECTION)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -156,7 +156,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                     tvOwnerName.setText("Owner Name: " + ownerName);
 
-                                    firestore.collection("user").document(mUser.getUid())
+                                    firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
                                             .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -197,7 +197,7 @@ public class ItemDisplayTool extends AppCompatActivity {
 
             Item data = getIntent().getParcelableExtra("selected_item");
 
-            firestore.collection("user").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            firestore.collection(Constants.USER_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
