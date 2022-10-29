@@ -135,7 +135,7 @@ public class CreateItem extends AppCompatActivity {
 
         if (location.isEmpty() || name.isEmpty() || link.isEmpty()) {
 
-            Toast.makeText(CreateItem.this, "Please fill in the text field",
+            Toast.makeText(CreateItem.this, "Please fill in the text field!",
                     Toast.LENGTH_LONG).show();
 
         } else {
@@ -154,13 +154,13 @@ public class CreateItem extends AppCompatActivity {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(CreateItem.this, "Failed to Upload Image to Firebase!",
+                    Toast.makeText(CreateItem.this, "Failed to Upload Item to Firebase!",
                             Toast.LENGTH_SHORT).show();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(CreateItem.this, "Successfully Uploaded Image to Firebase!",
+                    Toast.makeText(CreateItem.this, "Successfully Uploaded Item to Firebase!",
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -186,7 +186,10 @@ public class CreateItem extends AppCompatActivity {
                     .update("ownedItems", FieldValue.arrayUnion(randomKey));
 
         }
+
     }
+
+
 
 
     public void toMainMenu(View v) {

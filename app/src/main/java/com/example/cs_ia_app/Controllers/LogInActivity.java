@@ -77,60 +77,74 @@ public class LogInActivity extends AppCompatActivity {
         String emailString = nameFieldtv.getText().toString();
         String passwordString = passwordFieldtv.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+        if(emailString.isEmpty() || passwordString.isEmpty()){
 
-                mUser = mAuth.getCurrentUser();
+            Toast.makeText(LogInActivity.this, "Please Fill In Your Login Information!",
+                    Toast.LENGTH_SHORT).show();
+            updateUI(null);
 
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("SIGN UP", "signInWithEmail:success");
+        }
+        else{
+
+            mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                    mUser = mAuth.getCurrentUser();
+
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d("SIGN UP", "signInWithEmail:success");
 
 
-                    try {
+                        try {
 
-                        TimeUnit.SECONDS.sleep(1);
-                        //  Thread.sleep(500); //millisecond
+                            TimeUnit.SECONDS.sleep(1);
 
-                        String userUID = mUser.getUid();
 
-                        firestore.collection(Constants.USER_COLLECTION).document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                            String userUID = mUser.getUid();
 
-                                boolean userValidation = value.getBoolean("isValid").booleanValue();
+                            firestore.collection(Constants.USER_COLLECTION).document(userUID).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                                //checks if user is valid
-                                if (userValidation == true) {
+                                    boolean userValidation = value.getBoolean("isValid").booleanValue();
 
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    updateUI(user);
+                                    //checks if user is valid
+                                    if (userValidation == true) {
 
-                                    Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
-                                    startActivity(nextScreen);
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        updateUI(user);
 
-                                    Toast.makeText(LogInActivity.this, "Log In Successful!",
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
+                                        Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
+                                        startActivity(nextScreen);
 
-                                    Log.w("SIGN UP", "signInWithEmailAndPassword:Failure", task.getException());
-                                    Toast.makeText(LogInActivity.this, "user is invalid, can not log in!",
-                                            Toast.LENGTH_SHORT).show();
-                                    updateUI(null);
+                                        Toast.makeText(LogInActivity.this, "Login Successful!",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
 
+                                        Log.w("SIGN UP", "signInWithEmailAndPassword:Failure", task.getException());
+                                        Toast.makeText(LogInActivity.this, "user is invalid, can not log in!",
+                                                Toast.LENGTH_SHORT).show();
+                                        updateUI(null);
+
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+
+
                     }
 
-
                 }
-            }
-        });
+            });
+
+        }
+
+
 
     }
 
