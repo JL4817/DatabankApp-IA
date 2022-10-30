@@ -212,9 +212,13 @@ public class ItemDisplayTool extends AppCompatActivity {
 
                                 firestore.collection("user").document(data.getOwner())
                                         .update("isValid", false);
+
+                                Toast.makeText(ItemDisplayTool.this, "User Disabled!!",
+                                        Toast.LENGTH_SHORT).show();
                             }
 
                         }
+
 
                     } else {
                         Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());

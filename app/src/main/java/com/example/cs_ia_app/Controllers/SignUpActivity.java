@@ -1,11 +1,9 @@
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -20,27 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cs_ia_app.Models.Admin;
-import com.example.cs_ia_app.Models.Item;
 import com.example.cs_ia_app.Models.Person;
 import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
 import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -67,9 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     //user
     private EditText occupation;
-
-    private ArrayList<Item> items;
-    private ArrayList<Admin> users;
+    private ArrayList<Admin> admins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +67,11 @@ public class SignUpActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         mUser = mAuth.getCurrentUser();
 
+        admins = new ArrayList<>();
         layout = findViewById(R.id.llUser);
         userRoleSpinner = findViewById(R.id.spnAuthActivity);
         setupSpinner();
 
-        items = new ArrayList<>();
-        users = new ArrayList<>();
 
     }
 
@@ -157,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(task.isSuccessful() && task.getResult() != null){
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        users.add(document.toObject(Admin.class));
+                        admins.add(document.toObject(Admin.class));
                     }
                 }
 
@@ -165,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-        if(users.size() >= 3 && selectedRole.equals("Admin")){
+        if(admins.size() > 3 && selectedRole.equals("Admin")){
 
             Toast.makeText(SignUpActivity.this, "Too many Admin Users!",
                     Toast.LENGTH_LONG).show();

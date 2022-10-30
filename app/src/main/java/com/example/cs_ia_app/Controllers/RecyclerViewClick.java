@@ -150,6 +150,19 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
     public void btnToUpdateInfo(View v) {
 
+        String newName = tvName2.getText().toString();
+        String newLocation = tvLocation2.getText().toString();
+        String newLink = tvLink2.getText().toString();
+
+        if(newName.isEmpty() || newLocation.isEmpty() || newLink.isEmpty()){
+
+            Toast.makeText(RecyclerViewClick.this, "Please fill in the information!",
+                    Toast.LENGTH_SHORT).show();
+
+        }else{
+
+
+
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             String newItemId = selected.getItemImage();
@@ -206,10 +219,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
             //deleted
 
-            String newName = tvName2.getText().toString();
-            String newLocation = tvLocation2.getText().toString();
-            String newLink = tvLink2.getText().toString();
-
 
             firestore.collection("item").document(selected.getItemID())
                     .update("name", newName);
@@ -222,6 +231,9 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
                     Toast.LENGTH_SHORT).show();
 
         }
+
+    }
+
 
     }
 

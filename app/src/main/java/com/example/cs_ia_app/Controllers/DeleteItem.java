@@ -63,55 +63,59 @@ public class DeleteItem extends AppCompatActivity {
 
     public void deleteItem(View v) {
 
-        firestore.collection(Constants.ITEM_COLLECTION)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                items.add(document.toObject(Item.class));
+        String name = itemName.getText().toString();
+
+        if(name.isEmpty()){
+
+            Toast.makeText(DeleteItem.this, "Please fill in the text field!",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else{
+
+            firestore.collection(Constants.ITEM_COLLECTION)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    items.add(document.toObject(Item.class));
+                                }
+                            } else {
+                                Log.d("DeleteItem", "Error getting documents: ", task.getException());
                             }
-                        } else {
-                            Log.d("DeleteItem", "Error getting documents: ", task.getException());
-                        }
 
-                        for (Item item : items) {
+                            for (Item item : items) { ;
 
-                            String name = itemName.getText().toString();
+                                if (name.equals(item.getName())) {
 
-                            if (name.equals(item.getName())) {
+                                    String documentID = item.getItemID();
 
-                                String documentID = item.getItemID();
+                                    firestore.collection(Constants.ITEM_COLLECTION).document(documentID)
+                                            .delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("DeleteItemSuccess", "DocumentSnapshot successfully deleted!");
+                                                    Toast.makeText(DeleteItem.this, "Item Has Successfully been deleted!",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
 
-                                firestore.collection(Constants.ITEM_COLLECTION).document(documentID)
-                                        .delete()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d("DeleteItemSuccess", "DocumentSnapshot successfully deleted!");
-                                                Toast.makeText(DeleteItem.this, "Item Has Successfully been deleted!",
-                                                        Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w("DeleteItemFailure", "Error deleting document", e);
-                                                Toast.makeText(DeleteItem.this, "Item Deletion Failed.",
-                                                        Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                    String imageUri = item.getItemImage();
+                                    StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                                    StorageReference dateRef = storageRef.child("images/" + imageUri);
+                                    dateRef.delete();
 
-                                String imageUri = item.getItemImage();
-                                StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-                                StorageReference dateRef = storageRef.child("images/" + imageUri);
-                                dateRef.delete();
+                                }
 
                             }
                         }
-                    }
-                });
+                    });
+
+        }
+
+
     }
 
 

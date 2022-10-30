@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class CreateItem extends AppCompatActivity {
 
@@ -117,9 +118,6 @@ public class CreateItem extends AppCompatActivity {
             imageView.setImageBitmap(bitmap);
             imageUri = data.getData();
 
-            //ImageView imageView = findViewById(R.id.image_view);
-            //  Uri selectedImage = data.getData();
-            //    imageView.setImageURI(imageUri);
         }
 
     }
@@ -151,6 +149,7 @@ public class CreateItem extends AppCompatActivity {
             byte[] data = baos.toByteArray();
 
             UploadTask uploadTask = imageRef.putBytes(data);
+
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
@@ -164,6 +163,8 @@ public class CreateItem extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
             });
+
+
 
             id.setText(randomKey);
 
@@ -182,8 +183,10 @@ public class CreateItem extends AppCompatActivity {
             newSignUpKey.set(newItem);
 
             firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
-            firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
-                    .update("ownedItems", FieldValue.arrayUnion(randomKey));
+      //      firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
+     //               .update("ownedItems", FieldValue.arrayUnion(randomKey));
+
+
 
         }
 
