@@ -1,3 +1,8 @@
+/**
+
+ This class is responsible for creating a new item and uploading it to the Firebase storage and Firestore database.
+ */
+
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
@@ -61,6 +66,11 @@ public class CreateItem extends AppCompatActivity {
     EditText locationItem;
     EditText purchaseLinkItem;
 
+    /**
+     * Initializes the layout, Firebase storage and Firestore objects, and UI components.
+     * @param savedInstanceState The saved state of the application.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +97,10 @@ public class CreateItem extends AppCompatActivity {
 
     }
 
+    /**
+     * Requests permission to access the camera and saves the image to the image view.
+     * @param v The view that triggered the method.
+     */
 
     public void saveImage(View v) {
 
@@ -110,6 +124,13 @@ public class CreateItem extends AppCompatActivity {
     }
 
 
+    /**
+     * Handles the result of the image capture and sets the image view with the captured image.
+     * @param requestCode The code used to identify the request.
+     * @param resultCode The code returned to indicate the status of the request.
+     * @param data The data returned from the request.
+     */
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -123,6 +144,12 @@ public class CreateItem extends AppCompatActivity {
     }
 
 
+    /**
+
+     Uploads an item to Firebase Storage and Firestore.
+     @param v The view that triggered the method.
+     */
+
     public void toFirebase(View v) {
 
         final String randomKey = UUID.randomUUID().toString();
@@ -133,6 +160,7 @@ public class CreateItem extends AppCompatActivity {
 
         if (location.isEmpty() || name.isEmpty() || link.isEmpty()) {
 
+            // Show a Toast message if any fields are empty
             Toast.makeText(CreateItem.this, "Please fill in the text field!",
                     Toast.LENGTH_LONG).show();
 
@@ -165,35 +193,36 @@ public class CreateItem extends AppCompatActivity {
             });
 
 
-
+            // Set the item's ID to the random key
             id.setText(randomKey);
 
-            //generate + get new key
+            // Generate a new key for the item and create a DocumentReference for it
             DocumentReference newSignUpKey = firestore.collection(Constants.ITEM_COLLECTION).document();
             String itemKey = newSignUpKey.getId();
 
-            //user ID
+            // Get the user ID from Firebase Authentication
             String userID = mUser.getUid();
 
             Item newItem = null;
 
+            // Create a new item object with the details provided
             newItem = new Item(itemKey, location, name, link, randomKey, userID);
 
-            //add the new item to the database
+            //Add the new item to the database
             newSignUpKey.set(newItem);
 
             firestore.collection(Constants.ITEM_COLLECTION).document(itemKey).set(newItem);
-      //      firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
-     //               .update("ownedItems", FieldValue.arrayUnion(randomKey));
-
-
 
         }
 
     }
 
 
+    /**
 
+     Navigates to the main menu activity.
+     @param v The view that triggered the method.
+     */
 
     public void toMainMenu(View v) {
         Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);

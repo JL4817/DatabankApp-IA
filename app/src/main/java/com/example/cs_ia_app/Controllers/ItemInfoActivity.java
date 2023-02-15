@@ -1,3 +1,8 @@
+/**
+
+ This class represents the activity that displays a list of items in a RecyclerView.
+ */
+
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
@@ -29,10 +34,17 @@ import java.util.ArrayList;
 
 public class ItemInfoActivity extends AppCompatActivity implements RecHolder.ItemClickListener {
 
-    private FirebaseFirestore firestore;
-    private RecyclerView recyclerView;
-    private ArrayList<Item> itemList;
-    private Context context;
+    private FirebaseFirestore firestore; // Firebase Firestore instance
+    private RecyclerView recyclerView; // RecyclerView that displays items
+    private ArrayList<Item> itemList; // List of items to display in the RecyclerView
+    private Context context; // Context of this activity
+
+
+    /**
+     * Called when the activity is starting. Sets up the RecyclerView to display items.
+     *
+     * @param savedInstanceState the saved instance state of the activity
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +60,34 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
     }
 
 
+    /**
+     * Retrieves all items from Firebase Firestore and displays them in the RecyclerView.
+     */
+
     public void showItemList() {
 
         itemList.clear();
+
+        // Creates a task to get all items from the Firestore database
         TaskCompletionSource<String> getAllItem = new TaskCompletionSource<>();
         firestore.collection(Constants.ITEM_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful() && task.getResult() != null) {
+                    // Add each item to the itemList ArrayList
                     for (QueryDocumentSnapshot document : task.getResult()) {
-
                         itemList.add(document.toObject(Item.class));
                     }
 
                     getAllItem.setResult(null);
                 } else {
+                    // Log an error if the task fails
                     Log.d("ItemsInfoActivity", "Error getting documents from db: ", task.getException());
                 }
             }
         });
 
-
+        // Once the task to get all items is complete, create a RecyclerView adapter and set it to the RecyclerView
         getAllItem.getTask().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
@@ -77,7 +96,7 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
 
                     @Override
                     public void onItemClick(ArrayList<Item> details, int position) {
-
+                        // Start a new activity when an item in the RecyclerView is clicked
                         Intent i = new Intent(context, RecyclerViewClick.class);
                         i.putExtra("itemList", itemList);
                         i.putExtra("itemPos", position);
@@ -93,11 +112,22 @@ public class ItemInfoActivity extends AppCompatActivity implements RecHolder.Ite
         });
     }
 
+    /**
+
+     Notifies the listener that the pointer capture state has changed.
+     @param hasCapture true if the pointer is currently captured, false otherwise
+     */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
+    /**
+
+     Called when an item in the RecyclerView is clicked.
+     @param details the details of the clicked item
+     @param position the position of the clicked item in the list
+     */
     @Override
     public void onItemClick(ArrayList<Item> details, int position) {
 

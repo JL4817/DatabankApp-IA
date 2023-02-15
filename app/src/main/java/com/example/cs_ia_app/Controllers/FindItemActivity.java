@@ -1,3 +1,9 @@
+/**
+
+ The FindItemActivity class is responsible for searching and displaying a list of items.
+ It connects to Firebase to retrieve and display data, and allows users to search for items by name.
+ */
+
 package com.example.cs_ia_app.Controllers;
 
 
@@ -41,6 +47,14 @@ public class FindItemActivity extends AppCompatActivity {
     public ArrayAdapter<String> arrayAdapter;
     ArrayList<String> itemName = new ArrayList<>();
 
+    /**
+     * Called when the activity is starting. This method sets the layout of the activity,
+     * initializes the Firebase database, and retrieves the list of items from the database.
+     * It also sets up the search view and adapter to display the list of items to the user.
+     * Lastly, it sets up the on click listener for each item in the list.
+     * @param savedInstanceState Bundle object containing the activity's previously saved state, if any.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +72,16 @@ public class FindItemActivity extends AppCompatActivity {
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            /**
+             * Called when an item in the list is clicked. This method retrieves the selected item
+             * from the Firebase database and passes it to the ItemDisplayTool activity to be displayed.
+             * @param parent AdapterView where the click happened
+             * @param view View that was clicked within the AdapterView
+             * @param position Position of the view in the adapter
+             * @param id Row id of the item that was clicked
+             */
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -83,6 +107,10 @@ public class FindItemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Retrieves the list of item names from the Firebase database and adds them to the
+     * ArrayList of item names to be displayed to the user.
+     */
 
     public void getNames() {
 

@@ -1,3 +1,9 @@
+/**
+
+ This class represents the SignUp activity in the app.
+ It allows a new user to sign up for an account with their name, email and password, and choose whether to
+ be an admin or regular user. The Admin user can also choose to be able to disable other users.
+ */
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
@@ -58,6 +64,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText occupation;
     private ArrayList<Admin> admins;
 
+    /**
+     * This method initializes the SignUpActivity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +84,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method sets up the userRoleSpinner for the SignUpActivity.
+     */
     private void setupSpinner() {
         String[] userTypes = {Constants.USER, Constants.ADMIN};
         // add user types to spinner
@@ -97,7 +109,9 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * This method adds fields to the activity based on the user's selected role.
+     */
     public void addFields() {
 
         commonFields();
@@ -129,7 +143,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Method to sign up the user with provided details.
+     * It checks for the number of existing admin users and prevents more than 3 admin users to sign up.
+     */
     public void signUp(View v) {
 
         String emailString = emailField.getText().toString();
@@ -183,17 +200,18 @@ public class SignUpActivity extends AppCompatActivity {
                             }
                         });
             }
-
-
         }
-
-
-
     }
 
 
+    /**
 
+     This method adds a new user to the database according to their selected usertype.
 
+     @param emailString A string representing the user's email.
+
+     @param nameString A string representing the user's name.
+     */
     public void addUserToDatabase(String emailString, String nameString) {
 
         //make new user according to selected usertype
@@ -216,6 +234,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Called when the user taps on the "Log In" button.
+     *
+     * @param v the View object of the button that was clicked.
+     */
     public void toLogInScreen(View v) {
 
         Intent nextScreen = new Intent(getBaseContext(), LogInActivity.class);
@@ -224,6 +248,12 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
+    /**
+
+     This method updates the UI based on the current user. If the user is logged in, the MainMenu activity is launched.
+
+     @param currentUser The current FirebaseUser object.
+     */
     public void updateUI(FirebaseUser currentUser) {
 
         if (currentUser != null) {

@@ -1,3 +1,8 @@
+/**
+
+ The DeleteItem class provides functionality to delete an item from Firebase Firestore and Storage.
+ */
+
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
@@ -42,6 +47,9 @@ public class DeleteItem extends AppCompatActivity {
 
     private ArrayList<Item> items;
 
+    /**
+     * Initializes the necessary variables and views when the activity is created.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +69,11 @@ public class DeleteItem extends AppCompatActivity {
 
     }
 
+    /**
+     * Deletes an item from Firebase Firestore and Storage.
+     *
+     * @param v the view that called this method
+     */
     public void deleteItem(View v) {
 
         String name = itemName.getText().toString();
@@ -118,7 +131,11 @@ public class DeleteItem extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Returns to the main menu of the application.
+     *
+     * @param v the view that called this method
+     */
     public void toMainMenu(View v) {
         Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
         startActivity(nextScreen);

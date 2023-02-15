@@ -1,3 +1,8 @@
+/**
+
+ This class represents the log in activity of the application.
+ */
+
 package com.example.cs_ia_app.Controllers;
 
 import static com.google.common.io.Files.getFileExtension;
@@ -19,7 +24,6 @@ import com.example.cs_ia_app.Models.User;
 import com.example.cs_ia_app.R;
 import com.example.cs_ia_app.Utilities.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,28 +32,28 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.StorageReference;
 
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class LogInActivity extends AppCompatActivity {
 
-
+    // Firebase authentication and database instances
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
     private FirebaseUser mUser;
 
+    // TextView fields
     private TextView nameFieldtv;
     private TextView passwordFieldtv;
     private TextView banner1, banner2;
     private ArrayList<User> users;
 
 
+    /**
+     * Sets up the LogInActivity layout and initializes the FirebaseAuth and FirebaseFirestore instances.
+     * @param savedInstanceState A Bundle object containing the activity's previous saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +66,7 @@ public class LogInActivity extends AppCompatActivity {
         passwordFieldtv = findViewById(R.id.accountPasswordTV);
         passwordFieldtv.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-        //changing to purple color, textview
+        // changing banner colors to purple
         banner1 = findViewById(R.id.textView3);
         banner1.setTextColor(Color.rgb(148, 0, 211));
 
@@ -74,17 +78,21 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Starts the SignUpActivity when the user clicks the 'Sign Up' button.
+     * @param v The view that was clicked.
+     */
     public void toSignUpPage(View v) {
         Intent nextScreen = new Intent(getBaseContext(), SignUpActivity.class);
         startActivity(nextScreen);
     }
 
 
+    /**
+     * Authenticates the user and logs them in when the 'Log In' button is clicked.
+     * @param v The view that was clicked.
+     */
     public void logIn(View v) {
-
-        //make the if statement in login
-
 
         String emailString = nameFieldtv.getText().toString();
         String passwordString = passwordFieldtv.getText().toString();
@@ -138,8 +146,17 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
+    /**
+
+     Updates the user interface based on the current Firebase user. If the user is not null,
+
+     navigates to the main menu screen by creating an intent for MainMenu activity and starting it.
+
+     @param currentUser the current Firebase user
+     */
     public void updateUI(FirebaseUser currentUser) {
 
+        // Create an intent to navigate to the main menu
         if (currentUser != null) {
             Intent intent = new Intent(this, MainMenu.class);
             startActivity(intent);

@@ -1,3 +1,11 @@
+/**
+
+ The RecyclerViewClick class is responsible for handling the click event of an item in the recycler view.
+ It provides functionality to update the item's name, location, purchase link, and image.
+ The user can also take a new image for the item.
+ The updated item data is stored in Firebase Firestore and Firebase Storage.
+ */
+
 package com.example.cs_ia_app.Controllers;
 
 
@@ -40,11 +48,12 @@ import java.util.UUID;
 
 public class RecyclerViewClick extends AppCompatActivity implements View.OnClickListener {
 
-
+    //Firebase Firestore, Firebase Storage, and Firebase Authentication instances.
     private FirebaseFirestore firestore;
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
+    //Views for displaying the item information and for taking a new picture of the item.
     private ImageView imageView;
     private TextView tvlocation, tvname, tvitemLink;
     private String location, name, link;
@@ -53,21 +62,29 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     private Button takePicture;
     private ImageView tvImageView3;
 
+    //ArrayList for storing the items and position of the selected item.
     private ArrayList<Item> itemList;
     private int position;
     private Item selected;
 
 
+    /**
+     * Method called when the activity is first created.
+     * Initializes Firebase Firestore, Firebase Storage, and the views.
+     * Sets the information of the selected item in the views.
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
+        //Initialize Firebase Firestore, Firebase Storage, and the views.
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         firestore = FirebaseFirestore.getInstance();
 
-
+        //Get the selected item's information and set it in the views.
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             itemList = (ArrayList<Item>) getIntent().getSerializableExtra("itemList");
@@ -114,6 +131,12 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+
+     This method checks if the app has permission to use the camera, and if not, requests permission
+
+     @param v The view that was clicked
+     */
 
     public void takePictureNew(View v) {
 
@@ -124,6 +147,11 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
         }
 
+        /**
+         * This method launches the camera app to take a picture and sets the resulting image as the
+         * thumbnail image view
+         * @param v The view that was clicked
+         */
         takePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +165,18 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
     }
 
 
+    /**
+
+     This method is called when the camera app returns with a picture. It sets the thumbnail image view
+
+     to the resulting image.
+
+     @param requestCode The request code that was used to start the camera app
+
+     @param resultCode The result code that was returned by the camera app
+
+     @param data The intent containing the data returned by the camera app
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -148,6 +188,16 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
     }
 
+    /**
+
+     This method is called when the "Update Info" button is clicked. It updates the name, location, and purchase link
+
+     of the item in the Firestore database. If a new image was taken, it deletes the old image from Firebase storage and
+
+     uploads the new image.
+
+     @param v The view that was clicked
+     */
     public void btnToUpdateInfo(View v) {
 
         String newName = tvName2.getText().toString();
@@ -161,15 +211,14 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
 
         }else{
 
-
-
+        // Check if the intent contains the item list and position data
         if (getIntent().hasExtra("itemList") && getIntent().hasExtra("itemPos")) {
 
             String newItemId = selected.getItemImage();
-            System.out.println(newItemId);
 
             StorageReference photoRef = storageReference.child("images/" + newItemId);
 
+            // If a new image was taken, delete the old image and upload the new image to Firebase storage
             if (takePicture.isPressed()) {
 
                 photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -184,12 +233,13 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
                     }
                 });
 
-
+                // Generate a new random key for the new image
                 final String newRandomKey = UUID.randomUUID().toString();
 
+                // Get a reference to the new image in Firebase storage
                 StorageReference riversRef = storageReference.child("images/" + newRandomKey);
 
-                // Get the data from an ImageView as bytes
+                // Convert the image to bytes and upload to Firebase storage
                 tvImageView3.setDrawingCacheEnabled(true);
                 tvImageView3.buildDrawingCache();
                 Bitmap bitmap = ((BitmapDrawable) tvImageView3.getDrawable()).getBitmap();

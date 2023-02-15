@@ -1,5 +1,11 @@
-package com.example.cs_ia_app.Controllers;
+/**
 
+ This is the adapter class for the RecyclerView in the ItemInfoActivity. It sets the data for the
+ RecHolder and binds the RecHolder to the data.
+ */
+
+package com.example.cs_ia_app.Controllers;
+ 
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +29,27 @@ import java.util.List;
 
 public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
 
-    ArrayList<Item> itemList;
+    private ArrayList<Item> itemList;
     private RecHolder.ItemClickListener mItemListener;
 
+    /**
+     * Constructor for the RecAdapter class.
+     *
+     * @param itemList the ArrayList of items to be displayed in the RecyclerView
+     * @param itemClickListener the click listener for the items in the RecyclerView
+     */
     public RecAdapter(ArrayList itemList, RecHolder.ItemClickListener itemClickListener) {
         this.itemList = itemList;
         this.mItemListener = itemClickListener;
     }
 
-
+    /**
+     * Called when RecyclerView needs a new RecHolder of the given type to represent an item.
+     *
+     * @param parent the ViewGroup into which the new View will be added
+     * @param viewType the type of the new view
+     * @return a new RecHolder that holds a View of the given view type
+     */
     @NonNull
     @Override
     public RecHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,6 +61,14 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
     }
 
 
+    /**
+     * Called by RecyclerView to display the data at the specified position. This method updates
+     * the contents of the RecHolder to reflect the item at the given position.
+     *
+     * @param holder the RecHolder which should be updated to represent the contents of the item at
+     *               the given position in the data set
+     * @param position the position of the item within the adapter's data set
+     */
     @Override
     public void onBindViewHolder(@NonNull RecHolder holder, final int position) {
 
@@ -72,6 +98,11 @@ public class RecAdapter extends RecyclerView.Adapter<RecHolder> {
 
     }
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return the total number of items in the data set held by the adapter
+     */
     @Override
     public int getItemCount() {
 

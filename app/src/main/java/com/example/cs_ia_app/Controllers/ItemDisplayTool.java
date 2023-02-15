@@ -1,3 +1,11 @@
+/**
+
+ The ItemDisplayTool activity displays detailed information about a single Item, including its name, image,
+ location, purchase link, and owner name. If the current user is an administrator, a button to disable the item's owner is also displayed.
+ The information about the item is retrieved from Firebase, and the image is displayed using the Picasso library.
+ This activity expects an Item object to be passed as an extra with the name "selected_item".
+ */
+
 package com.example.cs_ia_app.Controllers;
 
 import androidx.annotation.NonNull;
@@ -55,6 +63,12 @@ public class ItemDisplayTool extends AppCompatActivity {
     private TextView tvOwnerName;
     private Button disableUser;
 
+    /**
+     * Initializes the activity layout and Firebase objects. Calls getFirebaseData() to retrieve data from Firebase and display it.
+     *
+     * @param savedInstanceState A Bundle object containing the activity's previously saved state.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +93,10 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrieves data from Firebase and uses it to display information about the item and its owner. If the current user is an admin,
+     * displays the disable button for the item's owner.
+     */
 
     public void getFirebaseData() {
 
@@ -132,8 +150,6 @@ public class ItemDisplayTool extends AppCompatActivity {
                     });
 
 
-
-
             firestore.collection(Constants.USER_COLLECTION)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -183,31 +199,40 @@ public class ItemDisplayTool extends AppCompatActivity {
                                                 }
                                             });
                                 }
-
                             }
                         }
                     });
         }
     }
 
+    /**
 
+     Disables the selected user by setting their "isValid" field to false in the Firestore database.
+
+     If the intent passed to this activity has the "selected_item" extra, the corresponding user will be disabled.
+
+     @param v the View object associated with the method call
+     */
     public void toDisableUser(View v) {
 
         if (getIntent().hasExtra("selected_item")) {
 
             Item data = getIntent().getParcelableExtra("selected_item");
 
+            // Get all users from Firestore and disable the selected user
             firestore.collection(Constants.USER_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
 
+                        // Add all users to an array
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             users.add(document.toObject(User.class));
                         }
 
                         for (User user : users) {
 
+                            // Disable the selected user
                             if (data.getOwner().equals(user.getUserID())) {
 
                                 firestore.collection("user").document(data.getOwner())
@@ -230,7 +255,11 @@ public class ItemDisplayTool extends AppCompatActivity {
 
     }
 
+    /**
 
+     Navigates to the main menu.
+     @param v the View object associated with the method call
+     */
     public void toMainMenu(View v) {
         Intent nextScreen = new Intent(getBaseContext(), MainMenu.class);
         startActivity(nextScreen);
