@@ -135,6 +135,14 @@ public class FindItemActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+
+     This method overrides the default onCreateOptionsMenu method and inflates a menu layout.
+     It sets a query hint in the search view and defines a listener that filters the list view with items whose names
+     match the entered search text.
+     @param menu - the menu that will be inflated
+     @return - a boolean indicating if the menu was successfully created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -162,7 +170,12 @@ public class FindItemActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
 
+     This method is called when an item in the options menu is selected.
+     @param item the selected item
+     @return true if the selected item is handled, false otherwise
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

@@ -79,36 +79,40 @@ public class DeleteItem extends AppCompatActivity {
         String name = itemName.getText().toString();
 
         if(name.isEmpty()){
-
+            // if the name is empty, display an error message in a Toast
             Toast.makeText(DeleteItem.this, "Please fill in the text field!",
                     Toast.LENGTH_SHORT).show();
         }
         else{
-
+            // if the name is not empty, query Firebase Firestore for all items in the collection
             firestore.collection(Constants.ITEM_COLLECTION)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
+                                // if the query is successful, add each item to an ArrayList
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     items.add(document.toObject(Item.class));
                                 }
                             } else {
+                                // if the query is not successful, log an error message
                                 Log.d("DeleteItem", "Error getting documents: ", task.getException());
                             }
 
+                            // iterate over the items in the ArrayList
                             for (Item item : items) { ;
-
+                                // check if the name of the item to be deleted matches the name of an item in the ArrayList
                                 if (name.equals(item.getName())) {
-
+                                    // if there is a match, retrieve the document ID of the item
                                     String documentID = item.getItemID();
-
+                                    // delete the item from Firebase Firestore
                                     firestore.collection(Constants.ITEM_COLLECTION).document(documentID)
                                             .delete()
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
+                                                    // if the deletion is successful, log a success message and display a success message in a Toast
                                                     Log.d("DeleteItemSuccess", "DocumentSnapshot successfully deleted!");
                                                     Toast.makeText(DeleteItem.this, "Item Has Successfully been deleted!",
                                                             Toast.LENGTH_SHORT).show();
@@ -116,8 +120,10 @@ public class DeleteItem extends AppCompatActivity {
                                             });
 
                                     String imageUri = item.getItemImage();
+                                    // get a reference to the Firebase Storage location of the image
                                     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
                                     StorageReference dateRef = storageRef.child("images/" + imageUri);
+                                    // delete the item's image from Firebase Storage
                                     dateRef.delete();
 
                                 }

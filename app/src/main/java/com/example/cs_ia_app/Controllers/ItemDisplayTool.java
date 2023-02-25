@@ -105,6 +105,7 @@ public class ItemDisplayTool extends AppCompatActivity {
             Item data = getIntent().getParcelableExtra("selected_item");
             String owner = data.getOwner();
 
+            //Retrieves all items from Firestore and adds them to an ArrayList
             firestore.collection(Constants.ITEM_COLLECTION)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -115,15 +116,15 @@ public class ItemDisplayTool extends AppCompatActivity {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     items.add(document.toObject(Item.class));
                                 }
-
+                                //Iterates through all items in the "items" ArrayList
                                 for (Item item : items) {
-
+                                    //Checks if the current item's name matches the selected item's name
                                     if (data.getName().equals(item.getName())) {
 
                                         String loc = item.getLocation();
                                         String pLink = item.getPurchaseLink();
                                         String imageUri = item.getItemImage();
-
+                                        //Loads the image for the selected item into the ImageView using Picasso library
                                         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
                                         StorageReference dateRef = storageRef.child("images/" + imageUri);
                                         dateRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -132,7 +133,7 @@ public class ItemDisplayTool extends AppCompatActivity {
                                                 Picasso.get().load(downloadUrl).into(iv);
                                             }
                                         });
-
+                                        //Sets the text for the location, purchase link, and item name textviews
                                         link.setText("Purchase Link: " + pLink);
                                         locate.setText("Location: " + loc);
                                         nam.setText("Name: " + item.getName());
@@ -149,7 +150,7 @@ public class ItemDisplayTool extends AppCompatActivity {
                         }
                     });
 
-
+            //Retrieves all users from Firestore and adds them to an ArrayList
             firestore.collection(Constants.USER_COLLECTION)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -163,15 +164,15 @@ public class ItemDisplayTool extends AppCompatActivity {
                                 Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
                             }
 
-
+                            //Iterates through all users in the "users" ArrayList
                             for (User user : users) {
-
+                                //Checks if the current user's ID matches the owner ID of the selected item
                                 if (owner.equals(user.getUserID())) {
 
                                     String ownerName = user.getName();
 
                                     tvOwnerName.setText("Owner Name: " + ownerName);
-
+                                    //Listens for changes to the current user's Firestore document
                                     firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
                                             .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                                 @Override

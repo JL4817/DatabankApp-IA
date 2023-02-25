@@ -128,6 +128,13 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+
+     Removes all views in the current layout and creates three new EditText fields for collecting common user data.
+     The fields include a name field, an email field, and a password field with input type set to password.
+     The fields are added to the current layout.
+     */
     public void commonFields() {
         layout.removeAllViewsInLayout();
         nameField = new EditText(this);

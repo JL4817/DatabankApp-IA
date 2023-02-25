@@ -125,10 +125,7 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
                     Picasso.get().load(downloadUrl).into(imageView);
                 }
             });
-
         }
-
-
     }
 
     /**
@@ -144,7 +141,6 @@ public class RecyclerViewClick extends AppCompatActivity implements View.OnClick
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(RecyclerViewClick.this,
                     new String[]{Manifest.permission.CAMERA}, 101);
-
         }
 
         /**

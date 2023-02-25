@@ -66,7 +66,7 @@ public class LogInActivity extends AppCompatActivity {
         passwordFieldtv = findViewById(R.id.accountPasswordTV);
         passwordFieldtv.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-        // changing banner colors to purple
+        //changing banner colors to purple
         banner1 = findViewById(R.id.textView3);
         banner1.setTextColor(Color.rgb(148, 0, 211));
 
