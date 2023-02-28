@@ -22,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainMenu extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore firestore;
 
     private TextView tvMainMenu;
 
@@ -40,7 +39,6 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_lobby);
 
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
 
         tvMainMenu = findViewById(R.id.mainMenuTV);
         tvMainMenu.setTextColor(Color.rgb(148, 0, 211));

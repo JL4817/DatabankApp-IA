@@ -24,7 +24,6 @@ public class Person {
         this.isValid = true;
     }
 
-
     /**
      * Constructor initializes all fields with provided values.
      *

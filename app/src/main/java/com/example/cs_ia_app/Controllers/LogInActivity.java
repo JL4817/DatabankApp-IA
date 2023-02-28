@@ -64,7 +64,6 @@ public class LogInActivity extends AppCompatActivity {
 
         nameFieldtv = findViewById(R.id.accountNameTV);
         passwordFieldtv = findViewById(R.id.accountPasswordTV);
-        passwordFieldtv.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         //changing banner colors to purple
         banner1 = findViewById(R.id.textView3);
@@ -97,15 +96,19 @@ public class LogInActivity extends AppCompatActivity {
         String emailString = nameFieldtv.getText().toString();
         String passwordString = passwordFieldtv.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+        if(emailString.isEmpty() || passwordString.isEmpty()){
+            Toast.makeText(LogInActivity.this, "Please Fill In Your Login Information!", Toast.LENGTH_LONG).show();
 
-                mUser = mAuth.getCurrentUser();
+        }else{
+            mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("SIGN UP", "signInWithEmail:success");
+                    mUser = mAuth.getCurrentUser();
+
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d("SIGN UP", "signInWithEmail:success");
 
 
                         String userUID = mUser.getUid();
@@ -138,9 +141,12 @@ public class LogInActivity extends AppCompatActivity {
                             }
                         });
 
+                    }
                 }
-            }
-        });
+            });
+        }
+
+
 
 
     }

@@ -54,7 +54,6 @@ public class FindItemActivity extends AppCompatActivity {
      * Lastly, it sets up the on click listener for each item in the list.
      * @param savedInstanceState Bundle object containing the activity's previously saved state, if any.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +71,6 @@ public class FindItemActivity extends AppCompatActivity {
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             /**
              * Called when an item in the list is clicked. This method retrieves the selected item
              * from the Firebase database and passes it to the ItemDisplayTool activity to be displayed.
@@ -81,7 +79,6 @@ public class FindItemActivity extends AppCompatActivity {
              * @param position Position of the view in the adapter
              * @param id Row id of the item that was clicked
              */
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 

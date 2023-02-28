@@ -38,10 +38,7 @@ public class DeleteItem extends AppCompatActivity {
 
 
     private FirebaseFirestore firestore;
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
 
-    private Button delete;
     private TextView itemName;
     private TextView nameBanner;
 
@@ -56,10 +53,7 @@ public class DeleteItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_item);
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
-        delete = findViewById(R.id.itemDelete);
         itemName = findViewById(R.id.itemNameDeleteField);
         itemName.setHint("Enter Item Name to Delete Item");
         nameBanner = findViewById(R.id.nameBannerTV);

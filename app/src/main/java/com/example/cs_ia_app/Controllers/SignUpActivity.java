@@ -43,7 +43,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
-    private FirebaseUser mUser;
 
     //login
     private TextView emailField;
@@ -74,7 +73,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        mUser = mAuth.getCurrentUser();
 
         admins = new ArrayList<>();
         layout = findViewById(R.id.llUser);

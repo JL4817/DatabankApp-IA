@@ -163,14 +163,11 @@ public class ItemDisplayTool extends AppCompatActivity {
                             } else {
                                 Log.d("ItemDisplayTool", "Error getting documents: ", task.getException());
                             }
-
                             //Iterates through all users in the "users" ArrayList
                             for (User user : users) {
                                 //Checks if the current user's ID matches the owner ID of the selected item
                                 if (owner.equals(user.getUserID())) {
-
                                     String ownerName = user.getName();
-
                                     tvOwnerName.setText("Owner Name: " + ownerName);
                                     //Listens for changes to the current user's Firestore document
                                     firestore.collection(Constants.USER_COLLECTION).document(mUser.getUid())
@@ -239,7 +236,7 @@ public class ItemDisplayTool extends AppCompatActivity {
                                 firestore.collection("user").document(data.getOwner())
                                         .update("isValid", false);
 
-                                Toast.makeText(ItemDisplayTool.this, "User Disabled!!",
+                                Toast.makeText(ItemDisplayTool.this, "User Disabled!",
                                         Toast.LENGTH_SHORT).show();
                             }
 
